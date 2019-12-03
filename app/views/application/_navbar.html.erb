@@ -1,0 +1,52 @@
+<nav class="navbar is-fixed-top has-shadow is-link" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="nav-logo" href="/">
+      <%= image_tag "logo.svg"%>
+    </a>
+
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-main">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbar-main" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="/">Inicio</a>
+      <%= link_to 'Mi perfil', my_profile_path, class: 'navbar-item' %>
+      <%= link_to 'Reportes', reports_path, class: 'navbar-item' %>
+    </div>
+
+    <div class="navbar-end">
+      <!-- <div class="navbar-item">
+        <p class="control has-icons-left">
+          <input class="input is-small" type="text" placeholder="Busqueda...">
+          <span class="icon is-small is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </span>
+        </p>
+      </div> -->
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+            <img src="https://cimav.edu.mx/foto/ion/128" class="navbar-user-img" alt="<%= current_user.full_name %>">
+        </a>
+        <div class="navbar-dropdown is-right">
+          <%= link_to 'Ver mi perfil', my_profile_path, class: 'navbar-item' %>
+          <% if is_admin? %>
+            <%= link_to 'Configuración', config_path, class: 'navbar-item' %>
+          <% end %>
+          <% if is_admin? || is_journal_admin? %>
+            <%= link_to 'Administrar Revistas', journals_path, class: 'navbar-item' %>
+          <% end %>
+          <hr class="navbar-divider">
+          <%= link_to 'Salir', logout_path, class: 'navbar-item' %>
+        </div>
+      </div>
+      <!-- <div class="navbar-item">
+        <a href="/" class="button is-link">Agregar nuevo</a>
+      </div> -->
+    </div>
+    </div>
+  </div>
+</nav>

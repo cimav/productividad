@@ -1,0 +1,268 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+html {
+  background: #fcfcfc;
+  font-size: 14px;
+}
+
+.tabs-content li {
+    display: none;
+    list-style: none;
+}
+
+.tabs-content li.is-active {
+    display: block;
+}
+
+#login-box {
+  margin: 0 auto;
+  width: 400px;
+  border: 1px solid #ddd;
+  margin-top: 3em;
+  padding: 2em;
+  text-align: center;
+  border-radius: 10px;
+  img {
+    width: 80%;
+  }
+  span {
+    margin-left: 1em;
+  }
+}
+
+.navbar {
+  padding-bottom: 0 !important;
+  height: 50px;
+  margin: 0 !important;
+}
+
+.navbar-brand {
+  padding: 0 1em;
+  a:hover {
+    background: none !important; 
+  }
+}
+
+.nav-logo img {
+  height: 50px;
+}
+
+.navbar-user-img {
+  border-radius: 50%;
+}
+
+#home {
+  padding-top: 2em;
+}
+
+.catalog {
+  margin-top: 1em;
+
+  nav {
+    a {
+      color: #000;
+    }
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+  }
+}
+
+
+.product {
+  margin-top: 1em;
+
+  nav {
+    a {
+      color: #000;
+    }
+    font-weight: bold;
+    font-size: 1.2em;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 2em;
+    font-weight: bold;
+  }
+
+  h2 {
+    font-size: 1.2em;
+    font-weight: 500;
+    border-bottom: 1px solid #ddd;
+    margin: 1em 0 0.5em 0;
+  }
+
+  .media {
+    padding: 0.5em !important;
+  }
+
+  .product-additional {
+    h3 {
+      font-size: 1em;
+      font-weight: 500;
+      border-bottom: 1px solid #ddd;
+      margin: 0 0 0.5em 0;
+    }
+
+    .author-is {
+      margin-bottom: 1em;
+      border-bottom: 1px dotted #ddd;
+      padding-bottom: 1em;
+    }
+  }
+
+  .product-dates {
+    text-align: center;
+    font-size: 0.8em;
+    color: #888;
+    margin: 1em 0;
+  }
+
+  .abstract {
+    font-size: 0.9em;
+  }
+
+  .product-edit-button {
+    margin: 2em 0;
+  }
+
+  .product-status {
+    text-align: center;
+  }
+}
+
+
+.journal-h1 {
+  margin-bottom: 1em;
+}
+
+.impact-factor-label {
+  font-size: 0.6em;
+  text-align: center;
+}
+
+.impact-factor-edit-link {
+  font-size: 0.6em;
+  text-align: center;
+}
+
+.impact-factor-value {
+  font-weight: bold;
+  font-size: 3em;
+  text-align: center;
+}
+
+.profile-sidebar {
+  margin-top: 1em;
+  border-right: 1px solid #eee;
+}
+
+.hero {
+  margin: 0;
+}
+
+.hero-body {
+  padding: 1em 1.5em !important;
+}
+
+.has-padding-1 {
+  padding: 1em;
+}
+
+.has-padding-2 {
+  padding: 2em;
+}
+
+.has-padding-3 {
+  padding: 3em;
+}
+
+.p-item {
+  strong a { 
+    color: #000 !important;
+  }
+}
+
+.product-index {
+  h2 {
+    font-size: 120%;
+    font-weight: 500;
+  }
+}
+
+.product-title {
+  font-size: 130% !important;
+  font-weight: 500;
+}
+
+.product-authors {
+  font-size: 90%;
+  color: #777;
+  text-align: center;
+}
+.product-extra {
+  font-size: 90%;
+  color: #777;
+  text-align: center;
+}
+
+#notification-area {
+  margin: 1em;
+  width: 30%;
+  position:absolute;                  
+  top:60px;                          
+  right:0;                          
+}
+
+.empty-tab {
+  color: #999;
+  font-size: 90%;
+  padding: 3em;
+  text-align: center;
+}
+
+.participant-ui {
+  .select {
+    width: 100% !important;
+  }
+  select {
+    width: 100% !important;
+  }
+  .participant-actions {
+    text-align: right;
+  }
+
+  .participant-ui-item {
+    border-bottom: 1px solid #eee;
+    padding: 1em;
+  }
+}
+
+.acknowledgment-ui {
+  .select {
+    width: 100% !important;
+  }
+  select {
+    width: 100% !important;
+  }
+  .participant-actions {
+    text-align: right;
+  }
+
+  .acknowledgement-ui-item {
+    border-bottom: 1px solid #eee;
+    padding: 1em;
+  }
+
+  .acknowledgment-notes {
+    width: 50%;
+  }
+}

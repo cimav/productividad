@@ -1,0 +1,132 @@
+<%= form_with(model: journal, local: true) do |form| %>
+  <% if journal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(journal.errors.count, "error") %> prohibited this journal from being saved:</h2>
+
+      <ul>
+        <% journal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Nombre', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :website, 'Sitio Web', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :website, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :is_refereed, '¿Es arbitrada?', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.check_box :is_refereed %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :is_international, '¿Es internacional?', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.check_box :is_international %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :is_indexed, '¿Es indizada?', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.check_box :is_indexed %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal" id="indexer-list">
+    <div class="field-label is-normal">
+      <%= form.label 'indexer', 'Indexada en', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <ul>
+          <% idxs = @journal.journal_indices.pluck(:indexer_id) %>
+          <% Indexer.order(:name).each do |idx| %>
+          <% 
+          if idxs.include? idx.id
+            checked = 'checked="checked"'
+          else
+            checked = ''
+          end 
+          %>
+          <li><label class="checkbox"><input type="checkbox" name="indexer[]" value="<%= idx.id %>" <%= checked %>> <%= idx.name %></label></li>
+        <% end %>
+       </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :issn, 'ISSN', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :issn, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :issn, 'E-ISSN', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :e_issn, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :issn, 'País', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+
+          <%= form.collection_select :country_id, Country.order(:name),:id,:name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Guardar', class:'button is-link' %>
+  </div>
+<% end %>

@@ -1,0 +1,46 @@
+<div class="container box product">
+
+<h1 class="journal-h1"><%= @journal_article.title %></h1>
+
+
+<div class="tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Participantes</a></li>
+        <li><a>Agradecimientos</a></li>
+        <li><a>Citas</a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+  <ul>
+    <li class="is-active">
+      <%= render 'edit_form', journal_article: @journal_article, person: @person  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="product-participants-ui">
+        <%= render 'product_participants/ui', product: @journal_article  %>
+      </div>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="acknowledgments-ui">
+      <%= render 'acknowledgments/ui', product: @journal_article  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <h3>Citas</h3>
+      <div class="is-clearfix"></div>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>
+
+
+<div class="has-text-centered has-padding-3">
+  <%= link_to "Regresar a Artículos en Revistas", journal_articles_path(@person.shortname) %>
+</div>

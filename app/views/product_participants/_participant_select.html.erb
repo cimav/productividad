@@ -1,0 +1,14 @@
+<% 
+people = Person.where(person_type_id: type_id).order(:first_name, :last_name).pluck(:id, :first_name, :last_name)
+person_type = PersonType.find(type_id)
+person_options = {}
+people.each do |p|
+  person_options["#{p[1]} #{p[2]}"] = p[0]
+end
+%>
+
+<% if participant_id == 'new' %>
+  <%= select_tag :person_id, options_for_select(person_options),prompt: "-- Seleccionar #{person_type.name} --", class: 'participant-person-select', id: "person_id_new"%>
+<% else %>
+  <%= select_tag :person_id, options_for_select(person_options, selected_value),prompt: "-- Seleccionar #{person_type.name} --", class: 'participant-person-select', 'data-participant-id': participant_id, id: "person_id_#{participant_id}"%>
+<% end %>

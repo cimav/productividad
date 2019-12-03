@@ -1,0 +1,78 @@
+<% content_for :content do %>
+  <section class="hero is-light">
+  <div class="hero-body">
+    <div class="container">
+      <table>
+      	<tr>
+      		<td><figure class="image is-64x64 profile-img"><img class="is-rounded" src="https://cimav.edu.mx/foto/ion/128"></figure></td>
+      		<td>
+		      <h1 class="title">
+		        <%= @person.full_name %>
+		      </h1>
+		      <h2 class="subtitle">
+		        <%= @person.department.name rescue '-' %> / <%= @person.organization.name rescue '-' %>
+		      </h2>
+		    </td>
+		</tr>
+      </table>
+    </div>
+  </div>
+  </section>
+  <div class="container">
+  <div class="columns">
+	<div class="column is-narrow profile-sidebar">
+	<aside class="menu">
+	  <p class="menu-label">General</p>
+	  <ul class="menu-list">
+	    <li><%= link_to "Resumen", "/perfiles/#{@person.shortname}" %></li>
+	    <li><a>Datos Personales</a></li>
+	  </ul>
+	  <p class="menu-label">
+	    Investigacion
+	  </p>
+	  <ul class="menu-list">
+	    <li><a>Proyectos</a></li>
+		<li><%= link_to "Artículos en Revistas", journal_articles_path(@person.shortname) %></li>
+		<li><a>Artículos en Congresos</a></li>
+		<li><a>Divulgación</a></li>
+		<li><a>Libros y Capítulos</a></li>
+		<li><a>Trabajos</a></li>
+		<li><a>Patentes</a></li>
+		<li><a>Conferencias por Invitación</a></li>
+		<li><a>Asociaciones</a></li>
+		<li><a>Redes</a></li>
+		<li><a>Reconocimientos y Distinciones</a></li>
+		<li><a>Chairman o Staff en Eventos</a></li>
+		<li><a>Arbitro / Evaluador</a></li>
+		<li><a>Actividades Relevantes</a></li>
+	  </ul>
+	  <p class="menu-label">
+	    Formación de Recursos Humanos
+	  </p>
+	  <ul class="menu-list">
+	    <li><a>En Curso</a></li>
+	    <li><a>Graduados</a></li>
+	  </ul>
+	  <p class="menu-label">
+	    Vinculación
+	  </p>
+	  <ul class="menu-list">
+	    <li><a>Ingresos por Proyectos</a></li>
+	    <li><a>Ingresos por Servicios</a></li>
+	  </ul>
+	  <p class="menu-label">
+	    Trabajo Interno
+	  </p>
+	  <ul class="menu-list">
+	    <li><a>Servicios de Laboratorio</a></li>
+	    <li><a>Brigadas y grupos</a></li>
+	  </ul>
+	</aside>
+	</div>
+	<div class="column profile-workarea">
+	  	<%= yield %>
+	</div>
+  </div>
+  </div>
+<% end %>
+<%= render template: "layouts/application" %>

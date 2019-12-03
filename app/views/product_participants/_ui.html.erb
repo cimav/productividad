@@ -1,0 +1,163 @@
+<% 
+person_type_default = 1  # Empleado
+
+# Relleno de autores automatico 
+authors = product.authors 
+
+authors_array = authors.split(',')
+c = 0
+authors_array.each do |author| 
+  c = c + 1
+  author_sanitized = author.remove('and').strip
+  
+  if !product.product_participants.exists?(author_is: author_sanitized)
+    p = product.product_participants.new
+    p.author_is = author_sanitized
+    p.participation = ProductParticipant::PARTICIPANT
+    if c == 1
+      p.participation = ProductParticipant::FIRST_AUTHOR
+    end 
+
+    if c == authors_array.count
+      p.participation = ProductParticipant::CORRESPONDING
+    end 
+  
+
+    puts author_sanitized
+    pp = ProductParticipant.where(author_is: author_sanitized)
+    if pp.count > 0
+      ppp = pp.last!
+      p.person_id = ppp.person_id
+    end 
+    p.status = ProductParticipant::UNASSIGNED
+
+    p.save
+  end
+end %>
+
+<div class="participant-ui">
+<% active_participants = product.product_participants.where(status: ProductParticipant::ACTIVE) %>
+<% if active_participants.count > 0 %>
+  <h2>Participantes</h2>
+  <% active_participants.each do |participant| %>
+  <div class="participant-ui-item">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <%= image_tag "unknown.svg", class: 'is-rounded' %>
+            <% else %>
+              <img class="is-rounded" src="<%= participant.person.display_url rescue '' %>">
+            <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+            <a class="delete participant-delete is-pulled-right" data-participant-id="<%= participant.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>" data-confirm="¿Confirmar?"></a>
+            <strong><%= participant.person.full_name rescue participant.author_is %></strong><br/>
+            <% if participant.participation == ProductParticipant::FIRST_AUTHOR %>
+              <span class="tag is-success"><%= participant.participation_text %></span>
+            <% elsif participant.participation == ProductParticipant::CORRESPONDING %>
+              <span class="tag is-info"><%= participant.participation_text %></span>
+            <% else %>
+              <span class="tag is-primary"><%= participant.participation_text %></span>
+            <% end %>
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <span class="tag is-light"><%= ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL] %></span>
+            <% else %>  
+              <span class="tag is-light"><%= participant.person.person_type.name rescue '-' %></span>
+            <% end %>
+            <% if !participant.author_is.blank? %>
+              <small>Aparece como: <%= participant.author_is %></small>
+            <% else %>
+              <small>No aparece en el listado de autores del <%= participant.attachable.product_name %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+  </div>
+  <% end %>
+  <% else %>
+    <div class="empty-tab">No hay participantes agregados</div>
+  
+<% end %>
+
+<% unassigned_authors = product.product_participants.where(status: ProductParticipant::UNASSIGNED) %>
+<% if unassigned_authors.count > 0 %>
+<h2>Autores sin asignar</h2>
+<table class="table is-fullwidth">
+  <% unassigned_authors.each do |participant| %>
+    <tr>
+      <td><%= participant.author_is %></td>
+      <td>  
+        <% participation_options = ProductParticipant::PARTICIPATION.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+        <div class="select"><%= select_tag :participation, options_for_select(participation_options, participant.participation), class: 'unassigned-participant-select', 'data-participant-id': participant.id, id: "participation_#{participant.id}" %></div>
+      </td>
+      <td>  
+        <% 
+          person_types = PersonType.order(:name).pluck(:id, :name)
+          type_options = {}
+          person_types.each do |p|
+            type_options[p[1]] = p[0]
+          end
+          type_options[ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL]] = ProductParticipant::IS_EXTERNAL
+
+          if participant.person.blank?
+            participant_type_id = person_type_default
+          else
+            participant_type_id = participant.person.person_type_id
+          end 
+        %>
+        <div class="select"><%= select_tag :participant_type, options_for_select(type_options, participant_type_id), class: 'participant-type-select', 'data-participant-id': participant.id, id: "participant_type_#{participant.id}" %></div>
+      </td>
+      <td>  
+        <div class="select" id="select_person_<%= participant.id %>">
+          <%= render 'product_participants/participant_select', type_id: participant_type_id, participant_id: participant.id, selected_value: participant.person_id %>
+        </div>
+      </td>
+      <td class="participant-actions"><a class="button participant-assign is-link" data-participant-id="<%= participant.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>">Asignar</a></td>
+    </tr>
+  <% end %>
+</table>
+<% end %>
+
+<h2>Agregar participante</h2>
+<table class="table is-fullwidth">
+  <tr>
+    <td>  
+      <% participation_options = ProductParticipant::PARTICIPATION.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <div class="field">
+        <div class="select"><%= select_tag :participation, options_for_select(participation_options), class: 'unassigned-participant-select', id: "participation_new" %></div>
+      </div>
+    </td>
+    <td>  
+      <% 
+          person_types = PersonType.order(:name).pluck(:id, :name)
+          type_options = {}
+          person_types.each do |p|
+            type_options[p[1]] = p[0]
+          end
+          type_options[ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL]] = ProductParticipant::IS_EXTERNAL
+          participant_type_id = person_type_default
+        %>
+      <div class="field">
+        <div class="select is-fullwidth"><%= select_tag :participant_type, options_for_select(type_options, participant_type_id), class: 'participant-type-select', 'data-participant-id': 'new',id: "participant_type_new" %></div>
+      </div>
+    </td>
+    <td>  
+      <div class="field">
+        <div class="select" id="select_person_new" >
+          <%= render 'product_participants/participant_select', type_id: participant_type_id, participant_id: 'new', selected_value: 0 %>
+        </div>
+        <div class="participant_author_is_area">
+          <input type="text" class="input" name="participant_author_is" id="participant_author_is" placeholder="Nombre del autor...">
+        </div>
+      </div>
+    </td>
+    <td class="participant-actions"><a class="button participant-add is-link" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>">Agregar</a></td>
+  </tr>
+</table>
+</div>
+
+

@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @indexer.name %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @indexer.website %>
+</p>
+
+<%= link_to 'Edit', edit_indexer_path(@indexer) %> |
+<%= link_to 'Back', indexers_path %>

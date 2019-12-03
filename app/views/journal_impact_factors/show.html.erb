@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Journal:</strong>
+  <%= @journal_impact_factor.journal_id %>
+</p>
+
+<p>
+  <strong>Year:</strong>
+  <%= @journal_impact_factor.year %>
+</p>
+
+<p>
+  <strong>Impact factor:</strong>
+  <%= @journal_impact_factor.impact_factor %>
+</p>
+
+<%= link_to 'Edit', edit_journal_impact_factor_path(@journal_impact_factor) %> |
+<%= link_to 'Back', journal_impact_factors_path %>

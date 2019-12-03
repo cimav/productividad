@@ -1,0 +1,65 @@
+<div class="acknowledgment-ui">
+<% active_acknowledgments = product.acknowledgments.where(status: Acknowledgment::ACTIVE) %>
+<% if active_acknowledgments.count > 0 %>
+  <h2>Agradecimientos</h2>
+  <% active_acknowledgments.each do |acknowledgment| %>
+  <div class="acknowledgement-ui-item">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img class="is-rounded" src="<%= acknowledgment.person.display_url rescue '' %>">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+            <a class="delete acknowledgement-delete is-pulled-right" data-acknowledgement-id="<%= acknowledgment.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>" data-confirm="¿Confirmar?"></a>  
+            <strong><%= acknowledgment.person.full_name %></strong><br>
+            <span class="tag is-light"><%= acknowledgment.person.person_type.name rescue '-' %></span> 
+            <% if !acknowledgment.notes.blank? %>
+              <small><%= acknowledgment.notes %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+  </div>
+  <% end %>
+<% else %>
+  <div class="empty-tab">No hay agradecimientos agregados</div>
+<% end %>
+
+<h2>Agregar agradecimiento</h2>
+<table class="table is-fullwidth">
+  <tr>
+    <td>  
+      <% 
+          person_type_default = 1  # Empleado
+          person_types = PersonType.order(:name).pluck(:id, :name)
+          type_options = {}
+          person_types.each do |p|
+            type_options[p[1]] = p[0]
+          end
+          acknowledgement_type_id = person_type_default
+        %>
+      <div class="field">
+        <div class="select is-fullwidth"><%= select_tag :acknowledgement_type, options_for_select(type_options, acknowledgement_type_id), class: 'acknowledgement-type-select', 'data-acknowledgement-id': 'new',id: "acknowledgement_type_new" %></div>
+      </div>
+    </td>
+    <td>  
+      <div class="field">
+        <div class="select" id="select-acknowledgement-new" >
+          <%= render 'acknowledgments/person_select', type_id: acknowledgement_type_id, participant_id: 'new', selected_value: 0 %>
+        </div>
+      </div>
+    </td>
+    <td class="acknowledgment-notes">
+      <div class="field">
+        <input type="text" class="input" style="width: 100%" name="acknowledgement_notes" id="acknowledgement_notes" placeholder="¿Cómo participa?">
+      </div>
+    </td>
+    <td class="acknowledgement-actions"><a class="button acknowledgement-add is-link" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>">Agregar</a></td>
+  </tr>
+</table>
+</div>
+
+

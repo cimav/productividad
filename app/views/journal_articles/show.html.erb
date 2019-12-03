@@ -1,0 +1,114 @@
+<div class="product">
+<% if notice %>
+  <div id="notice" class="notification is-info" isDismissable="true">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+
+<h1 class="product-title"><%= @journal_article.title %></h1>
+<p class="product-authors"><%= @journal_article.authors %></p>
+<p class="product-extra">
+  <% if @journal_article.status == JournalArticle::PUBLISHED %>
+  <%= @journal_article.published_date %> &bull; <%= @journal_article.journal.name %> / Vol. <%= @journal_article.volume %>, <%= @journal_article.issue %>, PP <%= @journal_article.pages %><br>
+    <% if !@journal_article.doi.blank? %>
+      DOI: <%= link_to "https://doi.org/#{@journal_article.doi}", "https://doi.org/#{@journal_article.doi}"  %>
+    <% end %>
+  <% end %>
+</p>
+
+<p class="product-dates">
+  Fecha envío: <%= @journal_article.sent_date %>
+  <% if @journal_article.accepted_date %>
+    &bull; Fecha aceptado: <%= @journal_article.accepted_date %>
+  <% end %>
+  <% if @journal_article.published_date %>
+    &bull; Fecha publicado: <%= @journal_article.published_date %>
+  <% end %>
+</p>
+<p class="product-status">
+  <span class="tag <%= @journal_article.status_class %>"><%= @journal_article.status_text %></span>
+</p>
+
+<% if !@journal_article.abstract.blank? %>
+<h2>Abstract</h2>
+<p class="abstract"><%= @journal_article.abstract %></p>
+<% end %>
+
+<% active_participants = @journal_article.product_participants.where(status: ProductParticipant::ACTIVE) %>
+<% if active_participants.count > 0 %>
+  <h2>Participantes</h2>
+  <% active_participants.each do |participant| %>
+  
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <%= image_tag "unknown.svg", class: 'is-rounded' %>
+            <% else %>
+              <img class="is-rounded" src="<%= participant.person.display_url rescue '' %>">
+            <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+            <strong><%= participant.person.full_name rescue participant.author_is %></strong><br/>
+            <% if participant.participation == ProductParticipant::FIRST_AUTHOR %>
+              <span class="tag is-success"><%= participant.participation_text %></span>
+            <% elsif participant.participation == ProductParticipant::CORRESPONDING %>
+              <span class="tag is-info"><%= participant.participation_text %></span>
+            <% else %>
+              <span class="tag is-primary"><%= participant.participation_text %></span>
+            <% end %>
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <span class="tag is-light"><%= ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL] %></span>
+            <% else %>  
+              <span class="tag is-light"><%= participant.person.person_type.name rescue '-' %></span>
+            <% end %>
+            <% if !participant.author_is.blank? %>
+              <small>Aparece como: <%= participant.author_is %></small>
+            <% else %>
+              <small>No aparece en el listado de autores del <%= participant.attachable.product_name %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+  
+  <% end %>
+<% end %>
+
+
+<% active_acknowledgments = @journal_article.acknowledgments.where(status: Acknowledgment::ACTIVE) %>
+<% if active_acknowledgments.count > 0 %>
+  <h2>Agradecimientos</h2>
+  <% active_acknowledgments.each do |acknowledgment| %>
+
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img class="is-rounded" src="<%= acknowledgment.person.display_url rescue '' %>">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">  
+            <strong><%= acknowledgment.person.full_name %></strong><br>
+            <span class="tag is-light"><%= acknowledgment.person.person_type.name rescue '-' %></span> 
+            <% if !acknowledgment.notes.blank? %>
+              <small><%= acknowledgment.notes %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+
+  <% end %>
+<% end %>
+  
+
+
+
+<div class="has-text-centered product-edit-button">
+  <%= link_to 'Editar', edit_journal_article_path(@person.shortname, @journal_article), class: 'button' %>
+</div>
+</div>

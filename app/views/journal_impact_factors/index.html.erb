@@ -1,0 +1,45 @@
+<div class="container catalog">
+<% if notice %>
+  <div id="notice" class="notification is-info">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+<div class="level">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Revistas', journals_path %></li>
+        <li><%= link_to @journal.name, journal_path(@journal) %></li>
+        <li><a>Factor de Impacto</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to 'Agregar', new_journal_journal_impact_factor_path(@journal), class:'button is-link' %>
+  </div>
+</div>
+
+<table class="table is-striped is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th>Año</th>
+      <th>Factor de Impacto</th>
+      <th colspan="2"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @journal_impact_factors.each do |journal_impact_factor| %>
+      <tr>
+        <td><%= journal_impact_factor.year %></td>
+        <td><%= journal_impact_factor.impact_factor %></td>
+        <td><%= link_to 'Editar', edit_journal_journal_impact_factor_path(@journal, journal_impact_factor) %></td>
+        <td><%= link_to 'Eliminar', journal_journal_impact_factor_path(@journal, journal_impact_factor), method: :delete, data: { confirm: '¿Confirmar?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+

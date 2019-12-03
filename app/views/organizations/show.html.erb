@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @organization.name %>
+</p>
+
+<p>
+  <strong>Website:</strong>
+  <%= @organization.website %>
+</p>
+
+<p>
+  <strong>Email:</strong>
+  <%= @organization.email %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @organization.address1 %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @organization.address2 %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @organization.description %>
+</p>
+
+<p>
+  <strong>Lat:</strong>
+  <%= @organization.lat %>
+</p>
+
+<p>
+  <strong>Long:</strong>
+  <%= @organization.long %>
+</p>
+
+<p>
+  <strong>Status:</strong>
+  <%= @organization.status %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @organization.city_id %>
+</p>
+
+<p>
+  <strong>Country:</strong>
+  <%= @organization.country_id %>
+</p>
+
+<p>
+  <strong>Organization:</strong>
+  <%= @organization.organization_id %>
+</p>
+
+<%= link_to 'Edit', edit_organization_path(@organization) %> |
+<%= link_to 'Back', organizations_path %>

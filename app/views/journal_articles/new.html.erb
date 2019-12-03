@@ -1,0 +1,104 @@
+<div class="container box product">
+
+
+<h1 class="journal-h1">Nuevo Artículo en Revista</h1>
+
+<%= form_with(model: @journal_article, local: true) do |form| %>
+  <% if @journal_article.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(@journal_article.errors.count, "error") %> prohibited this journal_article from being saved:</h2>
+    <ul>
+      <% @journal_article.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :sent_date, 'Fecha de envío', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :sent_date, type:'date', value: '09/25/2018' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :authors, 'Autores', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :authors, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :journal_id, 'Revista', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :journal_id, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Agregar artículo', class:'button is-link' %>
+  </div>
+  <div class="is-clearfix"></div>
+
+<% end %>
+</div>
+
+
+<div class="has-text-centered has-padding-3">
+  <%= link_to "Regresar a Artículos en Revistas", journal_articles_path(@person.shortname) %>
+</div>
+
+
+<script>
+	// Initialize all input of type date
+var calendars = bulmaCalendar.attach('[type="date"]', {
+    dateFormat: 'YYYY-MM-DD',
+    color: 'link'
+  });
+
+// // Loop on each calendar initialized
+// for(var i = 0; i < calendars.length; i++) {
+// 	// Add listener to date:selected event
+// 	calendars[i].on('select', date => {
+// 		console.log(date);
+// 	});
+// }
+
+// // To access to bulmaCalendar instance of an element
+// var element = document.querySelector('#my-element');
+// if (element) {
+// 	// bulmaCalendar instance is available as element.bulmaCalendar
+// 	element.bulmaCalendar.on('select', function(datepicker) {
+// 		console.log(datepicker.data.value());
+// 	});
+// }
+</script>

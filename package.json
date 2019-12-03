@@ -1,0 +1,19 @@
+{
+  "name": "productividad",
+  "private": true,
+  "dependencies": {
+    "@rails/actioncable": "^6.0.0-alpha",
+    "@rails/activestorage": "^6.0.0-alpha",
+    "@rails/ujs": "^6.0.0-alpha",
+    "@rails/webpacker": "^4.0.7",
+    "@vizuaalog/bulmajs": "^0.10.2",
+    "bulma": "^0.8.0",
+    "bulma-extensions": "^6.2.7",
+    "jquery": "^3.4.1",
+    "turbolinks": "^5.2.0"
+  },
+  "version": "0.1.0",
+  "devDependencies": {
+    "webpack-dev-server": "^3.8.0"
+  }
+}

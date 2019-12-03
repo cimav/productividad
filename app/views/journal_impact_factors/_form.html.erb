@@ -1,0 +1,55 @@
+<%= form_for [journal, journal_impact_factor], local: true do |form| %>
+
+  <% if journal_impact_factor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(journal_impact_factor.errors.count, "error") %> prohibited this journal_impact_factor from being saved:</h2>
+
+      <ul>
+        <% journal_impact_factor.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :journal_id, 'Revista', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= @journal.name %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :year, 'Año', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.number_field :year, class:'input'  %></p>
+      </div>
+    </div>
+  </div>  
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :impact_factor, 'Factor de impacto', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :impact_factor,  class:'input'  %></p>
+      </div>
+    </div>
+  </div>  
+
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Guardar', class:'button is-link' %>
+  </div>
+
+
+<% end %>

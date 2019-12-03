@@ -1,0 +1,57 @@
+<div class="container catalog">
+
+
+<div class="level">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+      	<li><%= link_to 'Configuración', config_path %></li>
+      </ul>
+  </nav>
+  </div>
+</div>
+
+<div class="columns">
+  <div class="column">
+    <div class="box">
+      <strong><%= link_to 'Personas', people_path %></strong>
+      <p>Cátalogo de personas, todas las personas son usuarios</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="box">
+      <strong><%= link_to 'Índices', indexers_path %></strong>
+      <p>Cátalogo de índices (e.g. JCR)</p>
+    </div>
+  </div>
+
+   <div class="column">
+    <div class="box">
+      <strong><%= link_to 'Ciudades', cities_path %></strong>
+      <p>Cátalogo de ciudades</p>
+    </div>
+  </div>
+
+  
+</div>
+<div class="columns">
+
+ 
+
+  <div class="column">
+    <div class="box">
+      <strong><%= link_to 'Países', countries_path %></strong>
+      <p>Cátalogo de países</p>
+    </div>
+  </div>
+
+  <div class="column">
+    <div class="box">
+      <strong><%= link_to 'Departamentos', departments_path %></strong>
+      <p>Cátalogo de departamentos de la organización</p>
+    </div>
+  </div>
+
+
+</div>
