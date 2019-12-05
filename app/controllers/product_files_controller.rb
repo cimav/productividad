@@ -1,0 +1,2 @@
+class ProductFilesController < ApplicationController
+end

@@ -3,6 +3,7 @@ class JournalArticle < ApplicationRecord
   belongs_to :person  
   has_many :product_participants, :as => :attachable
   has_many :acknowledgments, :as => :attachable
+  has_many :product_files, :as => :attachable
 
 
   SENT      = 1
