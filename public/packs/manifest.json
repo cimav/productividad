@@ -1,8 +1,8 @@
 {
   "acknowledgements.js": "/packs/js/acknowledgements-fe77a960ed69cb1f9421.js",
   "acknowledgements.js.map": "/packs/js/acknowledgements-fe77a960ed69cb1f9421.js.map",
-  "application.js": "/packs/js/application-4c4411c16b0291bd5e16.js",
-  "application.js.map": "/packs/js/application-4c4411c16b0291bd5e16.js.map",
+  "application.js": "/packs/js/application-b23a1a29db77025c6034.js",
+  "application.js.map": "/packs/js/application-b23a1a29db77025c6034.js.map",
   "entrypoints": {
     "acknowledgements": {
       "js": [
@@ -14,18 +14,18 @@
     },
     "application": {
       "js": [
-        "/packs/js/application-4c4411c16b0291bd5e16.js"
+        "/packs/js/application-b23a1a29db77025c6034.js"
       ],
       "js.map": [
-        "/packs/js/application-4c4411c16b0291bd5e16.js.map"
+        "/packs/js/application-b23a1a29db77025c6034.js.map"
       ]
     },
     "journal_articles": {
       "js": [
-        "/packs/js/journal_articles-172b387f87b9e61feda1.js"
+        "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js"
       ],
       "js.map": [
-        "/packs/js/journal_articles-172b387f87b9e61feda1.js.map"
+        "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js.map"
       ]
     },
     "product_participants": {
@@ -37,8 +37,8 @@
       ]
     }
   },
-  "journal_articles.js": "/packs/js/journal_articles-172b387f87b9e61feda1.js",
-  "journal_articles.js.map": "/packs/js/journal_articles-172b387f87b9e61feda1.js.map",
+  "journal_articles.js": "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js",
+  "journal_articles.js.map": "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js.map",
   "product_participants.js": "/packs/js/product_participants-f027089bc145b231e615.js",
   "product_participants.js.map": "/packs/js/product_participants-f027089bc145b231e615.js.map"
 }

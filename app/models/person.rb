@@ -5,6 +5,7 @@ class Person < ApplicationRecord
   has_many   :person_roles
   belongs_to :person_type
   has_many   :roles, through: :person_roles
+  has_many   :journal_articles
   
 
   STATUS_ACTIVE = 1

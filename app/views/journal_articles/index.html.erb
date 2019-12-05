@@ -9,22 +9,25 @@
     <div class="product-filters">
       <div class="select">
         <% 
-        options = JournalArticle::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0}
-        options.prepend(["Todos", 0])
+        options = {}
+        options["Todos"]      = "todos"
+        options["Enviados"]   = "enviados"
+        options["Aceptados"]  = "aceptados"
+        options["Rechazados"] = "rechazados"
         %>
-        <%= select_tag 'filter_status', options_for_select(options, '*'), class: 'filter-status-select', id: "filter_status" %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': journal_articles_path(@person.shortname) %>
       </div>
       <div class="select">
         <% 
-        options = []
-        options[0] = "Todos los años"
-        min_year = 2017
+        options = {}
+        options["Todos los años"] = "todos"
+        min_year = @min_year
         this_year = Date.today.year
         (min_year..this_year).each do |y|
-          options.append(["Año #{y}",y])
+          options["Año #{y}"] = y
         end
         %>
-        <%= select_tag 'filter_year', options_for_select(options, this_year), class: 'filter-status-select', id: "filter_year" %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': journal_articles_path(@person.shortname) %>
       </div>
 
     </div>
@@ -35,6 +38,9 @@
   </div>
 </div>
 
+<% if @journal_articles.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
 <% @journal_articles.each do |journal_article| %>
 <div class="product-item">
   <article class="media">

@@ -8,7 +8,46 @@ class JournalArticlesController < ApplicationController
   # GET /journal_articles
   # GET /journal_articles.json
   def index
-    @journal_articles = JournalArticle.all
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+    case @filter_status
+      when "enviados"
+        status = JournalArticle::SENT
+      when "aceptados"
+        status = JournalArticle::ACCEPTED
+      when "publicados"
+        status = JournalArticle::PUBLISHED
+      when "rechazados"
+        status = JournalArticle::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+        
+    if params[:status] == 'todos'
+      if !year.blank?
+        @journal_articles = @person.journal_articles.where("YEAR(last_date) = ?", year)
+      else 
+        @journal_articles = @person.journal_articles.all
+      end
+    elsif !status.blank? && !year.blank?
+      @journal_articles = @person.journal_articles.where("status = ? AND YEAR(last_date) = ?", status, year)
+    elsif !status.blank?
+      @journal_articles = @person.journal_articles.where("status = ?", status)
+    else
+      year = Date.today.year
+      @journal_articles = @person.journal_articles.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @journal_articles = @journal_articles.order(last_date: :desc)
+
+    min_date = @person.journal_articles.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
     render :layout => 'profile'
   end
 
@@ -35,6 +74,7 @@ class JournalArticlesController < ApplicationController
     @journal_article = JournalArticle.new(journal_article_params)
     @journal_article.person_id = current_user.id
     @journal_article.status = JournalArticle::SENT
+    @journal_article.last_date = @journal_article.sent_date
     respond_to do |format|
       if @journal_article.save
         format.html { redirect_to journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido creado.' }
@@ -51,6 +91,20 @@ class JournalArticlesController < ApplicationController
   def update
     respond_to do |format|
       if @journal_article.update(journal_article_params)
+
+        if @journal_article.status == JournalArticle::SENT
+          @journal_article.last_date = @journal_article.sent_date
+        elsif @journal_article.status == JournalArticle::ACCEPTED
+          @journal_article.last_date = @journal_article.accepted_date
+        elsif @journal_article.status == JournalArticle::PUBLISHED
+          @journal_article.last_date = @journal_article.published_date
+        elsif @journal_article.status == JournalArticle::REJECTED
+          @journal_article.last_date = @journal_article.rejected_date
+        end
+
+        @journal_article.save
+          
+          
         format.html { redirect_to journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido actualizado' }
         format.json { render :show, status: :ok, location: @journal_article }
       else
