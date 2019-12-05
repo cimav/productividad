@@ -42,4 +42,41 @@ module ApplicationHelper
     current_user_roles.include?('JOURNALS')
   end
 
+
+  def published_icon
+    '<span class="icon is-large">
+        <span class="fa-stack fa-lg">
+          <i class="fas fa-file fa-stack-2x fa-1x has-text-grey-lighter"></i>
+          <i class="fas fa-check fa-stack-1x has-text-success"></i>
+        </span>
+      </span>'.html_safe
+  end
+
+  def accepted_icon
+    '<span class="icon is-large">
+        <span class="fa-stack fa-lg">
+          <i class="fas fa-file fa-stack-2x fa-1x has-text-grey-lighter"></i>
+          <i class="fas fa-thumbs-up fa-stack-1x has-text-link"></i>
+        </span>
+      </span>'.html_safe
+  end
+
+  def sent_icon
+    '<span class="icon is-large">
+        <span class="fa-stack fa-lg">
+          <i class="fas fa-file fa-stack-2x has-text-grey-lighter"></i>
+          <i class="fas fa-arrow-right fa-stack-1x has-text-primary"></i>
+        </span>
+      </span>'.html_safe
+  end
+
+  def rejected_icon
+    '<span class="icon is-large">
+        <span class="fa-stack fa-lg">
+          <i class="fas fa-file fa-stack-2x has-text-grey-lighter"></i>
+          <i class="fas fa-times fa-stack-1x has-text-danger"></i>
+        </span>
+      </span>'.html_safe
+  end
+
 end

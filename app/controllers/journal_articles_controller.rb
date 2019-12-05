@@ -21,11 +21,12 @@ class JournalArticlesController < ApplicationController
   # GET /journal_articles/new
   def new
     @journal_article = JournalArticle.new
+    render :layout => 'profile'
   end
 
   # GET /journal_articles/1/edit
   def edit
-    
+    render :layout => 'profile'
   end
 
   # POST /journal_articles

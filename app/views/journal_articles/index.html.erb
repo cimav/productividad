@@ -1,22 +1,56 @@
 <div class="container product-index">
 <p id="notice"><%= notice %></p>
 
-<div class="level">
+<div class="level products-header">
   <div class="level-left">
     <h2>Artículos en revistas</h2>
   </div>
   <div class="level-right">
-    <%= link_to 'Agregar', new_journal_article_path, class:'button is-link' %>
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = JournalArticle::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0}
+        options.prepend(["Todos", 0])
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, '*'), class: 'filter-status-select', id: "filter_status" %>
+      </div>
+      <div class="select">
+        <% 
+        options = []
+        options[0] = "Todos los años"
+        min_year = 2017
+        this_year = Date.today.year
+        (min_year..this_year).each do |y|
+          options.append(["Año #{y}",y])
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, this_year), class: 'filter-status-select', id: "filter_year" %>
+      </div>
+
+    </div>
+    
+    <%= link_to new_journal_article_path, class:'button is-link' do %>
+      <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+    <%  end %>
   </div>
 </div>
 
 <% @journal_articles.each do |journal_article| %>
-<div class="box p-item">
+<div class="product-item">
   <article class="media">
     <div class="media-left">
-      <figure class="image is-64x64">
-        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
-      </figure>
+      <%= 
+      case journal_article.status 
+      when JournalArticle::SENT
+        sent_icon
+      when JournalArticle::ACCEPTED
+        accepted_icon
+      when JournalArticle::PUBLISHED
+        published_icon
+      when JournalArticle::REJECTED
+        rejected_icon  
+      end
+      %>
     </div>
     <div class="media-content">
       <div class="content">
@@ -24,17 +58,20 @@
           <strong><%= link_to journal_article.title, journal_article_path(@person.shortname, journal_article) %></strong>
           <br>
           <small><%= journal_article.authors %></small>
+          <p class="product-dates">
+            <span class="tag <%= journal_article.status_class %>"><%= journal_article.status_text %></span>
+            <small>
+              Fecha envío: <%= journal_article.sent_date %>
+              <% if journal_article.accepted_date %>
+                &bull; Fecha aceptado: <%= journal_article.accepted_date %>
+              <% end %>
+              <% if journal_article.published_date %>
+                &bull; Fecha publicado: <%= journal_article.published_date %>
+              <% end %>
+            </small>
+          </p>
         </p>
       </div>
-      <nav class="level is-mobile">
-        <div class="level-right">
-          <%= link_to edit_journal_article_path(@person.shortname, journal_article), class: 'level-item' do %>
-            <span class="icon is-small">
-              <i class="fas fa-edit" aria-hidden="true"></i>
-            </span>
-          <% end %>
-        </div>
-      </nav>
     </div>
   </article>
 </div>

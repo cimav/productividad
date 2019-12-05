@@ -7,6 +7,10 @@ html {
   font-size: 14px;
 }
 
+h1 a {
+  color: #444;
+}
+
 .tabs-content li {
     display: none;
     list-style: none;
@@ -154,10 +158,6 @@ html {
 }
 
 
-.journal-h1 {
-  margin-bottom: 1em;
-}
-
 .impact-factor-label {
   font-size: 0.6em;
   text-align: center;
@@ -174,9 +174,23 @@ html {
   text-align: center;
 }
 
-.profile-sidebar {
-  margin-top: 1em;
+.profile-sidebar { 
   border-right: 1px solid #eee;
+  .menu {
+    font-size: 0.9rem !important;
+  }
+}
+
+.profile-workarea {
+  padding: 1em !important;
+  background: #fff;
+}
+
+.profile-container {
+  .columns {
+    padding: 0 !important;
+    margin: 0 !important;
+  } 
 }
 
 .hero {
@@ -199,7 +213,16 @@ html {
   padding: 3em;
 }
 
-.p-item {
+.products-header {
+  margin: 0 0 1em 0;
+  border-bottom: 1px solid #eee;
+  padding: 0 0 1em 0;
+}
+
+.product-item {
+  margin: 1em 0;
+  border-bottom: 1px solid #eee;
+  padding: 1em 0;
   strong a { 
     color: #000 !important;
   }
@@ -279,4 +302,11 @@ html {
   .acknowledgment-notes {
     width: 50%;
   }
+}
+
+
+.product-filters {
+  margin-right: 1em;
+  padding-right: 1em;
+  border-right: 1px solid #ddd;
 }

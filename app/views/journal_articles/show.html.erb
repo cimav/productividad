@@ -30,6 +30,10 @@
   <span class="tag <%= @journal_article.status_class %>"><%= @journal_article.status_text %></span>
 </p>
 
+<p class="has-text-centered product-edit-button">
+  <%= link_to 'Editar', edit_journal_article_path(@person.shortname, @journal_article), class: 'button' %>
+</p>
+
 <% if !@journal_article.abstract.blank? %>
 <h2>Abstract</h2>
 <p class="abstract"><%= @journal_article.abstract %></p>
@@ -105,10 +109,4 @@
   <% end %>
 <% end %>
   
-
-
-
-<div class="has-text-centered product-edit-button">
-  <%= link_to 'Editar', edit_journal_article_path(@person.shortname, @journal_article), class: 'button' %>
-</div>
 </div>
