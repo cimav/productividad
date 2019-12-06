@@ -1,9 +1,13 @@
 <div class="container product-index">
 <p id="notice"><%= notice %></p>
 
-<div class="level products-header">
+<div class="level product-actions">
   <div class="level-left">
-    <h2>Artículos en revistas</h2>
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Artículos en Revistas', journal_articles_path(@person.shortname) %></li>
+      </ul>
+    </nav>
   </div>
   <div class="level-right">
     <div class="product-filters">

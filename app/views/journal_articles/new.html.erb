@@ -1,7 +1,23 @@
-<div class="container box product">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Artículos en Revistas', journal_articles_path(@person.shortname) %></li>
+        <li><a>Nuevo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to journal_articles_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
 
+<div class="product">
 
-<h1 class="journal-h1">Nuevo Artículo en Revista</h1>
+<h1 class="product-title">Nuevo Artículo en Revista</h1>
+
 
 <%= form_with(model: @journal_article, local: true) do |form| %>
   <% if @journal_article.errors.any? %>
@@ -72,10 +88,6 @@
 <% end %>
 </div>
 
-
-<div class="has-text-centered has-padding-3">
-  <%= link_to "Regresar a Artículos en Revistas", journal_articles_path(@person.shortname) %>
-</div>
 
 
 <script>
