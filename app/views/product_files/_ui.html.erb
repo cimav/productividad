@@ -1,0 +1,42 @@
+<div class="product-file-ui">
+
+<div class="columns">
+  <div class="column">
+    <% active_files = product.product_files.where(status: ProductFile::ACTIVE) %>
+    <% if active_files.count > 0 %>
+      <% active_files.each do |file| %>
+      <div class="participant-ui-item">
+        <article class="media">
+          <div class="media-left">
+            <span class="icon">
+              <i class="fas fa-file fa-2x has-text-grey-lighter"></i>
+            </span>
+          </div>
+          <div class="media-content">
+            <div class="content">
+                <a class="delete product-file-delete is-pulled-right" data-product-file-id="<%= file.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>" data-confirm="¿Confirmar?"></a>
+                <%= file.file %>
+                <%= file.notes %>
+            </div>
+            
+          </div>
+        </article>
+      </div>
+      <% end %>
+      <% else %>
+        <div class="empty-tab">No hay archivos agregados</div>
+      
+    <% end %>
+  </div>
+  <div class="column is-narrow">
+    <h2>Agregar archivo</h2>
+    <% new_file = product.product_files.new %>
+    <%= form_for(new_file, :html => {:id => 'item-upload-file-form', :multipart => true}) do |f| %>
+        <%= f.hidden_field :product_class, {:value => product.class } %>
+        <%= f.hidden_field :product_id, {:value => product.id } %>
+        <%= f.file_field :file %>
+        <button class="button">Agregar archivo</button>
+    <% end %>
+  </div>
+</div>
+</div>

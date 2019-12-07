@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   post 'agradecimientos/elimina' => 'acknowledgments#delete_acknowledgment'
   post 'agradecimientos/agrega' => 'acknowledgments#add_acknowledgment'
 
+  resources :product_files, :path => 'archivos-producto'
+
 
   get '/mi-perfil' => 'profiles#my_profile', as:'my_profile'
   get '/perfiles/:email' => 'profiles#show', :constraints => { :email => /(?!.*\/).*/ }

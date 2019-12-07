@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_05_230619) do
+ActiveRecord::Schema.define(version: 2019_12_07_003512) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -206,6 +206,7 @@ ActiveRecord::Schema.define(version: 2019_12_05_230619) do
     t.text "notes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
     t.index ["person_id"], name: "index_product_files_on_person_id"
   end
 

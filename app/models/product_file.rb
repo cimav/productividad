@@ -3,7 +3,6 @@ class ProductFile < ApplicationRecord
   belongs_to :person, optional: true
 
   mount_uploader :file, ProductFileUploader
-  validates :description, :presence => true
 
   ACTIVE  = 1
   DELETED = 2
