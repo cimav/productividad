@@ -1,4 +1,4 @@
-<div class="product-file-ui">
+<div id="product-file-ui">
 
 <div class="columns">
   <div class="column">
@@ -15,7 +15,7 @@
           <div class="media-content">
             <div class="content">
                 <a class="delete product-file-delete is-pulled-right" data-product-file-id="<%= file.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>" data-confirm="¿Confirmar?"></a>
-                <%= file.file %>
+                <%= link_to File.basename(file.file.to_s), "/archivos-producto/descarga/#{file.id}", target: '_blank' %>
                 <%= file.notes %>
             </div>
             
@@ -29,14 +29,46 @@
     <% end %>
   </div>
   <div class="column is-narrow">
-    <h2>Agregar archivo</h2>
-    <% new_file = product.product_files.new %>
-    <%= form_for(new_file, :html => {:id => 'item-upload-file-form', :multipart => true}) do |f| %>
-        <%= f.hidden_field :product_class, {:value => product.class } %>
-        <%= f.hidden_field :product_id, {:value => product.id } %>
-        <%= f.file_field :file %>
-        <button class="button">Agregar archivo</button>
-    <% end %>
+    <div class="box product-file-box">
+      <% new_file = product.product_files.new %>
+      <%= form_for(new_file, :html => {:id => 'item-upload-file-form', :multipart => true, :remote => true}) do |f| %>
+          <%= f.hidden_field :product_class, {:value => product.class } %>
+          <%= f.hidden_field :product_id, {:value => product.id } %>
+          <% 
+          options = {} 
+          options[ProductFile::TYPES[ProductFile::PROBATORY]] = ProductFile::PROBATORY
+          options[ProductFile::TYPES[ProductFile::OTHER]] = ProductFile::OTHER
+          %>
+          <div class="box-control">
+            <div class="select">
+              <%= f.select :file_type, options, {} %>
+            </div>
+          </div>
+          <div class="box-control">
+            <%= f.text_area :notes, class: "textarea", rows: 3, placeholder: 'Notas…' %>
+         </div>
+      
+          <div class="box-control">
+            <div class="file has-name is-boxed is-fullwidth">
+              <label class="file-label">
+                <%= f.file_field :file, class: 'file-input' %>
+                <span class="file-cta">
+                  <span class="file-icon">
+                    <i class="fas fa-upload"></i>
+                  </span>
+                  <span class="file-label">
+                    Escoger archivo…
+                  </span>
+                </span>
+                <span class="file-name"></span>
+              </label>
+            </div>
+          </div>
+          <div class="box-actions">
+            <button class="button is-link">Agregar archivo</button>
+          </p>
+      <% end %>
+    </div>
   </div>
 </div>
 </div>

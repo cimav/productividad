@@ -250,7 +250,7 @@ h1 a {
 #notification-area {
   margin: 1em;
   width: 30%;
-  position:absolute;                  
+  position:fixed;                  
   top:60px;                          
   right:0;                          
 }
@@ -319,5 +319,24 @@ h1 a {
 
   .button {
     margin-left: 0.5em;
+  }
+}
+
+.product-tabs {
+  margin-top: 2em;
+}
+
+.product-file-box {
+  select {
+    width: 16em;
+  }
+
+  .box-control {
+    margin-bottom: 1em !important;
+    text-align: center;
+  }
+  .box-actions {
+    text-align: center;
+    margin: 2em 0 1em 0;
   }
 }

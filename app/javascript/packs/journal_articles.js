@@ -4,7 +4,6 @@ $(document).on('change', '.filter-select', function() {
   var url =  $(this).data('url') + '/muestra/' + status
   if (year != 'todos') {
     url = url + '/' + year;
-
   }
   window.location = url;
 });

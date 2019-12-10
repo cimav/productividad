@@ -11,7 +11,7 @@ class ProductFile < ApplicationRecord
   PROBATORY = 1
 
   TYPES = {
-    OTHER      => 'Documento',
+    OTHER     => 'Otro Documento',
     PROBATORY => 'Documento Probatorio'
   }
 

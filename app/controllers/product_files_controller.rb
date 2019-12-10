@@ -1,5 +1,5 @@
 class ProductFilesController < ApplicationController
-  before_action :set_product_file, only: [:update_participant, :delete_participant]
+  before_action :set_product_file, only: [:update_file]
 
 
   def ui
@@ -27,7 +27,9 @@ class ProductFilesController < ApplicationController
   end
 
   def delete_file
-  	  @product_file.status = ProductParticipant::DELETED
+
+  	 @product_file = ProductFile.find(params[:id])
+  	 @product_file.status = ProductParticipant::DELETED
 
     if @product_file.save
       json = {}
@@ -64,6 +66,11 @@ class ProductFilesController < ApplicationController
       json[:errors] = @product_file.errors
       render :json => json, :status => :unprocessable_entity
     end
+  end
+
+  def download
+  	f = ProductFile.find(params[:id])
+    send_file f.file.to_s, :disposition => 'inline'
   end
 
 

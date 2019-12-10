@@ -12,7 +12,7 @@ require("@vizuaalog/bulmajs")
 require("packs/journal_articles")
 require("packs/product_participants")
 require("packs/acknowledgements")
-
+require("packs/product_files")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

@@ -44,6 +44,10 @@ Rails.application.routes.draw do
   post 'agradecimientos/agrega' => 'acknowledgments#add_acknowledgment'
 
   resources :product_files, :path => 'archivos-producto'
+  get 'archivos-producto/ui/:product_class/:product_id' => 'product_files#ui'
+  get 'archivos-producto/descarga/:id' => 'product_files#download'
+  post 'archivos-producto/elimina' => 'product_files#delete_file'
+
 
 
   get '/mi-perfil' => 'profiles#my_profile', as:'my_profile'
