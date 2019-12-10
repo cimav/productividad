@@ -1,0 +1,33 @@
+<div id="activity-log-ui">
+<% product.activity_logs.each do |log| %>
+  <div class="activity-log-ui-item">
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img class="is-rounded" src="<%= log.person.display_url rescue '' %>">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+          <strong><%= log.person.full_name %></strong> - <small><%= log.created_at %></small><br/>
+          <p><%= log.message %></p>
+          <% 
+	      if log.changed_values && log.changed_values != '' 
+	        changes = JSON.parse(log.changed_values) 
+	      %>
+	      <table class="record-changes">
+	        <tr><th>Campo</th><th>De</th><th>A</th></tr>
+	        <% changes.each do |k,v| %>
+	          <tr><td><%= product.field_text(k) %></td><td><%= v[0] %></td><td><%= v[1] %></td></tr>
+	        <% end %>
+	      </table>
+	      <%
+	      end
+	      %>
+        </div>
+      </div>
+    </article>
+  </div>
+<% end %>
+</div>
+  

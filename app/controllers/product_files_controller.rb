@@ -27,7 +27,6 @@ class ProductFilesController < ApplicationController
   end
 
   def delete_file
-
   	 @product_file = ProductFile.find(params[:id])
   	 @product_file.status = ProductParticipant::DELETED
 

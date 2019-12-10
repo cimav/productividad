@@ -26,6 +26,8 @@
         <li><a>Agradecimientos</a></li>
         <li><a>Citas</a></li>
         <li><a>Archivos</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
     </ul>
   </div>
 
@@ -52,6 +54,13 @@
     </li>
     <li>
       <%= render 'product_files/ui', product: @journal_article %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'activity_logs/ui', product: @journal_article %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
       <div class="is-clearfix"></div>
     </li>
   </ul>

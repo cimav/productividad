@@ -77,6 +77,10 @@ class JournalArticlesController < ApplicationController
     @journal_article.last_date = @journal_article.sent_date
     respond_to do |format|
       if @journal_article.save
+        log = @journal_article.activity_logs.new 
+        log.message = "Artículo agregado: #{@journal_article.title}"
+        log.person_id = current_user.id
+        log.save
         format.html { redirect_to journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido creado.' }
         format.json { render :show, status: :created, location: @journal_article }
       else
@@ -90,8 +94,9 @@ class JournalArticlesController < ApplicationController
   # PATCH/PUT /journal_articles/1.json
   def update
     respond_to do |format|
-      if @journal_article.update(journal_article_params)
 
+      if @journal_article.update(journal_article_params)
+        changes = @journal_article.changes
         if @journal_article.status == JournalArticle::SENT
           @journal_article.last_date = @journal_article.sent_date
         elsif @journal_article.status == JournalArticle::ACCEPTED
@@ -101,8 +106,15 @@ class JournalArticlesController < ApplicationController
         elsif @journal_article.status == JournalArticle::REJECTED
           @journal_article.last_date = @journal_article.rejected_date
         end
-
+        
         @journal_article.save
+
+        log = @journal_article.activity_logs.new
+        log.person_id = current_user.id
+        log.changed_values = changes.to_json
+        log.message = "El artículo #{@journal_article.id} ha sido actualizado."
+        log.save
+
           
           
         format.html { redirect_to journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido actualizado' }

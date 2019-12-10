@@ -4,6 +4,8 @@ class JournalArticle < ApplicationRecord
   has_many :product_participants, :as => :attachable
   has_many :acknowledgments, :as => :attachable
   has_many :product_files, :as => :attachable
+  has_many :activity_logs, :as => :item
+
 
 
   SENT      = 1
@@ -37,6 +39,10 @@ class JournalArticle < ApplicationRecord
     when REJECTED
       "is-danger"  
     end
+  end
+
+  def field_text(f)
+    f
   end
 
 end
