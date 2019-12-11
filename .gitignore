@@ -9,6 +9,9 @@ capybara-*.html
 /coverage/
 /spec/tmp
 *.orig
+/public
+/private
+yarn-error.log
 rerun.txt
 run.sh
 .DS_Store
