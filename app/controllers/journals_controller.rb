@@ -17,6 +17,23 @@ class JournalsController < ApplicationController
     render layout: false
   end
 
+  def new_journal
+    @journal = Journal.new
+    render layout: false
+  end
+
+  def add_journal
+    @journal = Journal.new
+    @journal.name = params[:name]
+    @journal.country_id   = params[:country_id]
+    @journal.validated    = Journal::NOT_VALIDATED
+    @journal.submitted_by = current_user.id
+
+    if @journal.save! 
+      render json: @journal
+    end
+  end
+
   # GET /journals/1
   # GET /journals/1.json
   def show

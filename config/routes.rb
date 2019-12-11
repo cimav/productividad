@@ -14,6 +14,9 @@ Rails.application.routes.draw do
 
   get '/revistas/buscar' => 'journals#search'
   get '/revistas/datos/:id' => 'journals#data'
+  get '/revistas/nueva' => 'journals#new_journal'
+  post '/revistas/agregar-nueva' => 'journals#add_journal'
+
   scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
     resources :journals, :path => 'revistas' do
       scope(:path_names => { :new => "nuevo", :edit => "editar" }) do

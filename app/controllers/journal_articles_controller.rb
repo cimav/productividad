@@ -71,22 +71,21 @@ class JournalArticlesController < ApplicationController
   # POST /journal_articles
   # POST /journal_articles.json
   def create
-    @journal_article = JournalArticle.new(journal_article_params)
-    @journal_article.person_id = current_user.id
-    @journal_article.status = JournalArticle::SENT
-    @journal_article.last_date = @journal_article.sent_date
-    respond_to do |format|
-      if @journal_article.save
-        log = @journal_article.activity_logs.new 
-        log.message = "Artículo agregado: #{@journal_article.title}"
-        log.person_id = current_user.id
-        log.save
-        format.html { redirect_to edit_journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido creado.' }
-        format.json { render :show, status: :created, location: @journal_article }
-      else
-        format.html { render :new }
-        format.json { render json: @journal_article.errors, status: :unprocessable_entity }
-      end
+    @journal_article = JournalArticle.new
+    @journal_article.title      = params[:title]
+    @journal_article.sent_date  = params[:sent_date]
+    @journal_article.authors    = params[:authors]
+    @journal_article.journal_id = params[:journal_id]
+    @journal_article.person_id  = current_user.id
+    @journal_article.status     = JournalArticle::SENT
+    @journal_article.last_date  = @journal_article.sent_date
+
+    if @journal_article.save
+      log = @journal_article.activity_logs.new 
+      log.message = "Artículo agregado: #{@journal_article.title}"
+      log.person_id = current_user.id
+      log.save
+      render json: @journal_article
     end
   end
 

@@ -1,16 +1,23 @@
-<% @journals.each do |journal| %>
-  <div class="journal-list-item" data-id="<%= journal.id %>">
-    <%= journal.name %> 
-    <div class="row-extra">
-      <% if journal.is_refereed %>
-        <span class="tag is-light">Arbitrada</span>
-      <% end %>
-      <% if journal.is_international %>
-        <span class="tag is-light">Internacional</span>
-      <% end %>
-      <% if journal.is_indexed %>
-        <span class="tag is-light">Índizada</span>
-      <% end %>
+<% if @journals.count > 0 %>
+  <% @journals.each do |journal| %>
+    <div class="journal-list-item" data-id="<%= journal.id %>">
+      <%= journal.name %> 
+      <div class="row-extra">
+        <% if journal.is_refereed %>
+          <span class="tag is-light">Arbitrada</span>
+        <% end %>
+        <% if journal.is_international %>
+          <span class="tag is-light">Internacional</span>
+        <% end %>
+        <% if journal.is_indexed %>
+          <span class="tag is-light">Índizada</span>
+        <% end %>
+      </div>
     </div>
+  <% end %>
+<% else %>
+  <div class="empty-results">
+    No se encontraron revistas.<br/><br/>
+    <a id="add-new-journal">¿Deseas agregar una nueva?</a>
   </div>
 <% end %>
