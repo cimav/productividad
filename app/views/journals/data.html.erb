@@ -1,0 +1,14 @@
+<div class="journal-data" data-id="<%= @journal.id %>">
+  <%= @journal.name %> 
+  <div class="row-extra">
+    <% if @journal.is_refereed %>
+      <span class="tag is-light">Arbitrada</span>
+    <% end %>
+    <% if @journal.is_international %>
+      <span class="tag is-light">Internacional</span>
+    <% end %>
+    <% if @journal.is_indexed %>
+      <span class="tag is-light">Índizada</span>
+    <% end %>
+  </div>
+</div>

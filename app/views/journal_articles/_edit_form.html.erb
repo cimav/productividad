@@ -56,7 +56,7 @@
               <span class="tag is-light">Índizada</span>
             <% end %>
             <% if journal_article.journal.is_indexed %>
-              <span class="tag is-light">Factor de impacto <%= journal_article.journal.impact_factor.year %>: <%= journal_article.journal.impact_factor.impact_factor %></span>
+              <span class="tag is-light">Factor de impacto <%= journal_article.journal.impact_factor.year rescue '-' %>: <%= journal_article.journal.impact_factor.impact_factor rescue '-' %></span>
             <% end %>
           </div>
         </p>

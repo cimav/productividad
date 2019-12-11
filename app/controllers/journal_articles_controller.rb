@@ -81,7 +81,7 @@ class JournalArticlesController < ApplicationController
         log.message = "Artículo agregado: #{@journal_article.title}"
         log.person_id = current_user.id
         log.save
-        format.html { redirect_to journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido creado.' }
+        format.html { redirect_to edit_journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido creado.' }
         format.json { render :show, status: :created, location: @journal_article }
       else
         format.html { render :new }
@@ -106,7 +106,7 @@ class JournalArticlesController < ApplicationController
         elsif @journal_article.status == JournalArticle::REJECTED
           @journal_article.last_date = @journal_article.rejected_date
         end
-        
+      
         @journal_article.save
 
         log = @journal_article.activity_logs.new
@@ -114,10 +114,8 @@ class JournalArticlesController < ApplicationController
         log.changed_values = changes.to_json
         log.message = "El artículo #{@journal_article.id} ha sido actualizado."
         log.save
-
           
-          
-        format.html { redirect_to journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido actualizado' }
+        format.html { redirect_to edit_journal_article_path(@person.shortname, @journal_article.id), notice: 'El artículo ha sido actualizado' }
         format.json { render :show, status: :ok, location: @journal_article }
       else
         format.html { render :edit }

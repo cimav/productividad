@@ -1,8 +1,8 @@
 {
   "acknowledgements.js": "/packs/js/acknowledgements-fe77a960ed69cb1f9421.js",
   "acknowledgements.js.map": "/packs/js/acknowledgements-fe77a960ed69cb1f9421.js.map",
-  "application.js": "/packs/js/application-3d7f60fd2455c5950421.js",
-  "application.js.map": "/packs/js/application-3d7f60fd2455c5950421.js.map",
+  "application.js": "/packs/js/application-6f1c5565803d5c350fa3.js",
+  "application.js.map": "/packs/js/application-6f1c5565803d5c350fa3.js.map",
   "entrypoints": {
     "acknowledgements": {
       "js": [
@@ -14,18 +14,18 @@
     },
     "application": {
       "js": [
-        "/packs/js/application-3d7f60fd2455c5950421.js"
+        "/packs/js/application-6f1c5565803d5c350fa3.js"
       ],
       "js.map": [
-        "/packs/js/application-3d7f60fd2455c5950421.js.map"
+        "/packs/js/application-6f1c5565803d5c350fa3.js.map"
       ]
     },
     "journal_articles": {
       "js": [
-        "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js"
+        "/packs/js/journal_articles-d9a33cad41a70373ceca.js"
       ],
       "js.map": [
-        "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js.map"
+        "/packs/js/journal_articles-d9a33cad41a70373ceca.js.map"
       ]
     },
     "product_files": {
@@ -45,8 +45,8 @@
       ]
     }
   },
-  "journal_articles.js": "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js",
-  "journal_articles.js.map": "/packs/js/journal_articles-7bb57dcf5efb03c3c627.js.map",
+  "journal_articles.js": "/packs/js/journal_articles-d9a33cad41a70373ceca.js",
+  "journal_articles.js.map": "/packs/js/journal_articles-d9a33cad41a70373ceca.js.map",
   "product_files.js": "/packs/js/product_files-b62b507c4be5dd2e2f87.js",
   "product_files.js.map": "/packs/js/product_files-b62b507c4be5dd2e2f87.js.map",
   "product_participants.js": "/packs/js/product_participants-f027089bc145b231e615.js",

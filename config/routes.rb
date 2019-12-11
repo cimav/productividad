@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     end
   end 
 
+  get '/revistas/buscar' => 'journals#search'
+  get '/revistas/datos/:id' => 'journals#data'
   scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
     resources :journals, :path => 'revistas' do
       scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
@@ -19,6 +21,8 @@ Rails.application.routes.draw do
       end
     end
   end
+  
+
 
   get '/configuracion' => 'config#index', as:'config'
   get '/reportes' => 'reports#index', as:'reports'

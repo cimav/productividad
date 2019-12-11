@@ -348,3 +348,26 @@ h1 a {
     margin: 2em 0 1em 0;
   }
 }
+
+#journal-list-select {
+  height: 15em;
+  overflow-y: auto;
+}
+
+.modal-card-body {
+  margin: 0 !important;
+  padding: 0 !important;
+  .search-controls {
+    padding: 1em;
+    border-bottom: 1px solid #ddd;
+  } 
+}
+
+.journal-list-item {
+  padding: 1em;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+  &:hover {
+    background: #d9e7ff;
+  }
+}

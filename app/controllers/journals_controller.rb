@@ -7,6 +7,16 @@ class JournalsController < ApplicationController
     @journals = Journal.all
   end
 
+  def search 
+    @journals = Journal.where("name LIKE :query", query: "%#{params[:q]}%")
+    render layout: false
+  end
+
+  def data 
+    @journal = Journal.find(params[:id])
+    render layout: false
+  end
+
   # GET /journals/1
   # GET /journals/1.json
   def show
