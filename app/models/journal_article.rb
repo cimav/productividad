@@ -45,4 +45,12 @@ class JournalArticle < ApplicationRecord
     f
   end
 
+  def can_edit(person_id)
+    editable = false
+    if self.product_participants.where(person_id: person_id, status: ProductParticipant::ACTIVE).count >= 1
+      editable = true
+    end
+    editable
+  end
+
 end

@@ -54,7 +54,13 @@ end %>
       <div class="media-content">
         <div class="content">
             <a class="delete participant-delete is-pulled-right" data-participant-id="<%= participant.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>" data-confirm="¿Confirmar?"></a>
-            <strong><%= participant.person.full_name rescue participant.author_is %></strong><br/>
+            <strong>
+              <% if participant.person %>
+                <%= link_to participant.person.full_name, "/perfiles/#{participant.person.shortname}" %>
+              <% else %>
+                <%= participant.author_is %>
+              <% end %>
+            </strong><br/>
             <% if participant.participation == ProductParticipant::FIRST_AUTHOR %>
               <span class="tag is-success"><%= participant.participation_text %></span>
             <% elsif participant.participation == ProductParticipant::CORRESPONDING %>

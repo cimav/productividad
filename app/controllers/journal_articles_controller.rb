@@ -24,27 +24,30 @@ class JournalArticlesController < ApplicationController
       else
         @filter_status = 'todos'
     end
-        
+       
+    @all_journal_articles = JournalArticle.joins(:product_participants).where('product_participants.person_id': @person.id, 'product_participants.status' => ProductParticipant::ACTIVE) 
+    
+    @journal_articles = @all_journal_articles
+
+
     if params[:status] == 'todos'
       if !year.blank?
-        @journal_articles = @person.journal_articles.where("YEAR(last_date) = ?", year)
-      else 
-        @journal_articles = @person.journal_articles.all
+        @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
       end
     elsif !status.blank? && !year.blank?
-      @journal_articles = @person.journal_articles.where("status = ? AND YEAR(last_date) = ?", status, year)
+      @journal_articles = @journal_articles.where("status = ? AND YEAR(last_date) = ?", status, year)
     elsif !status.blank?
-      @journal_articles = @person.journal_articles.where("status = ?", status)
+      @journal_articles = @journal_articles.where("status = ?", status)
     else
       year = Date.today.year
-      @journal_articles = @person.journal_articles.where("YEAR(last_date) = ?", year)
+      @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
     end
 
     @filter_year = year
 
     @journal_articles = @journal_articles.order(last_date: :desc)
 
-    min_date = @person.journal_articles.minimum(:last_date)
+    min_date = @all_journal_articles.minimum(:last_date)
     
     @min_year = min_date.year rescue year
 
