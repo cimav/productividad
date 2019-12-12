@@ -1,26 +1,14 @@
 <% content_for :content do %>
-  <section class="hero is-light">
-    <div class="hero-body">
-      <div class="container">
-        <table>
-      	  <tr>
-      	  	<td><figure class="image is-64x64 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure></td>
-      		<td>
-		      <h1 class="title">
-		        <%= @person.full_name %>
-		      </h1>
-		      <h2 class="subtitle">
-		        <%= @person.department.name rescue '-' %> / <%= @person.organization.name rescue '-' %>
-		      </h2>
-		    </td>
-		  </tr>
-        </table>
-      </div>
-    </div>
-  </section>
-  <div class="container profile-container">
+  <div class="container is-fullhd profile-container">
     <div class="columns">
       <div class="column is-narrow profile-sidebar">
+        <div class="profile-header">
+          <figure class="image is-64x64 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure>
+          <strong><%= link_to @person.full_name, "/perfiles/#{@person.shortname}" %></strong><br/>
+          <small>
+            <%= @person.department.name rescue '-' %><br/><%= @person.organization.shortname rescue '-' %>
+          </small>
+        </div>
         <%= render 'profile_menu', person: @person %>
       </div>
       <div class="column profile-workarea">
