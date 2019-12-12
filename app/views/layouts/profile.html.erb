@@ -4,7 +4,7 @@
       <div class="container">
         <table>
       	  <tr>
-      	  	<td><figure class="image is-64x64 profile-img"><img class="is-rounded" src="https://cimav.edu.mx/foto/ion/128"></figure></td>
+      	  	<td><figure class="image is-64x64 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure></td>
       		<td>
 		      <h1 class="title">
 		        <%= @person.full_name %>

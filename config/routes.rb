@@ -31,11 +31,14 @@ Rails.application.routes.draw do
   get '/reportes' => 'reports#index', as:'reports'
 
   get '/perfiles/' => 'profiles#index', as:'profiles'
-  scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
-    scope '/perfiles/:email' do
-      resources :journal_articles, :path => 'articulos-en-revistas'
-      get 'articulos-en-revistas/muestra/:status/:year' => 'journal_articles#index'
-      get 'articulos-en-revistas/muestra/:status' => 'journal_articles#index'
+
+  scope format: false, constraints: { email: /.+/ } do
+    scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
+      scope '/perfiles/:email' do
+        resources :journal_articles, :path => 'articulos-en-revistas'
+        get 'articulos-en-revistas/muestra/:status/:year' => 'journal_articles#index'
+        get 'articulos-en-revistas/muestra/:status' => 'journal_articles#index'
+      end
     end
   end
 

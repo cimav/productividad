@@ -140,6 +140,10 @@ class JournalArticlesController < ApplicationController
         email += '@' + main_organization.domain
       end
       @person = Person.find_by_email(email)
+
+      if (!@person) 
+        redirect_to profiles_url
+      end
     end
 
     # Use callbacks to share common setup or constraints between actions.
