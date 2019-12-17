@@ -1,4 +1,4 @@
-
+<div class="profile-show">
 <div class="level product-actions profile-head">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -26,5 +26,57 @@
       <%= @person.description %><br/>
     <% end %>
   </div>
+</div>
 
+
+
+<% active_experiences = @person.experiences.where(status: Experience::ACTIVE) %>
+<% if active_experiences.count > 0 %>
+  <div id="experience-list">
+    <h2>Experiencia</h2>
+    <% active_experiences.each do |experience| %>
+      <div class="experience-ui-item media"> 
+        <div class="media-left">
+          <span class="icon is-large has-text-grey-lighter">
+            <i class="fas fa-building fa-3x"></i>
+           </span>
+        </div>
+        <div class="media-content">
+          <strong><%= experience.title %></strong><br>
+          <%= experience.company %><br>
+          <small><%= experience.start_date %> - <%= experience.end_date %> <span class="tag is-light"><%= experience.experience_type.name rescue '-' %></span> </small>
+          <p><%= simple_format(experience.description) %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<% active_educations = @person.educations.where(status: Education::ACTIVE) %>
+<% if active_educations.count > 0 %>
+  <div id="education-list">
+    <h2>Educación</h2>
+    <% active_educations.each do |education| %>
+      <div class="education-ui-item media">  
+        <div class="media-left">
+          <span class="icon is-large has-text-grey-lighter">
+            <i class="fas fa-university fa-3x"></i>
+           </span>
+        </div>
+        <div class="media-content"> 
+          <strong><%= education.title %></strong><br>
+          <%= education.organization.name %>
+          <% if !education.faculty.blank? %>
+            - <%= education.faculty %>
+          <% end %>
+          <br>
+          <small><%= education.start_year %> - <%= education.end_year %> <span class="tag is-light"><%= education.degree.name rescue '-' %></span> </small>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
+</div>
 
