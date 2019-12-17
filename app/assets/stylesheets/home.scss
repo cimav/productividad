@@ -403,7 +403,7 @@ h1 a {
   }
 }
 
-.experience-ui-item {
+.experience-ui-item, .education-ui-item {
   padding: 1em;
   border-bottom: 1px solid #ddd;
   strong {
@@ -414,9 +414,7 @@ h1 a {
   }
 }
 
-.experience-form {
 
-}
 
 .actions {
   margin-top: 2em;

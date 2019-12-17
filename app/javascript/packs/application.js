@@ -14,6 +14,7 @@ require("packs/product_participants")
 require("packs/acknowledgements")
 require("packs/product_files")
 require("packs/experiences")
+require("packs/education")
 
 
 // Uncomment to copy all static images under ../images to the output folder and reference

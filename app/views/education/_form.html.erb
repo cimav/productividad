@@ -1,0 +1,88 @@
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="education_title">Título</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <input type="text" class="input" name="education_title" id="education_title" value="<%= education.title %>" placeholder="Título obtenido...">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="education_type">Grado</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% 
+      degrees = Degree.order(:name).pluck(:id, :name)
+      degree_options = {}
+      degrees.each do |p|
+        degree_options[p[1]] = p[0]
+      end
+      %>
+      <div class="field">
+        <div class="select is-fullwidth"><%= select_tag :education_degree, options_for_select(degree_options), class: 'education-degree-select', id: "education_degree" %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="education_type">Grado</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% 
+      organizations = Organization.order(:name).pluck(:id, :name)
+      organization_options = {}
+      organizations.each do |p|
+        organization_options[p[1]] = p[0]
+      end
+      %>
+      <div class="field">
+        <div class="select is-fullwidth"><%= select_tag :education_organization, options_for_select(organization_options), class: 'education-organization-select', id: "education_organization" %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="education_faculty">Facultad</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <input type="text" class="input" name="education_faculty" id="education_faculty" value="<%= education.faculty %>" placeholder="">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="education_start_year">Año de inicio</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><input type="number" class="input" name="education_start_year" id="education_start_year" value="<%= education.start_year %>"></p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="education_start_year">Año de termino</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><input type="number" class="input" name="education_end_year" id="education_end_year" value="<%= education.end_year %>"></p>
+    </div>
+  </div>
+</div>
+

@@ -7,6 +7,7 @@ class Person < ApplicationRecord
   belongs_to :person_type, optional: true
   has_many   :roles, through: :person_roles
   has_many   :experiences
+  has_many   :educations
   has_many   :journal_articles
   
 

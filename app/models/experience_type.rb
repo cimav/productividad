@@ -1,2 +1,3 @@
 class ExperienceType < ApplicationRecord
+	
 end

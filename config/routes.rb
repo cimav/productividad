@@ -36,11 +36,26 @@ Rails.application.routes.draw do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       scope '/perfiles/:email' do
         resources :journal_articles, :path => 'articulos-en-revistas'
+        get 'editar' => 'profiles#edit', as: 'profile_edit'
+        patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
         get 'articulos-en-revistas/muestra/:status/:year' => 'journal_articles#index'
         get 'articulos-en-revistas/muestra/:status' => 'journal_articles#index'
       end
     end
   end
+
+  get  'experiencia/ui/:person_id' => 'experiences#ui'
+  get  'experiencia/editar/:person_id/:experience_id' => 'experiences#edit'
+  post 'experiencia/actualiza' => 'experiences#update_experience'
+  post 'experiencia/elimina' => 'experiences#delete_experience'
+  post 'experiencia/agrega' => 'experiences#add_experience'
+
+  get  'educacion/ui/:person_id' => 'education#ui'
+  get  'educacion/editar/:person_id/:education_id' => 'education#edit'
+  post 'educacion/actualiza' => 'education#update_education'
+  post 'educacion/elimina' => 'education#delete_education'
+  post 'educacion/agrega' => 'education#add_education'
+
 
   get  'participantes/ui/:product_class/:product_id' => 'product_participants#ui'
   get  'participantes/select/:participant_id/:type_id' => 'product_participants#participant_select'

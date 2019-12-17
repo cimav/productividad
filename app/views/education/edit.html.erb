@@ -1,0 +1,5 @@
+<h2>Actualizar educación</h2>
+<%= render 'education/form', education: @education, person: @person %>
+<div class="actions is-pulled-right">
+  <a class="button is-link" id="education-update" data-education-id="<%= @education.id %>" data-person-id="<%= @person.id %>">Actualizar</a>
+</div>

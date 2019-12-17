@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_232919) do
+ActiveRecord::Schema.define(version: 2019_12_17_183833) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -56,6 +56,12 @@ ActiveRecord::Schema.define(version: 2019_12_13_232919) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "degrees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.integer "status"
@@ -80,7 +86,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_232919) do
 
   create_table "educations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
-    t.integer "degree"
+    t.integer "degree_id"
     t.bigint "organization_id"
     t.string "faculty"
     t.integer "start_year"
@@ -88,6 +94,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_232919) do
     t.bigint "person_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
     t.index ["organization_id"], name: "index_educations_on_organization_id"
     t.index ["person_id"], name: "index_educations_on_person_id"
   end
@@ -109,6 +116,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_232919) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
+    t.text "description"
     t.index ["person_id"], name: "index_experiences_on_person_id"
   end
 
