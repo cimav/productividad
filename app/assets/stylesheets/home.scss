@@ -390,3 +390,34 @@ h1 a {
 .new-journal {
   padding: 1em 1em 3em 1em;
 }
+
+.tabs-content {
+  li {
+    padding: 1em;
+  }
+}
+
+.profile-head {
+  li a {
+    font-size: 150%;
+  }
+}
+
+.experience-ui-item {
+  padding: 1em;
+  border-bottom: 1px solid #ddd;
+  strong {
+    font-size: 120%;
+  }
+  p {
+    margin-top: 1em;
+  }
+}
+
+.experience-form {
+
+}
+
+.actions {
+  margin-top: 2em;
+}

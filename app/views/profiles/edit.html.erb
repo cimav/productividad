@@ -1,0 +1,50 @@
+<div class="level product-actions profile-head">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to @person.full_name, "/perfiles/#{@person.shortname}" %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to my_profile_path, class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="product-tabs tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Experiencia</a></li>
+        <li><a>Educación</a></li>
+        <li><a>Áreas de Interes</a></li>
+        <li><a>Lineas de Investigación</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon has-text-grey-light"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon has-text-grey-light"><i class="fas fa-cogs"></i></span></a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+    <ul>
+      <li class="is-active">
+        <%= render 'general', person: @person  %>
+      </li>
+      <li>
+     	  <%= render 'experiences/ui', person: @person  %>
+      </li>
+      <li>
+    	Educación
+      </li>
+      <li>
+    	Areas de interes
+      </li>
+      <li>
+    	Lineas de investigación
+      </li>
+   </ul>
+  </div>
+</div>

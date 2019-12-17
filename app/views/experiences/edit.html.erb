@@ -1,0 +1,5 @@
+<h2>Actualizar experiencia</h2>
+<%= render 'experiences/form', experience: @experience, person: @person %>
+<div class="actions is-pulled-right">
+  <a class="button is-link" id="experience-update" data-experience-id="<%= @experience.id %>" data-person-id="<%= @person.id %>">Actualizar</a>
+</div>

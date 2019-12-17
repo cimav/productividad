@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_11_223250) do
+ActiveRecord::Schema.define(version: 2019_12_13_232919) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -76,6 +76,40 @@ ActiveRecord::Schema.define(version: 2019_12_11_223250) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_documents_on_user_id"
+  end
+
+  create_table "educations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.integer "degree"
+    t.bigint "organization_id"
+    t.string "faculty"
+    t.integer "start_year"
+    t.integer "end_year"
+    t.bigint "person_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_educations_on_organization_id"
+    t.index ["person_id"], name: "index_educations_on_person_id"
+  end
+
+  create_table "experience_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "experiences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.integer "experience_type_id"
+    t.string "company"
+    t.string "location"
+    t.date "start_date"
+    t.date "end_date"
+    t.bigint "person_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
+    t.index ["person_id"], name: "index_experiences_on_person_id"
   end
 
   create_table "indexers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -174,14 +208,24 @@ ActiveRecord::Schema.define(version: 2019_12_11_223250) do
     t.integer "status"
     t.bigint "organization_id"
     t.bigint "department_id"
-    t.bigint "people_id"
+    t.bigint "person_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "identificator"
     t.integer "person_type_id"
+    t.text "about"
     t.index ["department_id"], name: "index_people_on_department_id"
     t.index ["organization_id"], name: "index_people_on_organization_id"
-    t.index ["people_id"], name: "index_people_on_people_id"
+    t.index ["person_id"], name: "index_people_on_person_id"
+  end
+
+  create_table "person_research_lines", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.bigint "research_line_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_person_research_lines_on_person_id"
+    t.index ["research_line_id"], name: "index_person_research_lines_on_research_line_id"
   end
 
   create_table "person_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -191,6 +235,15 @@ ActiveRecord::Schema.define(version: 2019_12_11_223250) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["person_id"], name: "index_person_roles_on_person_id"
     t.index ["role_id"], name: "index_person_roles_on_role_id"
+  end
+
+  create_table "person_topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id", null: false
+    t.bigint "topic_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_person_topics_on_person_id"
+    t.index ["topic_id"], name: "index_person_topics_on_topic_id"
   end
 
   create_table "person_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -226,10 +279,23 @@ ActiveRecord::Schema.define(version: 2019_12_11_223250) do
     t.index ["person_id"], name: "index_product_participants_on_person_id"
   end
 
+  create_table "research_lines", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "identificator"
     t.string "name"
     t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "topics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -246,7 +312,11 @@ ActiveRecord::Schema.define(version: 2019_12_11_223250) do
   add_foreign_key "organizations", "organizations"
   add_foreign_key "people", "departments"
   add_foreign_key "people", "organizations"
-  add_foreign_key "people", "people", column: "people_id"
+  add_foreign_key "people", "people"
+  add_foreign_key "person_research_lines", "people"
+  add_foreign_key "person_research_lines", "research_lines"
   add_foreign_key "person_roles", "people"
   add_foreign_key "person_roles", "roles"
+  add_foreign_key "person_topics", "people"
+  add_foreign_key "person_topics", "topics"
 end

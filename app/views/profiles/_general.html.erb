@@ -1,0 +1,121 @@
+<%= form_for person, :url => profile_edit_save_path(person.shortname), local: true do |form| %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Nombre</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.full_name %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Correo</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.email %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Fecha de inicio</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.start_date %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Puesto/Descripción</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.description %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Departamento</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.department.name %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Organización</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.organization.name %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Reporta a</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.person.full_name rescue '' %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <label class="label">Identificador Interno</label>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control">
+          <input type="text" class="input" value="<%= person.identificator %>" disabled>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :about, 'Acerca de...', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_area :about, class:'textarea', placeholder: 'Escribe acerca de ti' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+
+<% end %>

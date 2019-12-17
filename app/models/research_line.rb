@@ -1,0 +1,2 @@
+class ResearchLine < ApplicationRecord
+end

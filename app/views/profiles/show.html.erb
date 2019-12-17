@@ -1,1 +1,30 @@
-<h2>PERFIL</h2>
+
+<div class="level product-actions profile-head">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to @person.full_name, "/perfiles/#{@person.shortname}" %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @person.id == current_user.id %>
+      <%= link_to 'Editar', profile_edit_path(@person.shortname), class: 'button is-link' %>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="columns">
+  <div class="column">
+	<% if !@person.about.blank? %>
+	  <p><%= @person.about %></p>
+	<% end %>
+  </div>
+  <div class="column is-one-third">
+    <% if !@person.description.blank? %>
+      <%= @person.description %><br/>
+    <% end %>
+  </div>
+
+

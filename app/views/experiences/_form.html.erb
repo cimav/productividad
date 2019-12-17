@@ -1,0 +1,98 @@
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_title">Puesto</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <input type="text" class="input" name="experience_title" id="experience_title" value="<%= experience.title %>" placeholder="Nombre del puesto desempeñado...">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_type">Tipo</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% 
+      experience_type_default = 1  # Tiempo completo
+      experience_types = ExperienceType.order(:name).pluck(:id, :name)
+      type_options = {}
+      experience_types.each do |p|
+        type_options[p[1]] = p[0]
+      end
+
+      if !experience.experience_type_id.blank?
+      	experience_type_default = experience.experience_type_id
+      end
+
+      experience_type_id = experience_type_default
+      %>
+      <div class="field">
+        <div class="select is-fullwidth"><%= select_tag :experience_type, options_for_select(type_options, experience_type_id), class: 'experience-type-select', 'data-experience-id': 'new',id: "experience_type" %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_company">Compañia/Institución</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <input type="text" class="input" name="experience_company" id="experience_company" value="<%= experience.company %>" placeholder="">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_company">Ubicación</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <input type="text" class="input" name="experience_location" id="experience_location" value="<%= experience.location %>" placeholder="Ubicación de la compañia">
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_start_date">Fecha de inicio</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><input type="date" class="input" name="experience_start_date" id="experience_start_date" value="<%= experience.start_date %>"></p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_start_date">Fecha de termino</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><input type="date" class="input" name="experience_end_date" id="experience_end_date" value="<%= experience.end_date %>"></p>
+    </div>
+  </div>
+</div>
+
+<div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <label for="experience_start_date">Actividades realizadas</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><textarea class="textarea" name="experience_description" id="experience_description"><%= experience.description %></textarea></p>
+    </div>
+  </div>
+</div>

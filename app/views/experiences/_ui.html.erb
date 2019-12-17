@@ -1,0 +1,31 @@
+<div id="experience-ui" class="product">
+<div id="experience-list">
+<% active_experiences = person.experiences.where(status: Experience::ACTIVE) %>
+<% if active_experiences.count > 0 %>
+  <% active_experiences.each do |experience| %>
+  <div class="experience-ui-item"> 
+    <a class="delete experience-delete is-pulled-right" data-experience-id="<%= experience.id %>"  data-person-id="<%= person.id %>" data-confirm="¿Confirmar?"></a>  
+    <strong><%= experience.title %></strong> <a class="edit experience-edit" data-experience-id="<%= experience.id %>"  data-person-id="<%= person.id %>"><span class="icon"><i class="fas fa-edit"></i></span></a> <br>
+    <%= experience.company %><br>
+    <small><%= experience.start_date %> - <%= experience.end_date %> <span class="tag is-light"><%= experience.experience_type.name rescue '-' %></span> </small>
+    <p><%= simple_format(experience.description) %></p>
+  </div>
+  <% end %>
+<% else %>
+  <div class="empty-tab">No hay experiencia agregada</div>
+<% end %>
+<div class="actions is-pulled-right">
+  <a class="button is-link" id="experience-show-add">Agregar</a>
+</div>
+</div>
+<div id="experience-form">
+<h2>Agregar experiencia</h2>
+<%= render 'experiences/form', experience: person.experiences.new, person: person %>
+<div class="actions is-pulled-right">
+  <a class="button is-link" id="experience-add" data-person-id="<%= person.id %>">Agregar</a>
+</div>
+</div>
+
+    
+    
+</div>

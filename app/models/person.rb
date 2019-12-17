@@ -1,10 +1,12 @@
 class Person < ApplicationRecord
-  belongs_to :organization
-  belongs_to :department
-  belongs_to :people
+  belongs_to :organization, optional: true
+  belongs_to :department, optional: true
+  belongs_to :person, optional: true
+
   has_many   :person_roles
-  belongs_to :person_type
+  belongs_to :person_type, optional: true
   has_many   :roles, through: :person_roles
+  has_many   :experiences
   has_many   :journal_articles
   
 

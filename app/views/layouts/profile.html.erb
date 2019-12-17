@@ -1,9 +1,9 @@
 <% content_for :content do %>
   <div class="container is-fullhd profile-container">
     <div class="columns">
-      <div class="column is-narrow profile-sidebar">
+      <div class="column is-one-fifth profile-sidebar">
         <div class="profile-header">
-          <figure class="image is-64x64 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure>
+          <figure class="image is-128x128 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure>
           <strong><%= link_to @person.full_name, "/perfiles/#{@person.shortname}" %></strong><br/>
           <small>
             <%= @person.department.name rescue '-' %><br/><%= @person.organization.shortname rescue '-' %>
