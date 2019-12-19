@@ -1,0 +1,12 @@
+
+<% topics = person.person_topics.joins(:topic).order('topics.name') %>
+<% if topics.count > 0 %>
+  <% topics.each do |topic| %>
+    <div class="topic-ui-item"> 
+      <a class="delete topic-delete is-pulled-right" data-person-topic-id="<%= topic.id %>"  data-person-id="<%= person.id %>" data-confirm="¿Confirmar?"></a>  
+      <strong><%= topic.topic.name %></strong> 
+    </div>
+  <% end %>
+<% else %>
+  <div class="empty-tab">No hay áreas de interes registradas</div>
+<% end %>

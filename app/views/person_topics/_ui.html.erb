@@ -1,0 +1,17 @@
+<div id="person-topics-ui" class="product">
+<div id="topic-list">
+<%= render 'person_topics/topic_list', person: person %>
+</div>
+<div id="topic-form" >
+<div class="columns">
+  <div class="column">
+    <div class="field">
+    	<input type="hidden" id="topic-id" value="">
+      <input type="text" class="input" style="width: 100%" name="topic" id="topic" placeholder="Área de interes...">
+    </div>
+  </div>
+  <div class="column is-narrow">
+    <a class="button topic-add is-link" data-person-id="<%= person.id %>">Agregar</a>
+  </div>   
+</div>
+</div>

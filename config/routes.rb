@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get '/revistas/nueva' => 'journals#new_journal'
   post '/revistas/agregar-nueva' => 'journals#add_journal'
 
+
   scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
     resources :journals, :path => 'revistas' do
       scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
@@ -55,6 +56,14 @@ Rails.application.routes.draw do
   post 'educacion/actualiza' => 'education#update_education'
   post 'educacion/elimina' => 'education#delete_education'
   post 'educacion/agrega' => 'education#add_education'
+
+  get  'areas-de-interes/buscar' => 'topics#search'
+  get  'areas-de-interes-por-persona/ui/:person_id' => 'person_topics#ui'
+  get  'areas-de-interes-por-persona/lista/:person_id' => 'person_topics#topic_list'
+  post 'areas-de-interes-por-persona/elimina' => 'person_topics#delete_topic'
+  post 'areas-de-interes-por-persona/agrega' => 'person_topics#add_topic'
+
+
 
 
   get  'participantes/ui/:product_class/:product_id' => 'product_participants#ui'

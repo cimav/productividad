@@ -8,6 +8,8 @@ class Person < ApplicationRecord
   has_many   :roles, through: :person_roles
   has_many   :experiences
   has_many   :educations
+  has_many   :person_topics
+  has_many   :topics, :through => :person_topics
   has_many   :journal_articles
   
 
