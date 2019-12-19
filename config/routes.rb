@@ -64,6 +64,9 @@ Rails.application.routes.draw do
   post 'areas-de-interes-por-persona/agrega' => 'person_topics#add_topic'
 
 
+  get  'lineas-de-investigacion-por-persona/ui/:person_id' => 'person_research_lines#ui'
+  post 'lineas-de-investigacion-por-persona/elimina' => 'person_research_lines#delete_research_line'
+  post 'lineas-de-investigacion-por-persona/agrega' => 'person_research_lines#add_research_line'
 
 
   get  'participantes/ui/:product_class/:product_id' => 'product_participants#ui'

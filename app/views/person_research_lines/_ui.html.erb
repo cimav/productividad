@@ -1,0 +1,20 @@
+<div id="person-research-lines-ui" class="product">
+<% departments = Department.order(:name) %>
+<% person_research_lines = person.research_lines.pluck(:research_line_id) %>
+<% departments.each do |department| %>
+  <% if department.research_lines.count > 0 %>
+    <div class="research-line-department">
+    <h2><%= department.name %></h2>
+      <% department.research_lines.order(:name).each do |research_line| %>
+        <div class="research-line-ui-item">
+          <label class="checkbox">
+          	<% checked = person_research_lines.include?(research_line.id)? 'checked="checked"' : '' %>
+            <input type="checkbox" class="research-line-checkbox" data-research-line-id="<%= research_line.id %>"  data-person-id="<%= person.id %>" <%= checked %>> <strong><%= research_line.name %></strong><br>
+            <p><%= research_line.description %></p>
+          </label>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+<% end %> 
+</div>

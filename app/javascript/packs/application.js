@@ -17,6 +17,7 @@ require("packs/product_files")
 require("packs/experiences")
 require("packs/education")
 require("packs/person_topics")
+require("packs/person_research_lines")
 
 
 

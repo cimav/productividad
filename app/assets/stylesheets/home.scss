@@ -430,3 +430,19 @@ h1 a {
   border-top: 1px solid #ddd;
   padding-top: 1em;
 }
+
+#person-research-lines-ui {
+  .research-line-department {
+    margin-bottom: 3em;
+  }
+  .research-line-ui-item {
+    margin: 1em;
+    border-bottom
+    strong {
+      font-size: 110%;
+    }
+    p {
+      margin-top: 1em;
+    }
+  }
+}
