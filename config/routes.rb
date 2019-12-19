@@ -6,6 +6,8 @@ Rails.application.routes.draw do
       resources :indexers, :path => 'indices'
       resources :people
       resources :departments
+      resources :research_groups, :path => 'grupos-de-investigacion'
+      #resources :research_sub_groups, :path => 'subgrupos-de-investigacion'
       resources :organizations
       resources :cities
       resources :countries

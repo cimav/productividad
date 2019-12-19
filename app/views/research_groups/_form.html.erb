@@ -1,0 +1,53 @@
+<%= form_with(model: research_group, local: true) do |form| %>
+  <% if research_group.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(research_group.errors.count, "error") %> prohibited this research_group from being saved:</h2>
+
+      <ul>
+        <% research_group.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Nombre', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+     <div class="field-label is-normal">
+        <%= form.label :description, 'Descripción', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_area :description, class:'textarea' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+     <div class="field-label is-normal">
+        <%= form.label :department_id, 'Departamento', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="control">
+          <div class="select"><%= form.collection_select :department_id, Department.order(:name), :id, :name %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Guardar', class:'button is-link' %>
+  </div>
+<% end %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_19_210002) do
+ActiveRecord::Schema.define(version: 2019_12_19_220726) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -287,12 +287,30 @@ ActiveRecord::Schema.define(version: 2019_12_19_210002) do
     t.index ["person_id"], name: "index_product_participants_on_person_id"
   end
 
+  create_table "research_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "department_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["department_id"], name: "index_research_groups_on_department_id"
+  end
+
   create_table "research_lines", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "department_id"
+  end
+
+  create_table "research_sub_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "research_group_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["research_group_id"], name: "index_research_sub_groups_on_research_group_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -329,4 +347,6 @@ ActiveRecord::Schema.define(version: 2019_12_19_210002) do
   add_foreign_key "person_roles", "roles"
   add_foreign_key "person_topics", "people"
   add_foreign_key "person_topics", "topics"
+  add_foreign_key "research_groups", "departments"
+  add_foreign_key "research_sub_groups", "research_groups"
 end

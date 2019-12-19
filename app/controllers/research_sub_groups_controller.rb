@@ -1,0 +1,2 @@
+class ResearchSubGroupsController < ApplicationController
+end
