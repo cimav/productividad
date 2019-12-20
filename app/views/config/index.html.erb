@@ -1,6 +1,5 @@
 <div class="container catalog">
 
-
 <div class="level">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -11,60 +10,36 @@
   </div>
 </div>
 
-<div class="columns">
-  <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Personas', people_path %></strong>
-      <p>Cátalogo de personas, todas las personas son usuarios</p>
-    </div>
-  </div>
+<table class="table is-fullwidth">
+  <tr>
+    <td><%= link_to 'Personas', people_path %></td>
+    <td>Cátalogo de personas, todas las personas son usuarios</td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Índices', indexers_path %></td>
+    <td>Cátalogo de índices (e.g. JCR)</td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Ciudades', cities_path %></td>
+    <td>Cátalogo de ciudades</td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Países', countries_path %></td>
+    <td>Cátalogo de países</td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Departamentos', departments_path %></td>
+    <td>Cátalogo de departamentos de la organización</td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Grupos de Investigación', research_groups_path %></td>
+    <td>Cátalogo de grupos de investigación</td>
+  </tr>
+  <tr>
+    <td><%= link_to 'Sub Grupos de Investigación', research_sub_groups_path %></td>
+    <td>Cátalogo de sub grupos de investigación</td>
+  </tr>
+</table>
 
-  <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Índices', indexers_path %></strong>
-      <p>Cátalogo de índices (e.g. JCR)</p>
-    </div>
-  </div>
-
-   <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Ciudades', cities_path %></strong>
-      <p>Cátalogo de ciudades</p>
-    </div>
-  </div>
-
-  
-</div>
-<div class="columns">
-
- 
-
-  <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Países', countries_path %></strong>
-      <p>Cátalogo de países</p>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Departamentos', departments_path %></strong>
-      <p>Cátalogo de departamentos de la organización</p>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Grupos de Investigación', research_groups_path %></strong>
-      <p>Cátalogo de grupos de investigación</p>
-    </div>
-  </div>
-
-   <div class="column">
-    <div class="box">
-      <strong><%= link_to 'Sub Grupos de Investigación', research_sub_groups_path %></strong>
-      <p>Cátalogo de sub grupos de investigación</p>
-    </div>
-  </div>
 
 </div>
