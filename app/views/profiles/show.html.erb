@@ -25,6 +25,7 @@
     <% if !@person.description.blank? %>
       <%= @person.description %><br/>
     <% end %>
+    
   </div>
 </div>
 
@@ -76,6 +77,43 @@
     <% end %>
   </div>
 <% end %>
+
+<% if @person.research_lines.order(:name).count > 0 %>
+  <h2>Líneas de Investigación</h2>
+  <div class="media research-lines-profile">  
+    <div class="media-left">
+      <span class="icon is-large has-text-grey-lighter">
+        <i class="fas fa-atom fa-3x"></i>
+       </span>
+    </div>
+    <div class="media-content"> 
+      <% @person.research_lines.each do |line| %>
+        <div class="research-line-ui-item">
+          <%= line.name %><br>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<% if @person.topics.order(:name).count > 0 %>
+  <h2>Áreas de Interes</h2>
+  <div class="media topics-profile">  
+    <div class="media-left">
+      <span class="icon is-large has-text-grey-lighter">
+        <i class="fas fa-brain fa-3x"></i>
+       </span>
+    </div>
+    <div class="media-content"> 
+      <% @person.topics.each do |topic| %>
+        <div class="research-line-ui-item">
+          <%= topic.name %><br>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 
 
 </div>
