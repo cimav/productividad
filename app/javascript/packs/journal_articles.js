@@ -58,7 +58,7 @@ $(document).on('change', '.filter-select', function() {
 });
 
 $(document).on('change', '#journal_article_status', function() {
-  v = $(this).val();
+  var v = $(this).val();
   if (v == 1) {
     // SENT
     $('.accepted-status').hide();
