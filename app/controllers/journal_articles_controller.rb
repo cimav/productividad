@@ -35,9 +35,9 @@ class JournalArticlesController < ApplicationController
         @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
       end
     elsif !status.blank? && !year.blank?
-      @journal_articles = @journal_articles.where("status = ? AND YEAR(last_date) = ?", status, year)
+      @journal_articles = @journal_articles.where("journal_articles.status = ? AND YEAR(last_date) = ?", status, year)
     elsif !status.blank?
-      @journal_articles = @journal_articles.where("status = ?", status)
+      @journal_articles = @journal_articles.where("journal_articles.status = ?", status)
     else
       year = Date.today.year
       @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
