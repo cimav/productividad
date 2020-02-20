@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
 
   
   def index
+    @departments = Department.order(:name)
   end
 
   def my_profile
