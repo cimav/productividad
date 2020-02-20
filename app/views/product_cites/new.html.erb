@@ -1,0 +1,103 @@
+<strong>Nueva cita</strong>
+<%= form_for @cite, :url => citas_agrega_path(@cite), local: true do |form| %>
+<%= hidden_field_tag :product_class, @product.class %>
+<%= hidden_field_tag :product_id, @product.id %>
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :authors, 'Autores', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :authors, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :journal_id, 'Revista', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field" id="select-journal-div">
+        <div id="selected-journal"></div>
+        <%= form.hidden_field :journal_id %></p>
+        <a id="select-journal">Seleccionar revista</a>
+      </div>
+    </div>
+  </div>
+
+
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <%= form.label :published_date, 'Fecha publicación', class:'label' %>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control"><%= form.text_field :published_date, type:'date', class:'input' %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <%= form.label :volume, 'Volúmen', class:'label' %>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control"><%= form.text_field :volume, class:'input' %></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="field is-horizontal">
+  	<div class="field-label is-normal">
+  	  <%= form.label :issue, 'Número', class:'label' %>
+  	</div>
+  	<div class="field-body">
+  	  <div class="field">
+  	    <p class="control"><%= form.text_field :issue, class:'input' %></p>
+  	  </div>
+  	</div>
+    </div>
+
+    <div class="field is-horizontal">
+  	<div class="field-label is-normal">
+  	  <%= form.label :pages, 'Páginas', class:'label' %>
+  	</div>
+  	<div class="field-body">
+  	  <div class="field">
+  	    <p class="control"><%= form.text_field :pages, class:'input' %></p>
+  	  </div>
+  	</div>
+    </div>
+
+    <div class="field is-horizontal">
+  	<div class="field-label is-normal">
+  	  <%= form.label :doi, 'DOI', class:'label' %>
+  	</div>
+  	<div class="field-body">
+  	  <div class="field">
+  	    <p class="control"><%= form.text_field :doi, class:'input' %></p>
+  	  </div>
+  	</div>
+    </div>
+  </div>
+
+  
+  <div class="actions is-pulled-right">
+    <a id="add-cite" class="button is-link">Agregar cita</a>
+  </div>
+<% end %>

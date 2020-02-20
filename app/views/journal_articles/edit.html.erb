@@ -24,7 +24,7 @@
         <li class="is-active"><a>Datos Generales</a></li>
         <li><a>Participantes</a></li>
         <li><a>Agradecimientos</a></li>
-        <li><a>Citas</a></li>
+        <li><a class="get-cites"  data-product-id="<%= @journal_article.id %>" data-product-class="<%= @journal_article.class %>">Citas</a></li>
         <li><a>Archivos</a></li>
         <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
         <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
@@ -49,7 +49,7 @@
       <div class="is-clearfix"></div>
     </li>
     <li>
-      <h3>Citas</h3>
+      <div id="cites-workarea"></div>
       <div class="is-clearfix"></div>
     </li>
     <li>

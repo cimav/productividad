@@ -48,7 +48,7 @@
     </div>
     <div class="field-body">
       <div class="field">
-        <p class="control"><%= form.text_field :sent_date, type:'date', value: Date.today.strftime("%F") %></p>
+        <p class="control"><%= form.text_field :sent_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
       </div>
     </div>
   </div>
@@ -84,10 +84,3 @@
 
 <% end %>
 </div>
-
-<script>
-  var calendars = bulmaCalendar.attach('[type="date"]', {
-    dateFormat: 'YYYY-MM-DD',
-    color: 'link'
-  });
-</script>

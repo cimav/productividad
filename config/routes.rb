@@ -82,6 +82,13 @@ Rails.application.routes.draw do
   post 'agradecimientos/elimina' => 'acknowledgments#delete_acknowledgment'
   post 'agradecimientos/agrega' => 'acknowledgments#add_acknowledgment'
 
+  get  'citas/ui/:product_class/:product_id' => 'product_cites#ui'
+  get  'citas/nueva/:product_class/:product_id' => 'product_cites#new'
+  post 'citas/elimina' => 'product_cites#delete_cite'
+  post 'citas/agrega' => 'product_cites#add_cite'
+  get  'citas/editar/:id' => 'product_cites#edit_cite'
+  post 'citas/actualiza' => 'product_cites#update_cite'
+
   resources :product_files, :path => 'archivos-producto'
   get 'archivos-producto/ui/:product_class/:product_id' => 'product_files#ui'
   get 'archivos-producto/descarga/:id' => 'product_files#download'

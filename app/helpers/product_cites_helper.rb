@@ -1,0 +1,2 @@
+module ProductCitesHelper
+end

@@ -1,0 +1,72 @@
+<input type="hidden" id="product-class" value="<%= product.class %>">
+<input type="hidden" id="product-id" value="<%= product.id %>">
+<div class="cites-ui">
+  <div class="level">
+    <div class="level-left">
+      <strong><%= @product_cites.count %> citas encontradas</strong>
+    </div>
+    <div class="level-right">
+      <div class="product-filters">
+        <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        min_year = @min_year
+        this_year = Date.today.year
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-cites-select', id: "filter-year-cite" %>
+        </div>
+      </div>
+      <a class="button is-link" id="add-cite-link" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>">
+        <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+      </a>
+    </div>
+  </div>
+
+  <% if @product_cites.count > 0 %>
+    <table class="table table-cites">
+      <tr>
+        <th>Título</th><th>Autores</th><th>Fuente</th><th></th>
+      </tr>
+      <% @product_cites.each do |cite| %>
+        <tr>
+          <td>
+            <%= cite.title %>
+            <div class="cite-extra">
+              Publicado: <%= cite.published_date %>
+              <% if !cite.doi.blank? %>
+                - DOI: <%= link_to "https://doi.org/#{cite.doi}", "https://doi.org/#{cite.doi}"  %>
+              <% end %>
+            </div>
+          </td>
+          <td><%= cite.authors %></td>
+          <td>
+            <%= cite.journal.name %>
+            <div class="cite-extra"><%= cite.volume %> <%= cite.issue %> <%= cite.pages %></div>
+          </td>
+          <td class="table-actions">
+            <nav class="level is-mobile">
+              <div class="level-left">
+                <a class="level-item edit-cite" aria-label="edit" data-cite-id="<%= cite.id %>">
+                  <span class="icon is-small">
+                    <i class="fas fa-edit" aria-hidden="true"></i>
+                  </span>
+                </a>
+                <a class="level-item delete-cite" aria-label="delete" data-cite-id="<%= cite.id %>" data-confirm="¿Confirmar?">
+                  <span class="icon is-small">
+                    <i class="fas fa-times-circle" aria-hidden="true"></i>
+                  </span>
+                </a>
+              </div>
+            </nav>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% else %>
+    <div class="empty-tab">No hay citas para dadas de alta para <em><%= product.title %></em></div>
+  <% end %>
+</div>
