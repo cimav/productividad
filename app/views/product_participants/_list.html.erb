@@ -1,0 +1,48 @@
+<% active_participants = product.product_participants.where(status: ProductParticipant::ACTIVE) %>
+<% if active_participants.count > 0 %>
+  <h2>Participantes</h2>
+  <% active_participants.each do |participant| %>
+  
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <%= image_tag "unknown.svg", class: 'is-rounded' %>
+            <% else %>
+              <img class="is-rounded" src="<%= participant.person.display_url rescue '' %>">
+            <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+            <strong>
+            <% if participant.person %>
+                <%= link_to participant.person.full_name, "/perfiles/#{participant.person.shortname}" %>
+              <% else %>
+                <%= participant.author_is %>
+              <% end %>
+            </strong><br/>
+            <% if participant.participation == ProductParticipant::FIRST_AUTHOR %>
+              <span class="tag is-success"><%= participant.participation_text %></span>
+            <% elsif participant.participation == ProductParticipant::CORRESPONDING %>
+              <span class="tag is-info"><%= participant.participation_text %></span>
+            <% else %>
+              <span class="tag is-primary"><%= participant.participation_text %></span>
+            <% end %>
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <span class="tag is-light"><%= ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL] %></span>
+            <% else %>  
+              <span class="tag is-light"><%= participant.person.person_type.name rescue '-' %></span>
+            <% end %>
+            <% if !participant.author_is.blank? %>
+              <small>Aparece como: <%= participant.author_is %></small>
+            <% else %>
+              <small>No aparece en el listado de autores del <%= participant.attachable.product_name %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+  
+  <% end %>
+<% end %>

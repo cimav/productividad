@@ -1,0 +1,20 @@
+<% active_cites = product.product_cites.where(status: ProductCite::ACTIVE) %>
+<% if active_cites.count > 0 %>
+  <h2><%= active_cites.count %> Citas</h2>
+  <% active_cites.each do |cite| %>
+    <article class="media">
+      <div class="media-content">
+        <div class="content"> 
+            <%= cite.authors %><br/>
+            <strong><%= cite.title %></strong><br/>
+            <%= cite.journal.name %>, <%= cite.volume %>, <%= cite.issue %>, pp. <%= cite.pages %>
+            <% if !cite.doi.blank? %>
+              <div class="cite-extra">DOI: <%= link_to "https://doi.org/#{cite.doi}", "https://doi.org/#{cite.doi}" %></div>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+
+  <% end %>
+<% end %>

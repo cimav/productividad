@@ -1,0 +1,38 @@
+<% public_files = product.product_files.where(status: ProductFile::ACTIVE).order("file_type, file") %>
+<% if public_files.count > 0 %>
+  <h2>Archivos</h2>
+  <table class="table table-files">
+    <% public_files.each do |f| %>
+      <% if f.file_type == ProductFile::PRIVATE %>
+        <% if product.can_edit(current_user.id) %>
+          <tr>
+            <td class="table-file-icon">
+              <span class="icon has-text-danger">
+                <i class="fas fa-lock" title="Documento privado"></i>
+              </span>
+            </td>
+            <td class="table-file-name"><%= link_to File.basename(f.file.to_s), "/archivos-producto/descarga/#{f.id}", target: '_blank' %></td>
+            <td class="table-file-notes"><%= f.notes %></td>
+          </tr>
+        <% end %>
+      <% else %>
+        <tr>
+          <td class="table-file-icon">
+            <% if f.file_type == ProductFile::PROBATORY %>
+              <span class="icon has-text-success">
+                <i class="fas fa-check" title="Documento probatorio"></i>
+              </span>
+            <% else %>
+              <span class="icon has-text-grey-lighter">
+                <i class="fas fa-file" title="Otro documento"></i>
+              </span>
+            <% end %>
+          </td>
+          <td class="table-file-name"><%= link_to File.basename(f.file.to_s), "/archivos-producto/descarga/#{f.id}", target: '_blank' %></td>
+          <td class="table-file-notes"><%= f.notes %></td>
+        </tr>
+      <% end %>
+
+    <% end %>
+  </table>
+<% end %>
