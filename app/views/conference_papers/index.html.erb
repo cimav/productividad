@@ -3,7 +3,7 @@
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Artículos en Revistas', journal_articles_path(@person.shortname) %></li>
+        <li><%= link_to 'Artículos en Conferencias', conference_papers_path(@person.shortname) %></li>
       </ul>
     </nav>
   </div>
@@ -17,7 +17,7 @@
         options["Aceptados"]  = "aceptados"
         options["Rechazados"] = "rechazados"
         %>
-        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': journal_articles_path(@person.shortname) %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': conference_papers_path(@person.shortname) %>
       </div>
       <div class="select">
         <% 
@@ -26,38 +26,38 @@
         
         this_year = Date.today.year
 
-
         if @min_year.is_a? Integer
           min_year = @min_year
         else
           min_year = this_year
         end
 
+        
         (min_year..this_year).each do |y|
           options["Año #{y}"] = y
         end
         %>
-        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': journal_articles_path(@person.shortname) %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': conference_papers_path(@person.shortname) %>
       </div>
 
     </div>
     <% if current_user.id == @person.id %>
-      <%= link_to new_journal_article_path, class:'button is-link' do %>
+      <%= link_to new_conference_paper_path, class:'button is-link' do %>
         <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
       <%  end %>
     <% end %>
   </div>
 </div>
 
-<% if @journal_articles.count == 0 %>
+<% if @conference_papers.count == 0 %>
   <div class="empty-results">No existen</div>
 <% end %>
-<% @journal_articles.each do |journal_article| %>
+<% @conference_papers.each do |conference_paper| %>
 <div class="product-item">
   <article class="media">
     <div class="media-left">
       <%= 
-      case journal_article.status 
+      case conference_paper.status 
       when JournalArticle::SENT
         sent_icon
       when JournalArticle::ACCEPTED
@@ -72,18 +72,18 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong><%= link_to journal_article.title, journal_article_path(@person.shortname, journal_article) %></strong>
+          <strong><%= link_to conference_paper.title, conference_paper_path(@person.shortname, conference_paper) %></strong>
           <br>
-          <small><%= journal_article.authors %></small>
+          <small><%= conference_paper.authors %></small>
           <p class="product-dates">
-            <span class="tag <%= journal_article.status_class %>"><%= journal_article.status_text %></span>
+            <span class="tag <%= conference_paper.status_class %>"><%= conference_paper.status_text %></span>
             <small>
-              Fecha envío: <%= journal_article.sent_date %>
-              <% if journal_article.accepted_date %>
-                &bull; Fecha aceptado: <%= journal_article.accepted_date %>
+              Fecha envío: <%= conference_paper.sent_date %>
+              <% if conference_paper.accepted_date %>
+                &bull; Fecha aceptado: <%= conference_paper.accepted_date %>
               <% end %>
-              <% if journal_article.published_date %>
-                &bull; Fecha publicado: <%= journal_article.published_date %>
+              <% if conference_paper.published_date %>
+                &bull; Fecha publicado: <%= conference_paper.published_date %>
               <% end %>
             </small>
           </p>

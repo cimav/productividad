@@ -25,7 +25,7 @@ class JournalArticlesController < ApplicationController
         @filter_status = 'todos'
     end
        
-    @all_journal_articles = JournalArticle.joins(:product_participants).where('product_participants.person_id': @person.id, 'product_participants.status' => ProductParticipant::ACTIVE) 
+    @all_journal_articles = JournalArticle.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (journal_articles.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('journal_articles.id') 
     
     @journal_articles = @all_journal_articles
 
@@ -143,9 +143,10 @@ class JournalArticlesController < ApplicationController
         email += '@' + main_organization.domain
       end
       @person = Person.find_by_email(email)
-
+      puts email
       if (!@person) 
-        redirect_to profiles_url
+        #redirect_to profiles_url
+        puts "REDIRECT"
       end
     end
 

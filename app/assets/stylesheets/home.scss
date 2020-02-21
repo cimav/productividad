@@ -362,6 +362,7 @@ h1 a {
   }
 }
 
+#conference-list-select,
 #journal-list-select {
   height: 15em;
   overflow-y: auto;
@@ -376,6 +377,7 @@ h1 a {
   } 
 }
 
+.conference-list-item,
 .journal-list-item {
   padding: 1em;
   border-bottom: 1px solid #ddd;
@@ -385,10 +387,12 @@ h1 a {
   }
 }
 
+.conference-data,
 .journal-data {
   padding-bottom: 1em;
 }
 
+.new-conference,
 .new-journal {
   padding: 1em 1em 3em 1em;
 }

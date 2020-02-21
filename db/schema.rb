@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_19_220726) do
+ActiveRecord::Schema.define(version: 2020_02_21_175856) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -44,6 +44,38 @@ ActiveRecord::Schema.define(version: 2019_12_19_220726) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_cities_on_country_id"
+  end
+
+  create_table "conference_papers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.date "sent_date"
+    t.date "accepted_date"
+    t.date "published_date"
+    t.bigint "conference_id"
+    t.string "authors"
+    t.text "abstract"
+    t.bigint "person_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "last_date"
+    t.index ["conference_id"], name: "index_conference_papers_on_conference_id"
+    t.index ["person_id"], name: "index_conference_papers_on_person_id"
+  end
+
+  create_table "conferences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "place"
+    t.bigint "country_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.string "organizer"
+    t.boolean "is_international"
+    t.boolean "is_refereed"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_conferences_on_country_id"
   end
 
   create_table "countries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -125,6 +157,25 @@ ActiveRecord::Schema.define(version: 2019_12_19_220726) do
     t.string "website"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "journal_article_cites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "journal_article_id"
+    t.bigint "journal_id", null: false
+    t.string "title"
+    t.string "authors"
+    t.string "volume"
+    t.string "issue"
+    t.string "pages"
+    t.date "published_date"
+    t.string "doi"
+    t.bigint "person_id"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_article_id"], name: "index_journal_article_cites_on_journal_article_id"
+    t.index ["journal_id"], name: "index_journal_article_cites_on_journal_id"
+    t.index ["person_id"], name: "index_journal_article_cites_on_person_id"
   end
 
   create_table "journal_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -258,6 +309,27 @@ ActiveRecord::Schema.define(version: 2019_12_19_220726) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "product_cites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "attachable_id"
+    t.string "attachable_type"
+    t.bigint "journal_article_id"
+    t.bigint "journal_id", null: false
+    t.string "title"
+    t.string "authors"
+    t.string "volume"
+    t.string "issue"
+    t.string "pages"
+    t.date "published_date"
+    t.string "doi"
+    t.bigint "person_id"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_article_id"], name: "index_product_cites_on_journal_article_id"
+    t.index ["journal_id"], name: "index_product_cites_on_journal_id"
+    t.index ["person_id"], name: "index_product_cites_on_person_id"
   end
 
   create_table "product_files", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

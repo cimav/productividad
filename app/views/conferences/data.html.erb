@@ -1,0 +1,12 @@
+<div class="conference-data" data-id="<%= @conference.id %>">
+  <%= @conference.name %><br/>
+  <%= @conference.organizer %>, <%= @conference.start_date %>-<%= @conference.end_date %>, <%= @conference.place %> <%= @conference.country.name %>
+  <div class="row-extra">
+    <% if @conference.is_refereed %>
+      <span class="tag is-light">Arbitrada</span>
+    <% end %>
+    <% if @conference.is_international %>
+      <span class="tag is-light">Internacional</span>
+    <% end %>
+  </div>
+</div>

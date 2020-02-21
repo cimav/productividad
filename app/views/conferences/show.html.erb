@@ -1,0 +1,62 @@
+<div class="container catalog">
+<% if notice %>
+  <div id="notice" class="notification is-info">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+<div class="level">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Conferencias', conferences_path %></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+<h1 class="conference-h1"><%= @conference.name %></h1>
+<div class="box">
+    <table class="table is-fullwidth">
+      <tr>
+        <td class="has-text-right"><strong>Nombre:</strong></td>
+        <td><%= @conference.name %></td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>Fecha Inicio:</strong></td>
+        <td><%= @conference.start_date %></td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>Fecha Termino:</strong></td>
+        <td><%= @conference.end_date %></td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>¿Es arbitrada?:</strong></td>
+        <td>
+          <%= @conference.is_refereed ? 'SI' : 'NO' %>
+        </td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>¿Es internacional?:</strong></td>
+        <td><%= @conference.is_international ? 'SI' : 'NO'%></td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>Organizador:</strong></td>
+        <td><%= @conference.organizer %></td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>Lugar:</strong></td>
+        <td><%= @conference.place %></td>
+      </tr>
+      <tr>
+        <td class="has-text-right"><strong>País:</strong></td>
+        <td><%= @conference.country.name %></td>
+      </tr>
+      <tr>
+        <td colspan="2" class="has-text-centered"><%= link_to 'Editar', edit_conference_path(@conference) %></td>
+      </tr>
+    </table>
+</div>
+
+</div>

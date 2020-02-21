@@ -1,0 +1,89 @@
+<div class="new-conference">
+<%= form_with(model: @conference, local: true) do |form| %>
+  <% if @conference.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@conference.errors.count, "error") %> prohibited this conference from being saved:</h2>
+
+      <ul>
+        <% @conference.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Nombre', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :organizer, 'Organizador', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :organizer, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :place, 'Lugar', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :place, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :country_id, 'País', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+
+          <%= form.collection_select :country_id, Country.order(:name),:id,:name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Fecha inicio', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, class:'input', type: 'date' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :end_date, 'Fecha termino', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :end_date, class:'input', type: 'date' %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="actions is-pulled-right">
+  	<a class="button is-link" id="submit-new-conference">Agregar nueva conferencia</a>
+  </div>
+<% end %>
+</div>

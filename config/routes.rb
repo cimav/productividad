@@ -19,8 +19,14 @@ Rails.application.routes.draw do
   get '/revistas/nueva' => 'journals#new_journal'
   post '/revistas/agregar-nueva' => 'journals#add_journal'
 
+  get '/conferencias/buscar' => 'conferences#search'
+  get '/conferencias/datos/:id' => 'conferences#data'
+  get '/conferencias/nueva' => 'conferences#new_conference'
+  post '/conferencias/agregar-nueva' => 'conferences#add_conference'
+
 
   scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
+    resources :conferences
     resources :journals, :path => 'revistas' do
       scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
         resources :journal_impact_factors, :path => 'factor-de-impacto'
@@ -28,24 +34,27 @@ Rails.application.routes.draw do
     end
   end
   
-
-
   get '/configuracion' => 'config#index', as:'config'
   get '/reportes' => 'reports#index', as:'reports'
 
   get '/perfiles/' => 'profiles#index', as:'profiles'
 
+
   scope format: false, constraints: { email: /.+/ } do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       scope '/perfiles/:email' do
         resources :journal_articles, :path => 'articulos-en-revistas'
+        resources :conference_papers, :path => 'articulos-en-conferencias'
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
         get 'articulos-en-revistas/muestra/:status/:year' => 'journal_articles#index'
         get 'articulos-en-revistas/muestra/:status' => 'journal_articles#index'
+        get 'articulos-en-conferencias/muestra/:status/:year' => 'conference_papers#index'
+        get 'articulos-en-conferencias/muestra/:status' => 'conference_papers#index'
       end
     end
   end
+
 
   get  'experiencia/ui/:person_id' => 'experiences#ui'
   get  'experiencia/editar/:person_id/:experience_id' => 'experiences#edit'

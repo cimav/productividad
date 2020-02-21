@@ -1,0 +1,146 @@
+<%= form_for conference_paper, :url => conference_paper_path(person.shortname, conference_paper), local: true do |form| %>
+
+  <% if conference_paper.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(conference_paper.errors.count, "error") %> prohibited this conference_paper from being saved:</h2>
+    <ul>
+      <% conference_paper.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :authors, 'Autores', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :authors, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :conference_id, 'Revista', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p>
+          <%= conference_paper.conference.name %>
+          <div class="row-extra">
+            <% if conference_paper.conference.is_refereed %>
+              <span class="tag is-light">Arbitrada</span>
+            <% end %>
+            <% if conference_paper.conference.is_international %>
+              <span class="tag is-light">Internacional</span>
+            <% end %>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :abstract, 'Abstract', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :abstract, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :status, 'Estado', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = ConferencePaper::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :status, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="sent-status">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :sent_date, 'Fecha envío', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :sent_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <% if conference_paper.status == ConferencePaper::ACCEPTED ||  conference_paper.status == ConferencePaper::PUBLISHED 
+       display_accepted = ''
+     else 
+       display_accepted = 'display: none;'
+     end
+  %>
+  <div class="accepted-status" style="<%= display_accepted %>">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :accepted_date, 'Fecha aceptado', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :accepted_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <% if conference_paper.status == ConferencePaper::PUBLISHED 
+       display_published = ''
+     else 
+       display_published = 'display: none;'
+     end
+  %>
+  <div class="published-status" style="<%= display_published %>">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :published_date, 'Fecha publicación', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :published_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+
+
+    
+  </div>
+
+  
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar artículo', class:'button is-link' %>
+  </div>
+<% end %>

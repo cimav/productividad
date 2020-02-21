@@ -1,0 +1,70 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Artículos en Conferencias', conference_papers_path(@person.shortname) %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to conference_papers_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= link_to @conference_paper.title, conference_paper_path(@person.shortname, @conference_paper) %></h1>
+
+
+<div class="product-tabs tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Participantes</a></li>
+        <li><a>Agradecimientos</a></li>
+        <li><a class="get-cites"  data-product-id="<%= @conference_paper.id %>" data-product-class="<%= @conference_paper.class %>">Citas</a></li>
+        <li><a>Archivos</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+  <ul>
+    <li class="is-active">
+      <%= render 'edit_form', conference_paper: @conference_paper, person: @person  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="product-participants-ui">
+        <%= render 'product_participants/ui', product: @conference_paper  %>
+      </div>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="acknowledgments-ui">
+      <%= render 'acknowledgments/ui', product: @conference_paper  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="cites-workarea"></div>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'product_files/ui', product: @conference_paper %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'activity_logs/ui', product: @conference_paper %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div class="is-clearfix"></div>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>

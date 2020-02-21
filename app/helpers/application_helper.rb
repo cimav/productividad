@@ -42,6 +42,10 @@ module ApplicationHelper
     current_user_roles.include?('JOURNALS')
   end
 
+  def is_conference_admin?
+    current_user_roles.include?('CONFERENCES')
+  end
+
 
   def published_icon
     '<span class="icon is-large">

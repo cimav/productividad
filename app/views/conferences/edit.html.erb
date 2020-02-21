@@ -1,0 +1,16 @@
+<div class="container catalog">
+<div class="level">
+  <div class="level-left">
+  	<nav class="breadcrumb" aria-label="breadcrumbs">
+  		<ul>
+  			<li><%= link_to 'Conferencias', conferences_path %></li>
+  			<li class="is-active"><a>Editar</a></li>
+  		</ul>
+  	</nav>
+  </div>
+</div>
+
+<h1 class="conference-h1"><%= @conference.name %></h1>
+<%= render 'form', conference: @conference %>
+</div>
+

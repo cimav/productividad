@@ -1,0 +1,21 @@
+<% if @conferences.count > 0 %>
+  <% @conferences.each do |conference| %>
+    <div class="conference-list-item" data-id="<%= conference.id %>">
+      <strong><%= conference.name %></strong><br/>
+      <%= conference.organizer %>, <%= conference.place %>, <%= conference.country.name %>
+      <div class="row-extra">
+        <% if conference.is_refereed %>
+          <span class="tag is-light">Arbitrada</span>
+        <% end %>
+        <% if conference.is_international %>
+          <span class="tag is-light">Internacional</span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="empty-results">
+    No se encontraron conferencias.<br/><br/>
+    <a id="add-new-conference">¿Deseas agregar una nueva?</a>
+  </div>
+<% end %>

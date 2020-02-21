@@ -1,13 +1,12 @@
-class JournalArticle < ApplicationRecord
-  belongs_to :journal
+class ConferencePaper < ApplicationRecord
+
+  belongs_to :conference
   belongs_to :person  
   has_many :product_participants, :as => :attachable
   has_many :acknowledgments, :as => :attachable
   has_many :product_cites, :as => :attachable
   has_many :product_files, :as => :attachable
   has_many :activity_logs, :as => :item
-
-
 
   SENT      = 1
   ACCEPTED  = 2
@@ -22,7 +21,7 @@ class JournalArticle < ApplicationRecord
   }
 
   def product_name 
-    "Artículo en Revista"
+    "Artículo en Congreso"
   end 
 
   def status_text 
@@ -55,5 +54,4 @@ class JournalArticle < ApplicationRecord
     end
     editable
   end
-
 end

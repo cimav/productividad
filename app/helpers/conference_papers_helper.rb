@@ -1,0 +1,2 @@
+module ConferencePapersHelper
+end

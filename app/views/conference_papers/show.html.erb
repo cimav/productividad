@@ -1,0 +1,153 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Artículos en Conferencias', conference_papers_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @conference_paper.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_conference_paper_path(@person.shortname, @conference_paper), class: 'button is-link' %>
+    <% end %>
+    <%= link_to conference_papers_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+<% if notice %>
+  <div id="notice" class="notification is-info" isDismissable="true">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+
+<h1 class="product-title"><%= @conference_paper.title %></h1>
+
+<p class="product-authors"><%= @conference_paper.authors %></p>
+<p class="product-extra">
+  <% if @conference_paper.status == JournalArticle::PUBLISHED %>
+  <%= @conference_paper.published_date %> &bull; <%= @conference_paper.conference.name %> / <%= @conference_paper.conference.organizer %><br>
+    <%= @conference_paper.conference.place %>, <%= @conference_paper.conference.country.name %><br>
+  <% end %>
+</p>
+
+<p class="product-dates">
+  Fecha envío: <%= @conference_paper.sent_date %>
+  <% if @conference_paper.accepted_date %>
+    &bull; Fecha aceptado: <%= @conference_paper.accepted_date %>
+  <% end %>
+  <% if @conference_paper.published_date %>
+    &bull; Fecha publicado: <%= @conference_paper.published_date %>
+  <% end %>
+</p>
+<p class="product-status">
+  <span class="tag <%= @conference_paper.status_class %>"><%= @conference_paper.status_text %></span>
+</p>
+
+<% if !@conference_paper.abstract.blank? %>
+<h2>Abstract</h2>
+<p class="abstract"><%= @conference_paper.abstract %></p>
+<% end %>
+
+<% active_participants = @conference_paper.product_participants.where(status: ProductParticipant::ACTIVE) %>
+<% if active_participants.count > 0 %>
+  <h2>Participantes</h2>
+  <% active_participants.each do |participant| %>
+  
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <%= image_tag "unknown.svg", class: 'is-rounded' %>
+            <% else %>
+              <img class="is-rounded" src="<%= participant.person.display_url rescue '' %>">
+            <% end %>
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">
+            <strong>
+            <% if participant.person %>
+                <%= link_to participant.person.full_name, "/perfiles/#{participant.person.shortname}" %>
+              <% else %>
+                <%= participant.author_is %>
+              <% end %>
+            </strong><br/>
+            <% if participant.participation == ProductParticipant::FIRST_AUTHOR %>
+              <span class="tag is-success"><%= participant.participation_text %></span>
+            <% elsif participant.participation == ProductParticipant::CORRESPONDING %>
+              <span class="tag is-info"><%= participant.participation_text %></span>
+            <% else %>
+              <span class="tag is-primary"><%= participant.participation_text %></span>
+            <% end %>
+            <% if participant.participant_type == ProductParticipant::IS_EXTERNAL %>
+              <span class="tag is-light"><%= ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL] %></span>
+            <% else %>  
+              <span class="tag is-light"><%= participant.person.person_type.name rescue '-' %></span>
+            <% end %>
+            <% if !participant.author_is.blank? %>
+              <small>Aparece como: <%= participant.author_is %></small>
+            <% else %>
+              <small>No aparece en el listado de autores del <%= participant.attachable.product_name %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+  
+  <% end %>
+<% end %>
+
+
+<% active_acknowledgments = @conference_paper.acknowledgments.where(status: Acknowledgment::ACTIVE) %>
+<% if active_acknowledgments.count > 0 %>
+  <h2>Agradecimientos</h2>
+  <% active_acknowledgments.each do |acknowledgment| %>
+
+    <article class="media">
+      <div class="media-left">
+        <figure class="image is-48x48">
+          <img class="is-rounded" src="<%= acknowledgment.person.display_url rescue '' %>">
+        </figure>
+      </div>
+      <div class="media-content">
+        <div class="content">  
+            <strong><%= acknowledgment.person.full_name %></strong><br>
+            <span class="tag is-light"><%= acknowledgment.person.person_type.name rescue '-' %></span> 
+            <% if !acknowledgment.notes.blank? %>
+              <small><%= acknowledgment.notes %></small>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+
+  <% end %>
+<% end %>
+
+
+
+<% active_cites = @conference_paper.product_cites.where(status: ProductCite::ACTIVE) %>
+<% if active_cites.count > 0 %>
+  <h2><%= active_cites.count %> Citas</h2>
+  <% active_cites.each do |cite| %>
+    <article class="media">
+      <div class="media-content">
+        <div class="content"> 
+            <%= cite.authors %><br/>
+            <strong><%= cite.title %></strong><br/>
+            <%= cite.journal.name %>, <%= cite.volume %>, <%= cite.issue %>, pp. <%= cite.pages %>
+            <% if !cite.doi.blank? %>
+              <div class="cite-extra">DOI: <%= link_to "https://doi.org/#{cite.doi}", "https://doi.org/#{cite.doi}" %></div>
+            <% end %>
+        </div>
+        
+      </div>
+    </article>
+
+  <% end %>
+<% end %>
+  
+</div>

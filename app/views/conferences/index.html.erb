@@ -1,0 +1,55 @@
+<div class="container catalog">
+
+<% if notice %>
+  <div id="notice" class="notification is-info">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+
+<div class="level">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Conferencias', conferences_path %></li>
+      </ul>
+  </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to 'Agregar', new_conference_path, class:'button is-link' %>
+  </div>
+</div>
+
+<table class="table is-striped is-fullwidth is-hoverable">
+  <thead>
+    <tr>
+      <th>Nombre</th>
+      <th>Organizador</th>
+      <th>Lugar</th>
+      <th>País</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @conferences.each do |conference| %>
+      <tr>
+        <td>
+          <strong><%= link_to conference.name, conference_path(conference) %></strong>
+          <div class="row-extra">
+            <% if conference.is_refereed %>
+              <span class="tag is-light">Arbitrada</span>
+            <% end %>
+            <% if conference.is_international %>
+              <span class="tag is-light">Internacional</span>
+            <% end %>
+          </div>
+        </td>
+        <td><%= conference.organizer %></td>
+        <td><%= conference.place %></td>
+        <td><%= conference.country.name %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+</div>

@@ -39,6 +39,9 @@
           <% if is_admin? || is_journal_admin? %>
             <%= link_to 'Administrar Revistas', journals_path, class: 'navbar-item' %>
           <% end %>
+          <% if is_admin? || is_conference_admin? %>
+            <%= link_to 'Administrar Conferencias', conferences_path, class: 'navbar-item' %>
+          <% end %>
           <hr class="navbar-divider">
           <%= link_to 'Salir', logout_path, class: 'navbar-item' %>
         </div>
