@@ -49,7 +49,8 @@ class ProductFilesController < ApplicationController
 
   	@product_file = @product.product_files.new
     @product_file.person_id = current_user.id
-    @product_file.notes = params[:notes]
+    @product_file.notes = params[:product_file][:notes]
+    @product_file.file_type = params[:product_file][:file_type]
     @product_file.status = ProductFile::ACTIVE
     @product_file.file = params[:product_file][:file]
 

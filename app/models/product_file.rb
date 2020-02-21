@@ -7,12 +7,14 @@ class ProductFile < ApplicationRecord
   ACTIVE  = 1
   DELETED = 2
 
-  OTHER     = 99
   PROBATORY = 1
+  OTHER     = 2
+  PRIVATE   = 3
 
   TYPES = {
     OTHER     => 'Otro Documento',
-    PROBATORY => 'Documento Probatorio'
+    PROBATORY => 'Documento Probatorio',
+    PRIVATE => 'Documento Privado'
   }
 
   def type_text

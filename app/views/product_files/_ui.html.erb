@@ -15,8 +15,9 @@
           <div class="media-content">
             <div class="content">
                 <a class="delete product-file-delete is-pulled-right" data-product-file-id="<%= file.id %>" data-product-id="<%= product.id %>" data-product-class="<%= product.class %>" data-confirm="¿Confirmar?"></a>
-                <%= link_to File.basename(file.file.to_s), "/archivos-producto/descarga/#{file.id}", target: '_blank' %>
-                <%= file.notes %>
+                <%= link_to File.basename(file.file.to_s), "/archivos-producto/descarga/#{file.id}", target: '_blank' %><br>
+                <%= file.notes %><br>
+                <%= file.type_text %>
             </div>
             
           </div>
@@ -38,6 +39,7 @@
           options = {} 
           options[ProductFile::TYPES[ProductFile::PROBATORY]] = ProductFile::PROBATORY
           options[ProductFile::TYPES[ProductFile::OTHER]] = ProductFile::OTHER
+          options[ProductFile::TYPES[ProductFile::PRIVATE]] = ProductFile::PRIVATE
           %>
           <div class="box-control">
             <div class="select">

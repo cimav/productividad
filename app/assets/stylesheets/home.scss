@@ -469,3 +469,20 @@ h1 a {
   font-size: 80%;
   color: #777 !important;
 }
+
+.table-files {
+  td {
+    border: none !important;
+  }
+  width: 100%;
+  .table-file-icon {
+    width: 2em;
+  }
+  .table-file-name {
+    width: 10em;
+    white-space: pre;
+  }
+  .table-file-notes {
+    min-width: 50%;
+  }
+}
