@@ -58,13 +58,13 @@
     <div class="media-left">
       <%= 
       case conference_paper.status 
-      when JournalArticle::SENT
+      when ConferencePaper::SENT
         sent_icon
-      when JournalArticle::ACCEPTED
+      when ConferencePaper::ACCEPTED
         accepted_icon
-      when JournalArticle::PUBLISHED
+      when ConferencePaper::PUBLISHED
         published_icon
-      when JournalArticle::REJECTED
+      when ConferencePaper::REJECTED
         rejected_icon  
       end
       %>

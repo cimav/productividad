@@ -58,13 +58,13 @@
     <div class="media-left">
       <%= 
       case book.status 
-      when JournalArticle::SENT
+      when Book::SENT
         sent_icon
-      when JournalArticle::ACCEPTED
+      when Book::ACCEPTED
         accepted_icon
-      when JournalArticle::PUBLISHED
+      when Book::PUBLISHED
         published_icon
-      when JournalArticle::REJECTED
+      when Book::REJECTED
         rejected_icon  
       end
       %>

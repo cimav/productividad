@@ -27,7 +27,7 @@
 
 <p class="product-authors"><%= @conference_paper.authors %></p>
 <p class="product-extra">
-  <% if @conference_paper.status == JournalArticle::PUBLISHED %>
+  <% if @conference_paper.status == ConferencePaper::PUBLISHED %>
   <%= @conference_paper.published_date %> &bull; <%= @conference_paper.conference.name %> / <%= @conference_paper.conference.organizer %><br>
     <%= @conference_paper.conference.place %>, <%= @conference_paper.conference.country.name %><br>
   <% end %>

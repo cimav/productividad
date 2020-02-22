@@ -1,1 +1,1 @@
-json.partial! "journal_articles/journal_article", journal_article: @journal_article
+json.partial! "conference_papers/conference_paper", conference_paper: @conference_paper
