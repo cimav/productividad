@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   resources :person_types
   scope 'configuracion' do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
@@ -45,12 +44,17 @@ Rails.application.routes.draw do
       scope '/perfiles/:email' do
         resources :journal_articles, :path => 'articulos-en-revistas'
         resources :conference_papers, :path => 'articulos-en-conferencias'
+        resources :books, :path => 'libros'
+
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
+
         get 'articulos-en-revistas/muestra/:status/:year' => 'journal_articles#index'
         get 'articulos-en-revistas/muestra/:status' => 'journal_articles#index'
         get 'articulos-en-conferencias/muestra/:status/:year' => 'conference_papers#index'
         get 'articulos-en-conferencias/muestra/:status' => 'conference_papers#index'
+        get 'libros/muestra/:status/:year' => 'books#index'
+        get 'libros/muestra/:status' => 'books#index'
       end
     end
   end

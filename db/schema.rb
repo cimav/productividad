@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_175856) do
+ActiveRecord::Schema.define(version: 2020_02_22_200203) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -33,6 +33,27 @@ ActiveRecord::Schema.define(version: 2020_02_21_175856) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "changed_values"
     t.integer "person_id"
+  end
+
+  create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.string "authors"
+    t.integer "book_type"
+    t.integer "publisher"
+    t.boolean "is_refereed"
+    t.bigint "country_id", null: false
+    t.integer "status"
+    t.date "sent_date"
+    t.date "accepted_date"
+    t.date "published_date"
+    t.string "pages"
+    t.string "isbn"
+    t.bigint "person_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "last_date"
+    t.index ["country_id"], name: "index_books_on_country_id"
+    t.index ["person_id"], name: "index_books_on_person_id"
   end
 
   create_table "cities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -400,6 +421,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_175856) do
     t.integer "status"
   end
 
+  add_foreign_key "books", "countries"
   add_foreign_key "cities", "countries"
   add_foreign_key "departments", "organizations"
   add_foreign_key "journal_articles", "journals"

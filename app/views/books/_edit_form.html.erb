@@ -1,0 +1,171 @@
+<%= form_for book, :url => book_path(person.shortname, book), local: true do |form| %>
+
+  <% if book.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+    <ul>
+      <% book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :authors, 'Autores', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :authors, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :publisher, 'Editorial', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :publisher, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :country_id, 'País', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+          <%= form.collection_select :country_id, Country.order(:name),:id,:name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :is_refereed, '¿Es arbitrada?', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.check_box :is_refereed %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :status, 'Estado', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = ConferencePaper::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :status, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="sent-status">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :sent_date, 'Fecha envío', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :sent_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <% if book.status == ConferencePaper::ACCEPTED ||  book.status == ConferencePaper::PUBLISHED 
+       display_accepted = ''
+     else 
+       display_accepted = 'display: none;'
+     end
+  %>
+  <div class="accepted-status" style="<%= display_accepted %>">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :accepted_date, 'Fecha aceptado', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :accepted_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+  <% if book.status == ConferencePaper::PUBLISHED 
+       display_published = ''
+     else 
+       display_published = 'display: none;'
+     end
+  %>
+  <div class="published-status" style="<%= display_published %>">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :published_date, 'Fecha publicación', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :published_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+
+     <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <%= form.label :pages, 'Páginas', class:'label' %>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control"><%= form.text_field :pages, class:'input' %></p>
+        </div>
+      </div>
+     </div>
+
+     <div class="field is-horizontal">
+      <div class="field-label is-normal">
+        <%= form.label :isbn, 'ISBN', class:'label' %>
+      </div>
+      <div class="field-body">
+        <div class="field">
+          <p class="control"><%= form.text_field :isbn, class:'input' %></p>
+        </div>
+      </div>
+     </div>
+
+
+
+    
+  </div>
+
+  
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar libro', class:'button is-link' %>
+  </div>
+<% end %>

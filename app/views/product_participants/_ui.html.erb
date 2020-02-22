@@ -1,6 +1,9 @@
 <% 
 person_type_default = 1  # Empleado
 
+include_type = ['JournalArticle', 'ConferencePaper']
+show_types = include_type.include?(product.class)
+
 # Relleno de autores automatico 
 authors = product.authors 
 
@@ -61,6 +64,7 @@ end %>
                 <%= participant.author_is %>
               <% end %>
             </strong><br/>
+            <% if show_types %>
             <% if participant.participation == ProductParticipant::FIRST_AUTHOR %>
               <span class="tag is-success"><%= participant.participation_text %></span>
             <% elsif participant.participation == ProductParticipant::CORRESPONDING %>
@@ -72,6 +76,7 @@ end %>
               <span class="tag is-light"><%= ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL] %></span>
             <% else %>  
               <span class="tag is-light"><%= participant.person.person_type.name rescue '-' %></span>
+            <% end %>
             <% end %>
             <% if !participant.author_is.blank? %>
               <small>Aparece como: <%= participant.author_is %></small>
@@ -96,10 +101,12 @@ end %>
   <% unassigned_authors.each do |participant| %>
     <tr>
       <td><%= participant.author_is %></td>
+      <% if show_types %>
       <td>  
         <% participation_options = ProductParticipant::PARTICIPATION.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
         <div class="select"><%= select_tag :participation, options_for_select(participation_options, participant.participation), class: 'unassigned-participant-select', 'data-participant-id': participant.id, id: "participation_#{participant.id}" %></div>
       </td>
+      <% end %>
       <td>  
         <% 
           person_types = PersonType.order(:name).pluck(:id, :name)
@@ -131,12 +138,14 @@ end %>
 <h2>Agregar participante</h2>
 <table class="table is-fullwidth">
   <tr>
+    <% if show_types %>
     <td>  
       <% participation_options = ProductParticipant::PARTICIPATION.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
       <div class="field">
         <div class="select"><%= select_tag :participation, options_for_select(participation_options), class: 'unassigned-participant-select', id: "participation_new" %></div>
       </div>
     </td>
+    <% end %>
     <td>  
       <% 
           person_types = PersonType.order(:name).pluck(:id, :name)

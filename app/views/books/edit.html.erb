@@ -1,0 +1,75 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Libros', books_path(@person.shortname) %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to books_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+<% if notice %>
+  <div id="notice" class="notification is-success" isDismissable="true">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+<h1 class="product-title"><%= link_to @book.title, book_path(@person.shortname, @book) %></h1>
+
+
+<div class="product-tabs tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Participantes</a></li>
+        <li><a>Agradecimientos</a></li>
+        <li><a class="get-cites"  data-product-id="<%= @book.id %>" data-product-class="<%= @book.class %>">Citas</a></li>
+        <li><a>Archivos</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+  <ul>
+    <li class="is-active">
+      <%= render 'edit_form', book: @book, person: @person  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="product-participants-ui">
+        <%= render 'product_participants/ui', product: @book  %>
+      </div>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="acknowledgments-ui">
+      <%= render 'acknowledgments/ui', product: @book  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div id="cites-workarea"></div>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'product_files/ui', product: @book %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'activity_logs/ui', product: @book %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div class="is-clearfix"></div>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>

@@ -38,7 +38,6 @@ $(document).on('click', '#add-conference-paper', function() {
                  conference_id:  conference_id
                })
     .done(function( data ) {
-      alert(data);
       var conference_paper_id = data.id;
       url = url + '/' + conference_paper_id + '/editar';
       alert(url);

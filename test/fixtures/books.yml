@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  authors: MyString
+  book_type: 1
+  publisher: 1
+  is_refereed: false
+  country: one
+  status: 1
+  sent_date: 2020-02-22
+  accepted_date: 2020-02-22
+  published_date: 2020-02-22
+  pages: MyString
+  isbn: MyString
+
+two:
+  title: MyString
+  authors: MyString
+  book_type: 1
+  publisher: 1
+  is_refereed: false
+  country: two
+  status: 1
+  sent_date: 2020-02-22
+  accepted_date: 2020-02-22
+  published_date: 2020-02-22
+  pages: MyString
+  isbn: MyString
