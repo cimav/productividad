@@ -38,11 +38,26 @@ import Bulma from '@vizuaalog/bulmajs';
 $(document).on("turbolinks:load", function() {
   Bulma.traverseDOM();
 
-  var calendars = bulmaCalendar.attach('[type="date"]', {
-    dateFormat: 'YYYY-MM-DD',
-    color: 'link'
+  // var calendars = bulmaCalendar.attach('[type="date"]', {
+  //   dateFormat: 'YYYY-MM-DD',
+  //   color: 'link'
+  // });
+
+  $('ul.menu-list li').each(function(i) {
+  	var url = window.location.href
+  	var c = $(this).attr('class').replace('li-','');
+  	console.log(url + ' incluye ' + c);
+  	if (url.includes(c)) {
+  	  $(this).addClass('active');	
+  	}
   });
+
+
 });
+
+
+
+
 
 
 

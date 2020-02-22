@@ -187,6 +187,9 @@ h1 a {
   border-right: 1px solid #eee;
   .menu {
     font-size: 0.9rem !important;
+    .active {
+      font-weight: bold;
+    }
   }
 }
 
