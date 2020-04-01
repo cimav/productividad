@@ -26,7 +26,7 @@ class ConferencesController < ApplicationController
     @conference = Conference.new
     @conference.name = params[:name]
     @conference.country_id   = params[:country_id]
-    @conference.validated    = conference::NOT_VALIDATED
+    @conference.validated    = Conference::NOT_VALIDATED
     @conference.submitted_by = current_user.id
 
     if @conference.save! 

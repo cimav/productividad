@@ -1,0 +1,2 @@
+module ConferenceWorksHelper
+end

@@ -40,7 +40,6 @@ $(document).on('click', '#add-conference-paper', function() {
     .done(function( data ) {
       var conference_paper_id = data.id;
       url = url + '/' + conference_paper_id + '/editar';
-      alert(url);
       window.location = url;
     })
   }
@@ -85,7 +84,7 @@ $(document).on("turbolinks:load", function() {
   modal = Bulma.create('modal', {
     root: document.getElementById('select-conference-div'),
     title: 'Seleccionar conferencia',
-    body: '<div id="search-workarea"><div class="search-controls"><input type="text" placeholder="Nombre de la conferencia..." id="conference-title-select" class="input"></div><div id="conference-list-select"></div></div>',
+    body: '<div id="search-conference-workarea"><div class="search-controls"><input type="text" placeholder="Nombre de la conferencia..." id="conference-title-select" class="input"></div><div id="conference-list-select"></div></div>',
   });
 });
 
@@ -109,6 +108,7 @@ $(document).on('keyup', '#conference-title-select', function() {
 $(document).on('click', '.conference-list-item', function() {
   var conference_id = $(this).data('id');
   $('#conference_paper_conference_id').val(conference_id);
+  $('#conference_work_conference_id').val(conference_id);
   $('#product_cite_conference_id').val(conference_id);
   var url = '/conferencias/datos/' + conference_id;
     $.get(url, function(data) {
@@ -118,9 +118,9 @@ $(document).on('click', '.conference-list-item', function() {
 });
 
 $(document).on('click', '#add-new-conference', function() {
-  var url = '/conferencias/nueva/'
+  var url = '/conferencias/nueva/';
     $.get(url, function(data) {
-      $('#search-workarea').html(data);
+      $('#search-conference-workarea').html(data);
     });
 });
 
@@ -129,6 +129,8 @@ $(document).on('click', '#submit-new-conference', function() {
     .done(function( data ) {
       var conference_id = data.id;
       $('#conference_paper_conference_id').val(conference_id);
+      $('#conference_work_conference_id').val(conference_id);
+      $('#product_cite_conference_id').val(conference_id);
       var url = '/conferencias/datos/' + conference_id;
         $.get(url, function(data) {
           $('#selected-conference').html(data);

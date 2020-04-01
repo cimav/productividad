@@ -8,7 +8,7 @@
 	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", conference_papers_path(person.shortname) %></li>
 	  <li class="li-divulgacion"><a>Divulgación</a></li>
 	  <li class="li-libros"><%= link_to "Libros y capítulos", books_path(person.shortname) %></li>
-	  <li class="li-trabajos"><a>Trabajos</a></li>
+	  <li class="li-trabajos"><%= link_to "Trabajos", conference_works_path(person.shortname) %></li>
 	  <li class="li-patentes"><a>Patentes</a></li>
 	  <li class="li-conferencias-por-invitacion"><a>Conferencias por Invitación</a></li>
 	  <li class="li-asociaciones"><a>Asociaciones</a></li>

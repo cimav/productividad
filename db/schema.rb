@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_22_200203) do
+ActiveRecord::Schema.define(version: 2020_04_01_194309) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -84,6 +84,23 @@ ActiveRecord::Schema.define(version: 2020_02_22_200203) do
     t.index ["person_id"], name: "index_conference_papers_on_person_id"
   end
 
+  create_table "conference_works", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.integer "work_type"
+    t.date "sent_date"
+    t.date "accepted_date"
+    t.date "published_date"
+    t.bigint "conference_id"
+    t.string "authors"
+    t.bigint "person_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "last_date"
+    t.index ["conference_id"], name: "index_conference_works_on_conference_id"
+    t.index ["person_id"], name: "index_conference_works_on_person_id"
+  end
+
   create_table "conferences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.string "place"
@@ -96,6 +113,8 @@ ActiveRecord::Schema.define(version: 2020_02_22_200203) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "submitted_by"
+    t.integer "validated"
     t.index ["country_id"], name: "index_conferences_on_country_id"
   end
 

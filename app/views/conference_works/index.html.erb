@@ -1,0 +1,97 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Trabajos', conference_works_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos"]      = "todos"
+        options["Enviados"]   = "enviados"
+        options["Aceptados"]  = "aceptados"
+        options["Rechazados"] = "rechazados"
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': conference_works_path(@person.shortname) %>
+      </div>
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': conference_works_path(@person.shortname) %>
+      </div>
+
+    </div>
+    <% if current_user.id == @person.id %>
+      <%= link_to new_conference_work_path, class:'button is-link' do %>
+        <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+      <%  end %>
+    <% end %>
+  </div>
+</div>
+
+<% if @conference_works.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @conference_works.each do |conference_work| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= 
+      case conference_work.status 
+      when ConferenceWork::SENT
+        sent_icon
+      when ConferenceWork::ACCEPTED
+        accepted_icon
+      when ConferenceWork::PUBLISHED
+        published_icon
+      when ConferenceWork::REJECTED
+        rejected_icon  
+      end
+      %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to conference_work.title, conference_work_path(@person.shortname, conference_work) %></strong>
+          <br>
+          <small><%= conference_work.authors %></small>
+          <p class="product-dates">
+            <span class="tag"><%= conference_work.work_type_text rescue '--' %></span>
+            <span class="tag <%= conference_work.status_class %>"><%= conference_work.status_text %></span>
+            <small>
+              Fecha envío: <%= conference_work.sent_date %>
+              <% if conference_work.accepted_date %>
+                &bull; Fecha aceptado: <%= conference_work.accepted_date %>
+              <% end %>
+              <% if conference_work.published_date %>
+                &bull; Fecha publicado: <%= conference_work.published_date %>
+              <% end %>
+            </small>
+          </p>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

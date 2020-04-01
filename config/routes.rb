@@ -44,6 +44,7 @@ Rails.application.routes.draw do
       scope '/perfiles/:email' do
         resources :journal_articles, :path => 'articulos-en-revistas'
         resources :conference_papers, :path => 'articulos-en-conferencias'
+        resources :conference_works, :path => 'trabajos'
         resources :books, :path => 'libros'
 
         get 'editar' => 'profiles#edit', as: 'profile_edit'
@@ -55,6 +56,8 @@ Rails.application.routes.draw do
         get 'articulos-en-conferencias/muestra/:status' => 'conference_papers#index'
         get 'libros/muestra/:status/:year' => 'books#index'
         get 'libros/muestra/:status' => 'books#index'
+        get 'trabajos/muestra/:status/:year' => 'conference_works#index'
+        get 'trabajos/muestra/:status' => 'conference_works#index'
       end
     end
   end

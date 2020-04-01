@@ -1,0 +1,56 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Trabajos', conference_works_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @conference_work.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_conference_work_path(@person.shortname, @conference_work), class: 'button is-link' %>
+    <% end %>
+    <%= link_to conference_works_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+<% if notice %>
+  <div id="notice" class="notification is-info" isDismissable="true">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+
+<h1 class="product-title"><%= @conference_work.title %> <span class="tag"><%= @conference_work.work_type_text %></span></h1>
+
+<p class="product-authors"><%= @conference_work.authors %></p>
+<p class="product-extra">
+  <% if @conference_work.status == ConferenceWork::PUBLISHED %>
+  <%= @conference_work.published_date %> &bull; <%= @conference_work.conference.name %> / <%= @conference_work.conference.organizer %><br>
+    <%= @conference_work.conference.place %>, <%= @conference_work.conference.country.name %><br>
+  <% end %>
+</p>
+
+<p class="product-dates">
+  Fecha envío: <%= @conference_work.sent_date %>
+  <% if @conference_work.accepted_date %>
+    &bull; Fecha aceptado: <%= @conference_work.accepted_date %>
+  <% end %>
+  <% if @conference_work.published_date %>
+    &bull; Fecha publicado: <%= @conference_work.published_date %>
+  <% end %>
+</p>
+<p class="product-status">
+  <span class="tag <%= @conference_work.status_class %>"><%= @conference_work.status_text %></span>
+</p>
+
+
+<%= render 'product_files/list', product: @conference_work  %>
+<%= render 'product_participants/list', product: @conference_work  %>
+<%= render 'acknowledgments/list', product: @conference_work  %>
+
+
+  
+</div>
