@@ -63,7 +63,7 @@ Rails.application.routes.draw do
         get 'trabajos/muestra/:status' => 'conference_works#index'
         get 'patentes/muestra/:status/:year' => 'patents#index'
         get 'patentes/muestra/:status' => 'patents#index'
-        get 'conferencias-por-invitacion/muestra/:year' => 'patents#index'
+        get 'conferencias-por-invitacion/muestra/:year' => 'invited_conferences#index'
         get 'organizador-de-eventos/muestra/:year' => 'event_organizers#index'
       end
     end

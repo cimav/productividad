@@ -16,7 +16,9 @@ class InvitedConferencesController < ApplicationController
     @invited_conferences = @all_invited_conferences
 
     if !year.blank?
-      @invited_conferences = @invited_conferences.where("YEAR(last_date) = ?", year)
+      if year != 'todos'
+        @invited_conferences = @invited_conferences.where("YEAR(last_date) = ?", year)
+      end
     else
       year = Date.today.year
       @invited_conferences = @invited_conferences.where("YEAR(last_date) = ?", year)
