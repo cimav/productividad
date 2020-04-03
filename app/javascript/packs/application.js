@@ -58,6 +58,16 @@ $(document).on("turbolinks:load", function() {
 
 });
 
+window.showNotice = function(msg) {
+  Bulma.create('notification', {
+        isDismissable: true,
+        dismissInterval: 4000,
+        color: 'success',
+        body: msg,
+        parent: document.getElementById('notification-area'),
+       }).show();
+}
+
 
 
 

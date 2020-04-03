@@ -15,6 +15,9 @@
     <%= render 'navbar' %>
     <%= content_for?(:content) ? yield(:content) : yield %>
     <div id="notification-area"></div>
+    <% if notice %>
+      <script>showNotice('<%= notice %>')</script>
+    <% end %>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
   </body>
 </html>

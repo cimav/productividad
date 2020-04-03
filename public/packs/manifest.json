@@ -1,8 +1,14 @@
 {
   "acknowledgements.js": "/packs/js/acknowledgements-3913e28ba9165c799c65.js",
   "acknowledgements.js.map": "/packs/js/acknowledgements-3913e28ba9165c799c65.js.map",
-  "application.js": "/packs/js/application-8a78128a232f74720c27.js",
-  "application.js.map": "/packs/js/application-8a78128a232f74720c27.js.map",
+  "application.js": "/packs/js/application-ff7daf5d21e8b3e03ea1.js",
+  "application.js.map": "/packs/js/application-ff7daf5d21e8b3e03ea1.js.map",
+  "books.js": "/packs/js/books-2d042b6b3ec014cc0e7f.js",
+  "books.js.map": "/packs/js/books-2d042b6b3ec014cc0e7f.js.map",
+  "conference_papers.js": "/packs/js/conference_papers-a48dc1f49502ce290f78.js",
+  "conference_papers.js.map": "/packs/js/conference_papers-a48dc1f49502ce290f78.js.map",
+  "conference_works.js": "/packs/js/conference_works-c002c89f2a5ec661604a.js",
+  "conference_works.js.map": "/packs/js/conference_works-c002c89f2a5ec661604a.js.map",
   "education.js": "/packs/js/education-3be7fc8f589898eaf3b7.js",
   "education.js.map": "/packs/js/education-3be7fc8f589898eaf3b7.js.map",
   "entrypoints": {
@@ -16,10 +22,34 @@
     },
     "application": {
       "js": [
-        "/packs/js/application-8a78128a232f74720c27.js"
+        "/packs/js/application-ff7daf5d21e8b3e03ea1.js"
       ],
       "js.map": [
-        "/packs/js/application-8a78128a232f74720c27.js.map"
+        "/packs/js/application-ff7daf5d21e8b3e03ea1.js.map"
+      ]
+    },
+    "books": {
+      "js": [
+        "/packs/js/books-2d042b6b3ec014cc0e7f.js"
+      ],
+      "js.map": [
+        "/packs/js/books-2d042b6b3ec014cc0e7f.js.map"
+      ]
+    },
+    "conference_papers": {
+      "js": [
+        "/packs/js/conference_papers-a48dc1f49502ce290f78.js"
+      ],
+      "js.map": [
+        "/packs/js/conference_papers-a48dc1f49502ce290f78.js.map"
+      ]
+    },
+    "conference_works": {
+      "js": [
+        "/packs/js/conference_works-c002c89f2a5ec661604a.js"
+      ],
+      "js.map": [
+        "/packs/js/conference_works-c002c89f2a5ec661604a.js.map"
       ]
     },
     "education": {
@@ -40,10 +70,26 @@
     },
     "journal_articles": {
       "js": [
-        "/packs/js/journal_articles-1223db9b85fd4aae049d.js"
+        "/packs/js/journal_articles-149ea6a32f42b00a91a0.js"
       ],
       "js.map": [
-        "/packs/js/journal_articles-1223db9b85fd4aae049d.js.map"
+        "/packs/js/journal_articles-149ea6a32f42b00a91a0.js.map"
+      ]
+    },
+    "patents": {
+      "js": [
+        "/packs/js/patents-5bd6ff272d46defddfd9.js"
+      ],
+      "js.map": [
+        "/packs/js/patents-5bd6ff272d46defddfd9.js.map"
+      ]
+    },
+    "person_research_lines": {
+      "js": [
+        "/packs/js/person_research_lines-804c2d0b45267c801c3d.js"
+      ],
+      "js.map": [
+        "/packs/js/person_research_lines-804c2d0b45267c801c3d.js.map"
       ]
     },
     "person_topics": {
@@ -52,6 +98,14 @@
       ],
       "js.map": [
         "/packs/js/person_topics-5b42a44c9cafc5abf8f8.js.map"
+      ]
+    },
+    "product_cites": {
+      "js": [
+        "/packs/js/product_cites-82bda49202b1b5af55d7.js"
+      ],
+      "js.map": [
+        "/packs/js/product_cites-82bda49202b1b5af55d7.js.map"
       ]
     },
     "product_files": {
@@ -73,10 +127,16 @@
   },
   "experiences.js": "/packs/js/experiences-bb61bd330e3123780c73.js",
   "experiences.js.map": "/packs/js/experiences-bb61bd330e3123780c73.js.map",
-  "journal_articles.js": "/packs/js/journal_articles-1223db9b85fd4aae049d.js",
-  "journal_articles.js.map": "/packs/js/journal_articles-1223db9b85fd4aae049d.js.map",
+  "journal_articles.js": "/packs/js/journal_articles-149ea6a32f42b00a91a0.js",
+  "journal_articles.js.map": "/packs/js/journal_articles-149ea6a32f42b00a91a0.js.map",
+  "patents.js": "/packs/js/patents-5bd6ff272d46defddfd9.js",
+  "patents.js.map": "/packs/js/patents-5bd6ff272d46defddfd9.js.map",
+  "person_research_lines.js": "/packs/js/person_research_lines-804c2d0b45267c801c3d.js",
+  "person_research_lines.js.map": "/packs/js/person_research_lines-804c2d0b45267c801c3d.js.map",
   "person_topics.js": "/packs/js/person_topics-5b42a44c9cafc5abf8f8.js",
   "person_topics.js.map": "/packs/js/person_topics-5b42a44c9cafc5abf8f8.js.map",
+  "product_cites.js": "/packs/js/product_cites-82bda49202b1b5af55d7.js",
+  "product_cites.js.map": "/packs/js/product_cites-82bda49202b1b5af55d7.js.map",
   "product_files.js": "/packs/js/product_files-f90f325bdd973dc208f0.js",
   "product_files.js.map": "/packs/js/product_files-f90f325bdd973dc208f0.js.map",
   "product_participants.js": "/packs/js/product_participants-e6db313b54d93d28c165.js",
