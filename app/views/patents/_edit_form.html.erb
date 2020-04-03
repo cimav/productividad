@@ -1,0 +1,76 @@
+<%= form_for patent, :url => patent_path(person.shortname, patent), local: true do |form| %>
+
+  <% if patent.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(patent.errors.count, "error") %> prohibited this patent from being saved:</h2>
+    <ul>
+      <% patent.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :authors, 'Autores', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :authors, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :status, 'Estado', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = Patent::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :status, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="sent-status">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :register_date, 'Fecha de registro', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :register_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+    
+
+
+  
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar patente', class:'button is-link' %>
+  </div>
+<% end %>

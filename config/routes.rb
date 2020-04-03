@@ -46,6 +46,7 @@ Rails.application.routes.draw do
         resources :conference_papers, :path => 'articulos-en-conferencias'
         resources :conference_works, :path => 'trabajos'
         resources :books, :path => 'libros'
+        resources :patents, :path => 'patentes'
 
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
@@ -58,6 +59,8 @@ Rails.application.routes.draw do
         get 'libros/muestra/:status' => 'books#index'
         get 'trabajos/muestra/:status/:year' => 'conference_works#index'
         get 'trabajos/muestra/:status' => 'conference_works#index'
+        get 'patentes/muestra/:status/:year' => 'patents#index'
+        get 'patentes/muestra/:status' => 'patents#index'
       end
     end
   end

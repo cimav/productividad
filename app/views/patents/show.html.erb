@@ -1,0 +1,42 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Patentes', patents_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @patent.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_patent_path(@person.shortname, @patent), class: 'button is-link' %>
+    <% end %>
+    <%= link_to patents_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+<% if notice %>
+  <div id="notice" class="notification is-info" isDismissable="true">
+    <button class="delete"></button>
+    <%= notice %>
+  </div>
+<% end %>
+
+<h1 class="product-title"><%= @patent.title %></h1>
+<p class="product-authors"><%= @patent.authors %></p>
+<p class="product-dates">
+  Fecha de registro: <%= @patent.register_date %>
+</p>
+<p class="product-status">
+  <span class="tag <%= @patent.status_class %>"><%= @patent.status_text %></span>
+</p>
+
+
+<%= render 'product_files/list', product: @patent  %>
+<%= render 'product_participants/list', product: @patent  %>
+<%= render 'acknowledgments/list', product: @patent  %>
+
+
+  
+</div>
