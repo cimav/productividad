@@ -1,0 +1,52 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Conferencias por Invitación', invited_conferences_path(@person.shortname) %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to invited_conferences_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= link_to @invited_conference.title, invited_conference_path(@person.shortname, @invited_conference) %></h1>
+
+
+<div class="product-tabs tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Archivos</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+  <ul>
+    <li class="is-active">
+      <%= render 'edit_form', invited_conference: @invited_conference, person: @person  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'product_files/ui', product: @invited_conference %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'activity_logs/ui', product: @invited_conference %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div class="is-clearfix"></div>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>

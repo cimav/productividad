@@ -1,0 +1,75 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Conferencias por Invitación', invited_conferences_path(@person.shortname) %></li>
+        <li><a>Nuevo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to invited_conferences_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+<%= form_with(model: @invited_conference, local: true) do |form| %>
+  <% if @invited_conference.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(@invited_conference.errors.count, "error") %> prohibited this invited_conference from being saved:</h2>
+    <ul>
+      <% @invited_conference.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :conference_date, 'Fecha de presentación', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :conference_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :conference_id, 'Evento', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field" id="select-conference-div">
+        <div id="selected-conference"></div>
+        <%= form.hidden_field :conference_id %></p>
+        <a id="select-conference">Seleccionar evento</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <a id="add-invited-conference" class="button is-link" data-shortname="<%= @person.shortname %>">Agregar</a>
+  </div>
+  <div class="is-clearfix"></div>
+
+<% end %>
+</div>

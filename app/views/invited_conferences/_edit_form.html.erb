@@ -1,0 +1,69 @@
+<%= form_for invited_conference, :url => invited_conference_path(person.shortname, invited_conference), local: true do |form| %>
+
+  <% if invited_conference.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(invited_conference.errors.count, "error") %> prohibited this invited_conference from being saved:</h2>
+    <ul>
+      <% invited_conference.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :conference_id, 'Evento', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p>
+          <%= invited_conference.conference.name %>
+          <div class="row-extra">
+            <% if invited_conference.conference.is_refereed %>
+              <span class="tag is-light">Arbitrada</span>
+            <% end %>
+            <% if invited_conference.conference.is_international %>
+              <span class="tag is-light">Internacional</span>
+            <% end %>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="sent-status">
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :conference_date, 'Fecha de presentación', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :conference_date, class:'input', type:'date' %></p>
+      </div>
+    </div>
+    </div>
+  </div>
+
+    
+
+
+  
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+<% end %>

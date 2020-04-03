@@ -1,0 +1,35 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Conferencias por Invitación', invited_conferences_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @invited_conference.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_invited_conference_path(@person.shortname, @invited_conference), class: 'button is-link' %>
+    <% end %>
+    <%= link_to invited_conferences_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @invited_conference.title %></h1>
+
+<p class="product-authors"><%= @invited_conference.authors %></p>
+<p class="product-extra">
+  <%= @invited_conference.conference.name %> / <%= @invited_conference.conference.organizer %><br>
+  <%= @invited_conference.conference.place %>, <%= @invited_conference.conference.country.name %><br>
+</p>
+
+<p class="product-dates">
+  Fecha de presentaci´øn: <%= @invited_conference.conference_date %>
+</p>
+
+<%= render 'product_files/list', product: @invited_conference  %>
+
+  
+</div>
