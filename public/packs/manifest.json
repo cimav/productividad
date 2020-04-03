@@ -1,12 +1,12 @@
 {
   "acknowledgements.js": "/packs/js/acknowledgements-3913e28ba9165c799c65.js",
   "acknowledgements.js.map": "/packs/js/acknowledgements-3913e28ba9165c799c65.js.map",
-  "application.js": "/packs/js/application-1f793fe82d3188c92b14.js",
-  "application.js.map": "/packs/js/application-1f793fe82d3188c92b14.js.map",
+  "application.js": "/packs/js/application-4adb956bd5a66fb3fb9f.js",
+  "application.js.map": "/packs/js/application-4adb956bd5a66fb3fb9f.js.map",
   "books.js": "/packs/js/books-2d042b6b3ec014cc0e7f.js",
   "books.js.map": "/packs/js/books-2d042b6b3ec014cc0e7f.js.map",
-  "conference_papers.js": "/packs/js/conference_papers-11d8477a3aab53fe97fa.js",
-  "conference_papers.js.map": "/packs/js/conference_papers-11d8477a3aab53fe97fa.js.map",
+  "conference_papers.js": "/packs/js/conference_papers-f013ca5fdce97ce4fca9.js",
+  "conference_papers.js.map": "/packs/js/conference_papers-f013ca5fdce97ce4fca9.js.map",
   "conference_works.js": "/packs/js/conference_works-c002c89f2a5ec661604a.js",
   "conference_works.js.map": "/packs/js/conference_works-c002c89f2a5ec661604a.js.map",
   "education.js": "/packs/js/education-3be7fc8f589898eaf3b7.js",
@@ -22,10 +22,10 @@
     },
     "application": {
       "js": [
-        "/packs/js/application-1f793fe82d3188c92b14.js"
+        "/packs/js/application-4adb956bd5a66fb3fb9f.js"
       ],
       "js.map": [
-        "/packs/js/application-1f793fe82d3188c92b14.js.map"
+        "/packs/js/application-4adb956bd5a66fb3fb9f.js.map"
       ]
     },
     "books": {
@@ -38,10 +38,10 @@
     },
     "conference_papers": {
       "js": [
-        "/packs/js/conference_papers-11d8477a3aab53fe97fa.js"
+        "/packs/js/conference_papers-f013ca5fdce97ce4fca9.js"
       ],
       "js.map": [
-        "/packs/js/conference_papers-11d8477a3aab53fe97fa.js.map"
+        "/packs/js/conference_papers-f013ca5fdce97ce4fca9.js.map"
       ]
     },
     "conference_works": {
@@ -58,6 +58,14 @@
       ],
       "js.map": [
         "/packs/js/education-3be7fc8f589898eaf3b7.js.map"
+      ]
+    },
+    "event_organizers": {
+      "js": [
+        "/packs/js/event_organizers-f7ba947fe089ea951960.js"
+      ],
+      "js.map": [
+        "/packs/js/event_organizers-f7ba947fe089ea951960.js.map"
       ]
     },
     "experiences": {
@@ -133,6 +141,8 @@
       ]
     }
   },
+  "event_organizers.js": "/packs/js/event_organizers-f7ba947fe089ea951960.js",
+  "event_organizers.js.map": "/packs/js/event_organizers-f7ba947fe089ea951960.js.map",
   "experiences.js": "/packs/js/experiences-bb61bd330e3123780c73.js",
   "experiences.js.map": "/packs/js/experiences-bb61bd330e3123780c73.js.map",
   "invited_conferences.js": "/packs/js/invited_conferences-e6e2a1a8e23964550e3a.js",

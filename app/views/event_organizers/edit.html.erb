@@ -1,0 +1,52 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Organizador de Eventos', event_organizers_path(@person.shortname) %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to event_organizers_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= link_to "#{@event_organizer.organizer_type_text} en #{@event_organizer.conference.name}", event_organizer_path(@person.shortname, @event_organizer) %></h1>
+
+
+<div class="product-tabs tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Archivos</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+  <ul>
+    <li class="is-active">
+      <%= render 'edit_form', event_organizer: @event_organizer, person: @person  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'product_files/ui', product: @event_organizer %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'activity_logs/ui', product: @event_organizer %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div class="is-clearfix"></div>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>

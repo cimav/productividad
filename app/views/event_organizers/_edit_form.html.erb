@@ -1,0 +1,68 @@
+<%= form_for event_organizer, :url => event_organizer_path(person.shortname, event_organizer), local: true do |form| %>
+
+  <% if event_organizer.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(event_organizer.errors.count, "error") %> prohibited this event_organizer from being saved:</h2>
+    <ul>
+      <% event_organizer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :organizer_type, 'Participación como', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = EventOrganizer::ORGANIZER_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :organizer_type, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :activity, 'Actividad realizada', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :activity, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :conference_id, 'Evento', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p>
+          <%= event_organizer.conference.name %>
+          <div class="row-extra">
+            <% if event_organizer.conference.is_refereed %>
+              <span class="tag is-light">Arbitrada</span>
+            <% end %>
+            <% if event_organizer.conference.is_international %>
+              <span class="tag is-light">Internacional</span>
+            <% end %>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+<% end %>

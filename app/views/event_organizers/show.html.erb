@@ -1,0 +1,31 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Organizador de Eventos', event_organizers_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @event_organizer.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_event_organizer_path(@person.shortname, @event_organizer), class: 'button is-link' %>
+    <% end %>
+    <%= link_to event_organizers_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= "#{@event_organizer.organizer_type_text} en #{@event_organizer.conference.name}" %></h1>
+
+<p class="product-extra">
+  <%= @event_organizer.conference.name %> / <%= @event_organizer.conference.organizer %><br>
+  <%= @event_organizer.conference.place %>, <%= @event_organizer.conference.country.name %><br>
+</p>
+
+
+<%= render 'product_files/list', product: @event_organizer  %>
+
+  
+</div>

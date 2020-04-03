@@ -111,6 +111,7 @@ $(document).on('click', '.conference-list-item', function() {
   $('#conference_work_conference_id').val(conference_id);
   $('#invited_conference_conference_id').val(conference_id);
   $('#product_cite_conference_id').val(conference_id);
+  $('#event_organizer_conference_id').val(conference_id);
   var url = '/conferencias/datos/' + conference_id;
     $.get(url, function(data) {
       $('#selected-conference').html(data);
@@ -133,6 +134,7 @@ $(document).on('click', '#submit-new-conference', function() {
       $('#conference_work_conference_id').val(conference_id);
       $('#product_cite_conference_id').val(conference_id);
       $('#invited_conference_conference_id').val(conference_id);
+      $('#event_organizer_conference_id').val(conference_id);
       var url = '/conferencias/datos/' + conference_id;
         $.get(url, function(data) {
           $('#selected-conference').html(data);
