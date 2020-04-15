@@ -1,0 +1,101 @@
+<%= form_for association_member, :url => association_member_path(person.shortname, association_member), local: true do |form| %>
+
+  <% if association_member.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(association_member.errors.count, "error") %> prohibited this association_member from being saved:</h2>
+    <ul>
+      <% association_member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :activities, 'Actividad realizada', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :activities, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :association_id, 'Asociación/Red', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p>
+          <%= association_member.association_network.name %>
+          <div class="row-extra">
+            <% if association_member.association_network.is_international %>
+              <span class="tag is-light">Internacional</span>
+            <% end %>
+            <%= association_member.association_network.location %> (<%= association_member.association_network.country.name %>)
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :activities, 'Actividad Realizada', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :activities, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :status, 'Estado', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = AssociationMember::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :status, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Inicio en la asociación/red', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal" id="association-end" style="<%= association_member.status == AssociationMember::ACTIVE ? 'display: none;' : '' %>">
+    <div class="field-label is-normal">
+      <%= form.label :end_date, 'Termino en la asociación/red', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :end_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+<% end %>

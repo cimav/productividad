@@ -13,25 +13,7 @@ Rails.application.routes.draw do
     end
   end 
 
-  get '/revistas/buscar' => 'journals#search'
-  get '/revistas/datos/:id' => 'journals#data'
-  get '/revistas/nueva' => 'journals#new_journal'
-  post '/revistas/agregar-nueva' => 'journals#add_journal'
-
-  get '/conferencias/buscar' => 'conferences#search'
-  get '/conferencias/datos/:id' => 'conferences#data'
-  get '/conferencias/nueva' => 'conferences#new_conference'
-  post '/conferencias/agregar-nueva' => 'conferences#add_conference'
-
-
-  scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
-    resources :conferences
-    resources :journals, :path => 'revistas' do
-      scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
-        resources :journal_impact_factors, :path => 'factor-de-impacto'
-      end
-    end
-  end
+  
   
   get '/configuracion' => 'config#index', as:'config'
   get '/reportes' => 'reports#index', as:'reports'
@@ -49,6 +31,9 @@ Rails.application.routes.draw do
         resources :patents, :path => 'patentes'
         resources :invited_conferences, :path => 'conferencias-por-invitacion'
         resources :event_organizers, :path => 'organizador-de-eventos'
+        resources :association_members, :path => 'asociaciones-y-redes'
+        resources :awards, :path => 'reconocimientos'
+        resources :project_reviewers, :path => 'evaluador-de-proyectos'
 
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
@@ -65,6 +50,9 @@ Rails.application.routes.draw do
         get 'patentes/muestra/:status' => 'patents#index'
         get 'conferencias-por-invitacion/muestra/:year' => 'invited_conferences#index'
         get 'organizador-de-eventos/muestra/:year' => 'event_organizers#index'
+        get 'asociaciones-y-redes/muestra/:year' => 'association_members#index'
+        get 'reconocimientos/muestra/:year' => 'awards#index'
+        get 'evaluador-de-proyectos/muestra/:year' => 'project_reviewers#index'
       end
     end
   end
@@ -116,6 +104,34 @@ Rails.application.routes.draw do
   get 'archivos-producto/ui/:product_class/:product_id' => 'product_files#ui'
   get 'archivos-producto/descarga/:id' => 'product_files#download'
   post 'archivos-producto/elimina' => 'product_files#delete_file'
+
+
+  get '/revistas/buscar' => 'journals#search'
+  get '/revistas/datos/:id' => 'journals#data'
+  get '/revistas/nueva' => 'journals#new_journal'
+  post '/revistas/agregar-nueva' => 'journals#add_journal'
+
+  get '/conferencias/buscar' => 'conferences#search'
+  get '/conferencias/datos/:id' => 'conferences#data'
+  get '/conferencias/nueva' => 'conferences#new_conference'
+  post '/conferencias/agregar-nueva' => 'conferences#add_conference'
+
+  get '/asociaciones/buscar' => 'associations#search'
+  get '/asociaciones/datos/:id' => 'associations#data'
+  get '/asociaciones/nueva' => 'associations#new_conference'
+  post '/asociaciones/agregar-nueva' => 'associations#add_conference'
+
+
+  scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
+    resources :conferences, :path => 'conferencias'
+    resources :associations, :path => 'asociaciones'
+    resources :journals, :path => 'revistas' do
+      scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
+        resources :journal_impact_factors, :path => 'factor-de-impacto'
+      end
+    end
+     
+  end
 
 
 

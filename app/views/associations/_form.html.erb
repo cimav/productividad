@@ -1,0 +1,91 @@
+<%= form_with(model: association, local: true) do |form| %>
+  <% if association.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(association.errors.count, "error") %> prohibited this association from being saved:</h2>
+
+      <ul>
+        <% association.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Nombre', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :website, 'Sitio Web', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :website, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :location, 'Ubicación', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :location, class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :country, 'País', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+          <%= form.collection_select :country_id, Country.order(:name),:id,:name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :is_international, '¿Es internacional?', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.check_box :is_international %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :status, 'Estado', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = Association::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :status, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Guardar', class:'button is-link' %>
+  </div>
+<% end %>

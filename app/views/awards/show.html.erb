@@ -1,0 +1,31 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Reconocimientos', awards_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @award.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_award_path(@person.shortname, @award), class: 'button is-link' %>
+    <% end %>
+    <%= link_to awards_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @award.name %></h1>
+
+
+<p class="product-extra">
+<span class="tag is-light"><%= @award.award_type_text %></span> <%= "#{@award.grant_date}, #{@award.granted_by} (#{@award.country.name})" %>
+</p>
+
+
+<%= render 'product_files/list', product: @award  %>
+
+  
+</div>

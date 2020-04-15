@@ -1,0 +1,76 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Asociaciones y Redes', association_members_path(@person.shortname) %></li>
+        <li><a>Nuevo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to association_members_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+<%= form_with(model: @association_member, local: true) do |form| %>
+  <% if @association_member.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(@association_member.errors.count, "error") %> prohibited this association_member from being saved:</h2>
+    <ul>
+      <% @association_member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :association_id, 'Asociación/Red', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field" id="select-association-div">
+        <div id="selected-association"></div>
+        <%= form.hidden_field :association_id %></p>
+        <a id="select-association">Seleccionar asociación</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :activities, 'Actividad Realizada', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :activities, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Inicio en la asociación/red', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="actions is-pulled-right">
+    <a id="add-association-member" class="button is-link" data-shortname="<%= @person.shortname %>">Agregar</a>
+  </div>
+  <div class="is-clearfix"></div>
+
+<% end %>
+</div>

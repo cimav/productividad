@@ -1,0 +1,45 @@
+<div class="container catalog">
+<div class="level">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Asociaciones', associations_path %></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+
+<h1 class="association-h1"><%= @association.name %></h1>
+
+<table class="table is-fullwidth">
+  <tr>
+    <td class="has-text-right"><strong>Nombre:</strong></td>
+    <td><%= @association.name %></td>
+  </tr>
+  <tr>
+    <td class="has-text-right"><strong>Sitio Web:</strong></td>
+    <td><%= @association.website %></td>
+  </tr>
+  <tr>
+    <td class="has-text-right"><strong>País:</strong></td>
+    <td><%= @association.country.name %></td>
+  </tr>
+  <tr>
+    <td class="has-text-right"><strong>Ubicación:</strong></td>
+    <td><%= @association.location %></td>
+  </tr>
+  <tr>
+    <td class="has-text-right"><strong>¿Es internacional?:</strong></td>
+    <td><%= @association.is_international ? 'SI' : 'NO'%></td>
+  </tr>
+  <tr>
+    <td class="has-text-right"><strong>Estado:</strong></td>
+    <td><%= @association.status_text %></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="has-text-centered"><%= link_to 'Editar', edit_association_path(@association) %></td>
+  </tr>
+</table>
+
+</div>

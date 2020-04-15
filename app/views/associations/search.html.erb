@@ -1,0 +1,17 @@
+<% if @associations.count > 0 %>
+  <% @associations.each do |association| %>
+    <div class="association-list-item" data-id="<%= association.id %>">
+      <%= association.name %> (<%= association.country.name %>)
+      <div class="row-extra">
+        <% if association.is_international %>
+          <span class="tag is-light">Internacional</span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <div class="empty-results">
+    No se encontraron asociaciones.<br/><br/>
+    <a id="add-new-association">¿Deseas agregar una nueva?</a>
+  </div>
+<% end %>

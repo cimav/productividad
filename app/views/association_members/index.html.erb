@@ -1,0 +1,74 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Asociaciones y Redes', association_members_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': association_members_path(@person.shortname) %>
+      </div>
+
+    </div>
+    <% if current_user.id == @person.id %>
+      <%= link_to new_association_member_path, class:'button is-link' do %>
+        <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+      <%  end %>
+    <% end %>
+  </div>
+</div>
+
+<% if @association_members.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @association_members.each do |association_member| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= doc_icon %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to "Miembro de #{association_member.association_network.name}", association_member_path(@person.shortname, association_member) %></strong><br>
+          <% if association_member.association_network.is_international %>
+              <span class="tag is-light">Internacional</span>
+          <% end %>
+          <%= "#{association_member.association_network.location} (#{association_member.association_network.country.name})" %>
+          <p class="product-dates">
+            <span class="tag <%= association_member.status_class %>"><%= association_member.status_text %></span>
+            <small>
+              Inicio: <%= association_member.start_date %>
+              <% if association_member.status == AssociationMember::INACTIVE %>
+                &bull; Termino: <%= association_member.end_date %>
+              <% end %>
+            </small>
+          </p>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

@@ -46,6 +46,18 @@ module ApplicationHelper
     current_user_roles.include?('CONFERENCES')
   end
 
+  def is_association_admin?
+    current_user_roles.include?('ASSOCIATIONS')
+  end
+
+  def doc_icon
+    '<span class="icon is-large">
+        <span class="fa-stack fa-lg">
+          <i class="fas fa-file fa-stack-2x fa-1x has-text-grey-lighter"></i>
+        </span>
+      </span>'.html_safe
+  end
+
 
   def published_icon
     '<span class="icon is-large">

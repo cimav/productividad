@@ -42,6 +42,9 @@
           <% if is_admin? || is_conference_admin? %>
             <%= link_to 'Administrar Conferencias', conferences_path, class: 'navbar-item' %>
           <% end %>
+          <% if is_admin? || is_association_admin? %>
+            <%= link_to 'Administrar Asociaciones', associations_path, class: 'navbar-item' %>
+          <% end %>
           <hr class="navbar-divider">
           <%= link_to 'Salir', logout_path, class: 'navbar-item' %>
         </div>

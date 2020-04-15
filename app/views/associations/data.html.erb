@@ -1,0 +1,8 @@
+<div class="association-data" data-id="<%= @association.id %>">
+  <%= @association.name %> 
+  <div class="row-extra">
+    <% if @association.is_international %>
+      <span class="tag is-light">Internacional</span>
+    <% end %>
+  </div>
+</div>

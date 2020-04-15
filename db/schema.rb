@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_194309) do
+ActiveRecord::Schema.define(version: 2020_04_13_202522) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -33,6 +33,32 @@ ActiveRecord::Schema.define(version: 2020_04_01_194309) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "changed_values"
     t.integer "person_id"
+  end
+
+  create_table "association_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "association_id"
+    t.bigint "person_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.text "activities"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.date "last_date"
+    t.index ["association_id"], name: "index_association_members_on_association_id"
+    t.index ["person_id"], name: "index_association_members_on_person_id"
+  end
+
+  create_table "associations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "name"
+    t.string "website"
+    t.string "location"
+    t.boolean "is_international"
+    t.bigint "country_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_associations_on_country_id"
   end
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -171,6 +197,19 @@ ActiveRecord::Schema.define(version: 2020_04_01_194309) do
     t.index ["person_id"], name: "index_educations_on_person_id"
   end
 
+  create_table "event_organizers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.integer "organizer_type"
+    t.text "activity"
+    t.date "last_date"
+    t.bigint "conference_id"
+    t.bigint "person_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_event_organizers_on_conference_id"
+    t.index ["person_id"], name: "index_event_organizers_on_person_id"
+  end
+
   create_table "experience_types", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -197,6 +236,19 @@ ActiveRecord::Schema.define(version: 2020_04_01_194309) do
     t.string "website"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "invited_conferences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.date "conference_date"
+    t.date "last_date"
+    t.bigint "conference_id"
+    t.bigint "person_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["conference_id"], name: "index_invited_conferences_on_conference_id"
+    t.index ["person_id"], name: "index_invited_conferences_on_person_id"
   end
 
   create_table "journal_article_cites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -294,6 +346,18 @@ ActiveRecord::Schema.define(version: 2020_04_01_194309) do
     t.index ["city_id"], name: "index_organizations_on_city_id"
     t.index ["country_id"], name: "index_organizations_on_country_id"
     t.index ["organization_id"], name: "index_organizations_on_organization_id"
+  end
+
+  create_table "patents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "title"
+    t.date "register_date"
+    t.string "authors"
+    t.bigint "person_id"
+    t.integer "status"
+    t.date "last_date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_patents_on_person_id"
   end
 
   create_table "people", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
