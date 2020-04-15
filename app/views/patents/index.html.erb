@@ -59,18 +59,7 @@
 <div class="product-item">
   <article class="media">
     <div class="media-left">
-      <%= 
-      case patent.status 
-      when ConferenceWork::SENT
-        sent_icon
-      when ConferenceWork::ACCEPTED
-        accepted_icon
-      when ConferenceWork::PUBLISHED
-        published_icon
-      when ConferenceWork::REJECTED
-        rejected_icon  
-      end
-      %>
+      <%= doc_icon %>
     </div>
     <div class="media-content">
       <div class="content">
