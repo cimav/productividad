@@ -35,6 +35,7 @@ Rails.application.routes.draw do
         resources :awards, :path => 'reconocimientos'
         resources :project_reviewers, :path => 'evaluador-de-proyectos'
         resources :popular_sciences, :path => 'difusion-y-divulgacion'
+        resources :relevant_activities, :path => 'actividades-relevantes'
 
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
@@ -55,6 +56,7 @@ Rails.application.routes.draw do
         get 'reconocimientos/muestra/:year' => 'awards#index'
         get 'evaluador-de-proyectos/muestra/:year' => 'project_reviewers#index'
         get 'difusion-y-divulgacion/muestra/:year' => 'popular_sciences#index'
+        get 'actividades-relevantes/muestra/:year' => 'relevant_activities#index'
       end
     end
   end

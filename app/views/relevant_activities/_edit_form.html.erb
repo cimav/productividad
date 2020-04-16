@@ -1,0 +1,90 @@
+<%= form_for relevant_activity, :url => relevant_activity_path(person.shortname, relevant_activity), local: true do |form| %>
+
+  <% if relevant_activity.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(relevant_activity.errors.count, "error") %> prohibited this relevant_activity from being saved:</h2>
+    <ul>
+      <% relevant_activity.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+
+    <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Actividad', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :description, 'Objetivo', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :description, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Inicio', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :end_date, 'Termino', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :end_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :location, 'Lugar', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :location, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :country_id, 'País', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+
+          <%= form.collection_select :country_id, Country.order(:name),:id,:name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+<% end %>

@@ -1,0 +1,53 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Actividades Relevantes', relevant_activities_path(@person.shortname) %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to relevant_activities_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= link_to @relevant_activity.name, relevant_activity_path(@person.shortname, @relevant_activity) %></h1>
+
+
+
+<div class="product-tabs tabs-wrapper">
+  <div class="tabs">
+    <ul>
+        <li class="is-active"><a>Datos Generales</a></li>
+        <li><a>Archivos</a></li>
+        <li><a title="Bitácora de cambios"><span class="icon"><i class="fas fa-file-alt"></i></span></a></li>
+        <li><a title="Configuración"><span class="icon"><i class="fas fa-cogs"></i></span></a></li>
+    </ul>
+  </div>
+
+  <div class="tabs-content">
+  <ul>
+    <li class="is-active">
+      <%= render 'edit_form', relevant_activity: @relevant_activity, person: @person  %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'product_files/ui', product: @relevant_activity %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <%= render 'activity_logs/ui', product: @relevant_activity %>
+      <div class="is-clearfix"></div>
+    </li>
+    <li>
+      <div class="is-clearfix"></div>
+    </li>
+  </ul>
+  </div>
+</div>
+
+</div>

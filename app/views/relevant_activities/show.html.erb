@@ -1,0 +1,31 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Actividades Relevantes', relevant_activities_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @relevant_activity.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_relevant_activity_path(@person.shortname, @relevant_activity), class: 'button is-link' %>
+    <% end %>
+    <%= link_to relevant_activities_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @relevant_activity.name %></h1>
+
+
+<p class="product-extra">
+<%= "#{@relevant_activity.start_date}, #{@relevant_activity.location} (#{@relevant_activity.country.name})" %>
+</p>
+
+
+<%= render 'product_files/list', product: @relevant_activity  %>
+
+  
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_13_202522) do
+ActiveRecord::Schema.define(version: 2020_04_16_201004) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -59,6 +59,21 @@ ActiveRecord::Schema.define(version: 2020_04_13_202522) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_associations_on_country_id"
+  end
+
+  create_table "awards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.integer "award_type"
+    t.string "granted_by"
+    t.date "grant_date"
+    t.date "last_date"
+    t.bigint "country_id"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_awards_on_country_id"
+    t.index ["person_id"], name: "index_awards_on_person_id"
   end
 
   create_table "books", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -415,6 +430,23 @@ ActiveRecord::Schema.define(version: 2020_04_13_202522) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "popular_sciences", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.integer "activity_type"
+    t.text "description"
+    t.string "location"
+    t.bigint "country_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "last_date"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_popular_sciences_on_country_id"
+    t.index ["person_id"], name: "index_popular_sciences_on_person_id"
+  end
+
   create_table "product_cites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
     t.string "attachable_type"
@@ -461,6 +493,38 @@ ActiveRecord::Schema.define(version: 2020_04_13_202522) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["person_id"], name: "index_product_participants_on_person_id"
+  end
+
+  create_table "project_reviewers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.string "announcement"
+    t.text "description"
+    t.date "review_date"
+    t.bigint "country_id"
+    t.date "last_date"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_project_reviewers_on_country_id"
+    t.index ["person_id"], name: "index_project_reviewers_on_person_id"
+  end
+
+  create_table "relevant_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.integer "activity_type"
+    t.text "description"
+    t.string "location"
+    t.bigint "country_id"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "last_date"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["country_id"], name: "index_relevant_activities_on_country_id"
+    t.index ["person_id"], name: "index_relevant_activities_on_person_id"
   end
 
   create_table "research_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
