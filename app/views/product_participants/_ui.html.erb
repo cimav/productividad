@@ -5,38 +5,42 @@ include_type = ['JournalArticle', 'ConferencePaper']
 show_types = include_type.include?(product.class)
 
 # Relleno de autores automatico 
-authors = product.authors 
+if product.class.to_s != 'Project'
+  authors = product.authors 
 
-authors_array = authors.split(',')
-c = 0
-authors_array.each do |author| 
-  c = c + 1
-  author_sanitized = author.remove('and').strip
-  
-  if !product.product_participants.exists?(author_is: author_sanitized)
-    p = product.product_participants.new
-    p.author_is = author_sanitized
-    p.participation = ProductParticipant::PARTICIPANT
-    if c == 1
-      p.participation = ProductParticipant::FIRST_AUTHOR
-    end 
+  authors_array = authors.split(',')
+  c = 0
+  authors_array.each do |author| 
+    c = c + 1
+    author_sanitized = author.remove('and').strip
+    
+    if !product.product_participants.exists?(author_is: author_sanitized)
+      p = product.product_participants.new
+      p.author_is = author_sanitized
+      p.participation = ProductParticipant::PARTICIPANT
+      if c == 1
+        p.participation = ProductParticipant::FIRST_AUTHOR
+      end 
 
-    if c == authors_array.count
-      p.participation = ProductParticipant::CORRESPONDING
-    end 
-  
+      if c == authors_array.count
+        p.participation = ProductParticipant::CORRESPONDING
+      end 
+    
 
-    puts author_sanitized
-    pp = ProductParticipant.where(author_is: author_sanitized)
-    if pp.count > 0
-      ppp = pp.last!
-      p.person_id = ppp.person_id
-    end 
-    p.status = ProductParticipant::UNASSIGNED
+      puts author_sanitized
+      pp = ProductParticipant.where(author_is: author_sanitized)
+      if pp.count > 0
+        ppp = pp.last!
+        p.person_id = ppp.person_id
+      end 
+      p.status = ProductParticipant::UNASSIGNED
 
-    p.save
-  end
-end %>
+      p.save
+    end
+  end 
+
+end
+%>
 
 <div class="participant-ui">
 <% active_participants = product.product_participants.where(status: ProductParticipant::ACTIVE) %>
@@ -174,5 +178,6 @@ end %>
   </tr>
 </table>
 </div>
+
 
 

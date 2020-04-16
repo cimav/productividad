@@ -1,0 +1,32 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Reconocimientos', projects_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @project.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_project_path(@person.shortname, @project), class: 'button is-link' %>
+    <% end %>
+    <%= link_to projects_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @project.name %></h1>
+
+
+<p class="product-extra">
+<span class="tag is-light"><%= @project.research_type_text %></span>
+</p>
+
+
+<%= render 'product_files/list', product: @project  %>
+<%= render 'product_participants/list', product: @project  %>
+<%= render 'acknowledgments/list', product: @project  %>
+  
+</div>

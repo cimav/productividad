@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_16_201004) do
+ActiveRecord::Schema.define(version: 2020_04_16_212253) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -285,6 +285,21 @@ ActiveRecord::Schema.define(version: 2020_04_16_201004) do
     t.index ["person_id"], name: "index_journal_article_cites_on_person_id"
   end
 
+  create_table "journal_article_reviewers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.string "title"
+    t.text "authors"
+    t.date "review_date"
+    t.bigint "journal_id"
+    t.date "last_date"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_id"], name: "index_journal_article_reviewers_on_journal_id"
+    t.index ["person_id"], name: "index_journal_article_reviewers_on_person_id"
+  end
+
   create_table "journal_articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title"
     t.date "sent_date"
@@ -508,6 +523,26 @@ ActiveRecord::Schema.define(version: 2020_04_16_201004) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_project_reviewers_on_country_id"
     t.index ["person_id"], name: "index_project_reviewers_on_person_id"
+  end
+
+  create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.string "external_identificator"
+    t.string "internal_identificator"
+    t.integer "source_type"
+    t.string "source"
+    t.text "objectives"
+    t.text "results"
+    t.integer "research_type"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "extension_date"
+    t.date "last_date"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_projects_on_person_id"
   end
 
   create_table "relevant_activities", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

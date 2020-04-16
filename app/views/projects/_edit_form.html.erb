@@ -1,0 +1,144 @@
+<%= form_for project, :url => project_path(person.shortname, project), local: true do |form| %>
+
+  <% if project.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+    <ul>
+      <% project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+<div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Proyecto', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :external_identificator, 'ID Externo', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :external_identificator, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :internal_identificator, 'ID Interno', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :internal_identificator, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :source_type, 'Origen', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = Project::SOURCE_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :source_type, options, {} %>
+        </div>
+        <div class="extra-other">
+          <%= form.text_field :source, class:'input', required: true %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :research_type, 'Tipo de Investigación', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = Project::RESEARCH_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :research_type, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :objectives, 'Objetivos', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :objectives, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :results, 'Resultados esperados', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :results, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Fecha Inicio', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, type:'date', class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :end_date, 'Fecha Termino', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :end_date, type:'date', class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :extension_date, 'Fecha Prórroga', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :extension_date, type:'date', class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+<% end %>

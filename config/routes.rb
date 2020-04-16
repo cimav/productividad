@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   scope format: false, constraints: { email: /.+/ } do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       scope '/perfiles/:email' do
+        resources :projects, :path => 'proyectos'
         resources :journal_articles, :path => 'articulos-en-revistas'
         resources :conference_papers, :path => 'articulos-en-conferencias'
         resources :conference_works, :path => 'trabajos'
@@ -41,6 +42,8 @@ Rails.application.routes.draw do
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
 
+        get 'proyectos/muestra/:status/:year' => 'projects#index'
+        get 'proyectos/muestra/:status' => 'projects#index'
         get 'articulos-en-revistas/muestra/:status/:year' => 'journal_articles#index'
         get 'articulos-en-revistas/muestra/:status' => 'journal_articles#index'
         get 'articulos-en-conferencias/muestra/:status/:year' => 'conference_papers#index'

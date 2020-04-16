@@ -3,7 +3,7 @@
     Investigacion
   </p>
   <ul class="menu-list">
-    <li class="li-proyectos"><a>Proyectos ⌛</a></li>
+    <li class="li-proyectos"><%= link_to "Proyectos", projects_path(person.shortname) %></li>
 	  <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", journal_articles_path(person.shortname) %></li>
 	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", conference_papers_path(person.shortname) %></li>
 	  <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", popular_sciences_path(person.shortname) %></li>

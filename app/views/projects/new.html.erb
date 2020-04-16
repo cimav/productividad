@@ -1,0 +1,99 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Proyectos', projects_path(@person.shortname) %></li>
+        <li><a>Nuevo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to projects_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+<%= form_with(model: @project, local: true) do |form| %>
+  <% if @project.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(@project.errors.count, "error") %> prohibited this project from being saved:</h2>
+    <ul>
+      <% @project.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :name, 'Proyecto', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :name, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :source_type, 'Origen', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = Project::SOURCE_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :source_type, options, {} %>
+        </div>
+        <div class="extra-other">
+          <%= form.text_field :source, class:'input', required: true %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :research_type, 'Tipo de Investigación', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = Project::RESEARCH_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :research_type, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Fecha Inicio', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+      </div>
+    </div>
+  </div>
+
+
+  
+
+  <div class="actions is-pulled-right">
+    <a id="add-project" class="button is-link" data-shortname="<%= @person.shortname %>">Agregar</a>
+  </div>
+  <div class="is-clearfix"></div>
+
+<% end %>
+</div>
