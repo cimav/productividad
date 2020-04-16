@@ -1,36 +1,50 @@
-<div class="container profile-index">
-<% @departments.each do |department| %>
-  <h1><%= department.name %></h1>
-  <div class="columns is-multiline is-mobile">
-  <% department.people.where(status: Person::STATUS_ACTIVE).each do |p| %>
-  <div class="column is-one-third">
-  <article class="media">
-    <figure class="media-left">
-      <p class="image is-64x64">
-        <img class="is-rounded" src="<%= p.display_url rescue '' %>">
-      </p>
-    </figure>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong><%= link_to p.full_name, "/perfiles/#{p.shortname}" %></strong><br>
-          <small><%= p.email %></small><br>
-          <% if p.person_type.name == 'Empleado' %>
-            <span class="tag is-success"><%= p.person_type.name %></span>
+<div class="container is-fullhd profile-container">
+    <div class="columns">
+      <div class="column is-one-fifth profile-sidebar">
+        <aside class="menu">
+          <ul class="menu-list">
+            <% @departments.each do |department| %>
+              <li><a href="#departament-<%= department.id %>"><%= department.name %></a></li>
+            <% end %>
+          </ul>
+        </aside>
+      </div>
+      <div class="column profile-workarea profile-index">
+        <% @departments.each do |department| %>
+          <h1><a id="departament-<%= department.id %>"><%= department.name %></a></h1>
+          <div class="columns is-multiline is-mobile">
+          <% department.people.where(status: Person::STATUS_ACTIVE).each do |p| %>
+          <div class="column is-one-third">
+          <article class="media">
+            <figure class="media-left">
+              <p class="image is-64x64">
+                <img class="is-rounded" src="<%= p.display_url rescue '' %>">
+              </p>
+            </figure>
+            <div class="media-content">
+              <div class="content">
+                <p>
+                  <strong><%= link_to p.full_name, "/perfiles/#{p.shortname}" %></strong><br>
+                  <small><%= p.email %></small><br>
+                  <% if p.person_type.name == 'Empleado' %>
+                    <span class="tag is-success"><%= p.person_type.name %></span>
+                  <% end %>
+                  <% if p.person_type.name == 'Catedratico' %>
+                    <span class="tag is-primary"><%= p.person_type.name %></span>
+                  <% end %>
+                  <% if p.person_type.name == 'Estudiante' %>
+                    <span class="tag is-info"><%= p.person_type.name %></span>
+                  <% end %>
+                </p>
+              </div>
+            </div>
+          </article>
+          </div>
           <% end %>
-          <% if p.person_type.name == 'Catedratico' %>
-            <span class="tag is-primary"><%= p.person_type.name %></span>
-          <% end %>
-          <% if p.person_type.name == 'Estudiante' %>
-            <span class="tag is-info"><%= p.person_type.name %></span>
-          <% end %>
-        </p>
+          </div>
+        <% end %>
       </div>
     </div>
-  </article>
-  </div>
-  <% end %>
-  </div>
-<% end %>
-
 </div>
+
+
