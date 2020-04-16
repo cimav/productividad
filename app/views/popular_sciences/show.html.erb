@@ -1,0 +1,31 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Difusión y Divulgación', popular_sciences_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @popular_science.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_popular_science_path(@person.shortname, @popular_science), class: 'button is-link' %>
+    <% end %>
+    <%= link_to popular_sciences_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @popular_science.name %></h1>
+
+
+<p class="product-extra">
+<span class="tag is-light"><%= @popular_science.activity_type_text %></span> <%= "#{@popular_science.start_date}, #{@popular_science.location} (#{@popular_science.country.name})" %>
+</p>
+
+
+<%= render 'product_files/list', product: @popular_science  %>
+
+  
+</div>

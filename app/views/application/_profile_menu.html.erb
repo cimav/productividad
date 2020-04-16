@@ -6,8 +6,8 @@
     <li class="li-proyectos"><a>Proyectos ⌛</a></li>
 	  <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", journal_articles_path(person.shortname) %></li>
 	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", conference_papers_path(person.shortname) %></li>
-	  <li class="li-divulgacion"><a>Divulgación ⌛</a></li>
-	  <li class="li-libros"><%= link_to "Libros y capítulos", books_path(person.shortname) %></li>
+	  <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", popular_sciences_path(person.shortname) %></li>
+	  <li class="li-libros"><%= link_to "Libros y Capítulos", books_path(person.shortname) %></li>
 	  <li class="li-trabajos"><%= link_to "Trabajos", conference_works_path(person.shortname) %></li>
 	  <li class="li-patentes"><%= link_to "Patentes", patents_path(person.shortname) %></li>
 	  <li class="li-conferencias-por-invitacion"><%= link_to "Conferencias por Invitación", invited_conferences_path(person.shortname) %></li>

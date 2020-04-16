@@ -82,6 +82,7 @@ class AwardsController < ApplicationController
 
       if @award.update(award_params)
         changes = @award.changes
+        @award.last_date = @award.grant_date
     
         @award.save
 
