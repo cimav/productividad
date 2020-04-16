@@ -1,0 +1,32 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Evaluador de Proyectos', journal_article_reviewers_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if @journal_article_reviewer.can_edit(current_user.id) %>
+      <%= link_to 'Editar', edit_journal_article_reviewer_path(@person.shortname, @journal_article_reviewer), class: 'button is-link' %>
+    <% end %>
+    <%= link_to journal_article_reviewers_path(@person.shortname), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @journal_article_reviewer.title %></h1>
+
+<p class="product-extra">
+<%= @journal_article_reviewer.authors %><br/>
+<%= "#{@journal_article_reviewer.review_date}, #{@journal_article_reviewer.journal.name}" %>
+</p>
+
+
+
+<%= render 'product_files/list', product: @journal_article_reviewer  %>
+
+  
+</div>

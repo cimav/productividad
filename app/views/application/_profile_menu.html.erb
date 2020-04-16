@@ -15,7 +15,7 @@
 	  <li class="li-reconocimientos"><%= link_to "Reconocimientos", awards_path(person.shortname) %></li>
 	  <li class="li-organizador-de-eventos"><%= link_to "Organizador de Eventos", event_organizers_path(person.shortname) %></li>
 	  <li class="li-evaluador-de-proyectos"><%= link_to "Evaluador de Proyectos", project_reviewers_path(person.shortname) %></li>
-    <li class="li-evaluador-de-articulos"><a>Evaluador de Artículos ⌛</a></li>
+    <li class="li-evaluador-de-articulos"><%= link_to "Evaluador de Artículos", journal_article_reviewers_path(person.shortname) %></li>
 	  <li class="li-actividades-relevantes"><%= link_to "Actividades Relevantes", relevant_activities_path(person.shortname) %></li>
   </ul>
   <p class="menu-label">

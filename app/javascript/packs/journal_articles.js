@@ -109,6 +109,7 @@ $(document).on('click', '.journal-list-item', function() {
   var journal_id = $(this).data('id');
   $('#journal_article_journal_id').val(journal_id);
   $('#product_cite_journal_id').val(journal_id);
+  $('#journal_article_reviewer_journal_id').val(journal_id);
   var url = '/revistas/datos/' + journal_id;
     $.get(url, function(data) {
       $('#selected-journal').html(data);
@@ -128,6 +129,8 @@ $(document).on('click', '#submit-new-journal', function() {
     .done(function( data ) {
       var journal_id = data.id;
       $('#journal_article_journal_id').val(journal_id);
+      $('#product_cite_journal_id').val(journal_id);
+      $('#journal_article_reviewer_journal_id').val(journal_id);
       var url = '/revistas/datos/' + journal_id;
         $.get(url, function(data) {
           $('#selected-journal').html(data);

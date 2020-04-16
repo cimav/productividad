@@ -1,0 +1,81 @@
+<%= form_for journal_article_reviewer, :url => journal_article_reviewer_path(person.shortname, journal_article_reviewer), local: true do |form| %>
+
+  <% if journal_article_reviewer.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(journal_article_reviewer.errors.count, "error") %> prohibited this journal_article_reviewer from being saved:</h2>
+    <ul>
+      <% journal_article_reviewer.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :title, 'Título', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :title, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :authors, 'Autores', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_area :authors, class:'textarea' %></p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :journal_id, 'Revista', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p>
+          <%= journal_article_reviewer.journal.name %>
+          <div class="row-extra">
+            <% if journal_article_reviewer.journal.is_refereed %>
+              <span class="tag is-light">Arbitrada</span>
+            <% end %>
+            <% if journal_article_reviewer.journal.is_international %>
+              <span class="tag is-light">Internacional</span>
+            <% end %>
+            <% if journal_article_reviewer.journal.is_indexed %>
+              <span class="tag is-light">Índizada</span>
+            <% end %>
+            <% if journal_article_reviewer.journal.is_indexed %>
+              <span class="tag is-light">Factor de impacto <%= journal_article_reviewer.journal.impact_factor.year rescue '-' %>: <%= journal_article_reviewer.journal.impact_factor.impact_factor rescue '-' %></span>
+            <% end %>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :review_date, 'Fecha', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :review_date, type:'date', class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar', class:'button is-link' %>
+  </div>
+<% end %>
