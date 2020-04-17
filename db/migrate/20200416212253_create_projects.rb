@@ -7,8 +7,6 @@ class CreateProjects < ActiveRecord::Migration[6.0]
       t.string     :internal_identificator
       t.integer    :source_type
       t.string     :source
-      t.text       :objectives
-      t.text       :results
       t.integer    :research_type
       t.date       :start_date
       t.date       :end_date

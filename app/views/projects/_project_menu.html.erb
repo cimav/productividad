@@ -1,0 +1,21 @@
+<div class="project-menu-area">
+  <div class="columns is-gapless">
+
+    <div class="column"><a href="<%= administrar_informacion_project_path(person.shortname, project) %>"><div class="project-menu project-menu-informacion">Información</div></a></div>
+    
+    <div class="column"><a href="<%= administrar_presupuesto_project_path(person.shortname, project) %>"><div class="project-menu project-menu-presupuesto">Presupuesto</div></a></div>
+    
+    <div class="column"><a href="<%= project_project_messages_path(person.shortname, project) %>"><div class="project-menu project-menu-mensajes">Mensajes</div></a></div>
+    
+    <div class="column"><a href="<%= administrar_tareas_project_path(person.shortname, project) %>"><div class="project-menu project-menu-tareas">Tareas</div></a></div>
+    
+    <div class="column"><a href="<%= administrar_calendario_project_path(person.shortname, project) %>"><div class="project-menu project-menu-calendario">Calendario</div></a></div>
+    
+    <div class="column"><a href="<%= administrar_servicios_project_path(person.shortname, project) %>"><div class="project-menu project-menu-servicios">Servicios</div></a></div>
+    
+    <div class="column"><a href="<%= administrar_participantes_project_path(person.shortname, project) %>"><div class="project-menu project-menu-participantes">Participantes</div></a></div>
+    
+    <div class="column"><a href="<%= administrar_documentos_project_path(person.shortname, project) %>"><div class="project-menu project-menu-documentos">Documentos</div></a></div>
+  
+  </div>
+</div>

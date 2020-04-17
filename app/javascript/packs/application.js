@@ -57,10 +57,19 @@ $(document).on("turbolinks:load", function() {
   $('ul.menu-list li').each(function(i) {
   	var url = window.location.href
   	var c = $(this).attr('class').replace('li-','');
-  	console.log(url + ' incluye ' + c);
   	if (url.includes(c)) {
   	  $(this).addClass('active');	
   	}
+  });
+
+  $('.project-menu').each(function(i) {
+    var url = window.location.href
+    var c = $(this).attr('class').replace('project-menu-','').replace('project-menu','').replace(' ','');
+    console.log(url + ' incluye *' + c + '*');
+    if (url.includes(c)) {
+      console.log('SIIIII');
+      $(this).addClass('active'); 
+    }
   });
 
 
@@ -82,3 +91,6 @@ window.showNotice = function(msg) {
 
 
 
+
+require("trix")
+require("@rails/actiontext")

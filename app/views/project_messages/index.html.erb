@@ -1,0 +1,31 @@
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Mensajes', project_project_messages_path(@person.shortname, @project) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+  	<a href="<%= new_project_project_message_path(@person.shortname, @project) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus"></i></span></a>
+  </div>
+</div>
+<% @project.project_messages.where("status = ?", ProjectMessage::ACTIVE).order('created_at DESC').each do |message| %>
+  <article class="media message-item" data-url="<%= project_project_message_path(@person.shortname, @project, message) %>">
+    <div class="media-left">
+      <figure class="image is-48x48"><img class="is-rounded" src="<%= message.person.display_url rescue '' %>" title="<%= message.person.full_name %>"></figure>
+    </div>
+    <div class="media-content">
+      <div class="content">
+      	<strong class="message-title"><%= message.title %></strong><br>
+      	<span class="message-meta"><%= message.person.full_name %> &bull; <%= message.created_at %></span> — <%= strip_tags(message.content.to_s)[0...200] %>
+      </div>
+    </div>
+  </article>
+  <% end %>

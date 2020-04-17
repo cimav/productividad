@@ -24,7 +24,20 @@ Rails.application.routes.draw do
   scope format: false, constraints: { email: /.+/ } do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       scope '/perfiles/:email' do
-        resources :projects, :path => 'proyectos'
+        resources :projects, :path => 'proyectos' do 
+          resources :project_messages, :path => 'administrar/mensajes'
+          member do
+            get 'administrar' => 'projects#admin'
+            get 'administrar/informacion' => 'projects#edit'
+            get 'administrar/presupuesto' => 'projects#budget'
+            #get 'administrar/mensajes' => 'projects#messages'
+            get 'administrar/tareas' => 'projects#tasks'
+            get 'administrar/calendario' => 'projects#calendar'
+            get 'administrar/servicios' => 'projects#services'
+            get 'administrar/participantes' => 'projects#participants'
+            get 'administrar/documentos' => 'projects#documents'
+          end
+        end
         resources :journal_articles, :path => 'articulos-en-revistas'
         resources :conference_papers, :path => 'articulos-en-conferencias'
         resources :conference_works, :path => 'trabajos'

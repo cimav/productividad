@@ -497,3 +497,17 @@ h1 a {
 .extra-other {
   margin-top: 0.5em;
 }
+
+.single-rich {
+  trix-editor {
+    min-height: 200px !important;
+  }
+}
+
+.title-input {
+  input {
+    font-size: 1.5em !important;
+    font-weight: bold;
+  }
+  
+}

@@ -1,3 +1,170 @@
 // Place all the styles related to the Projects controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+$rainbow-1: #e53935;
+$rainbow-2: #ff7043;
+$rainbow-3: #ffab00;
+$rainbow-4: #4caf50;
+$rainbow-5: #00bcd4;
+$rainbow-6: #9c27b0;
+$rainbow-7: #ad1457;
+$rainbow-8: #c51162;
+
+.project-title {
+  text-align: center;
+  font-weight: 500 !important;
+  font-size: 1.5em !important;
+}
+
+.project-cards-area {
+  margin-top: 1em;
+  .card {
+    height: 250px;
+    padding: 0 1em;
+  }	
+}
+
+.project-menu-area {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid #ddd;
+}
+
+.project-menu {
+  color: #666;
+  padding: 1em 0;
+  text-transform: uppercase;
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+  font-size: 80%;
+  text-align: center;
+  margin: 0 4px;
+  &:hover {
+    color: #000;
+    cursor: pointer;
+  }
+  &.active {
+    color: #fff !important;
+    font-weight: bold !important;
+  }
+}
+
+.project-menu-informacion    { 
+  border-top: 2px solid $rainbow-1; 
+  &.active {
+    background-color: lighten($rainbow-1, 10%);
+  }
+}
+.project-menu-presupuesto    { 
+  border-top: 2px solid $rainbow-2; 
+  &.active {
+    background-color: lighten($rainbow-2, 10%);
+  }
+}
+.project-menu-mensajes       { 
+  border-top: 2px solid $rainbow-3; 
+  &.active {
+    background-color: lighten($rainbow-3, 10%);
+  }
+}
+.project-menu-tareas         { 
+  border-top: 2px solid $rainbow-4; 
+  &.active {
+    background-color: lighten($rainbow-4, 10%);
+  }
+}
+.project-menu-calendario { 
+  border-top: 2px solid $rainbow-5; 
+  &.active {
+    background-color: lighten($rainbow-5, 10%);
+  }
+}
+.project-menu-servicios      { 
+  border-top: 2px solid $rainbow-6; 
+  &.active {
+    background-color: lighten($rainbow-6, 10%);
+  }
+}
+.project-menu-participantes  { 
+  border-top: 2px solid $rainbow-7; 
+  &.active {
+    background-color: lighten($rainbow-7, 10%);
+  }
+}
+.project-menu-documentos     { 
+  border-top: 2px solid $rainbow-8; 
+  &.active {
+    background-color: lighten($rainbow-8, 10%);
+  }
+}
+
+
+.project-card {
+  cursor: pointer;
+}
+
+.project-card-title {
+  color: #000;
+  font-weight: bold;
+  font-size: 80%;
+  text-align: center;
+  padding: 1em 0;
+  text-transform: uppercase;
+}
+
+.project-card-title-informacion    { border-bottom: 2px solid $rainbow-1; }
+.project-card-title-presupuesto    { border-bottom: 2px solid $rainbow-2; }
+.project-card-title-mensajes       { border-bottom: 2px solid $rainbow-3; }
+.project-card-title-tareas         { border-bottom: 2px solid $rainbow-4; }
+.project-card-title-calendario     { border-bottom: 2px solid $rainbow-5; }
+.project-card-title-servicios      { border-bottom: 2px solid $rainbow-6; }
+.project-card-title-participantes  { border-bottom: 2px solid $rainbow-7; }
+.project-card-title-documentos     { border-bottom: 2px solid $rainbow-8; }
+
+.project-card-icon {
+  margin: 24px 0;
+  text-align: center;
+  font-size: 5em;
+}
+
+.project-card-icon-informacion    { color: $rainbow-1; }
+.project-card-icon-presupuesto    { color: $rainbow-2; }
+.project-card-icon-mensajes       { color: $rainbow-3; }
+.project-card-icon-tareas         { color: $rainbow-4; }
+.project-card-icon-calendario     { color: $rainbow-5; }
+.project-card-icon-servicios      { color: $rainbow-6; }
+.project-card-icon-participantes  { color: $rainbow-7; }
+.project-card-icon-documentos     { color: $rainbow-8; }
+
+
+.project-edit {
+	trix-editor {
+		min-height: 200px !important;
+	}
+}
+
+.project-card-content {
+  margin-top: 1em;
+}
+
+.project-tab-title {
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+.message-title-header {
+
+}
+
+.message-title {
+  font-size: 1.1em;
+}
+
+.message-item {
+  cursor: pointer;
+}
+
+.message-meta {
+  color: #607d8b;
+}

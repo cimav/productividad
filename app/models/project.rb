@@ -1,9 +1,10 @@
 class Project < ApplicationRecord
   belongs_to :person  
-  has_many :product_participants, :as => :attachable
-  has_many :acknowledgments, :as => :attachable
-  has_many :product_files, :as => :attachable
   has_many :activity_logs, :as => :item
+  has_many :project_messages
+
+  has_rich_text :objectives
+  has_rich_text :results
 
   DEFINITION  = 1
   NEGOTATION  = 2
@@ -92,8 +93,6 @@ class Project < ApplicationRecord
   def can_edit(person_id)
     editable = false
     if self.person_id == person_id
-      editable = true
-    elsif self.product_participants.where(person_id: person_id, status: ProductParticipant::ACTIVE).count >= 1
       editable = true
     end
     editable

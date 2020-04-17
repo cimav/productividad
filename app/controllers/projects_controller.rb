@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :auth_required
 
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
   before_action :set_person
 
 
@@ -32,7 +32,8 @@ class ProjectsController < ApplicationController
         @filter_status = 'todos'
     end
        
-    @all_projects = Project.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (projects.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('projects.id') 
+    # @all_projects = Project.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (projects.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('projects.id') 
+    @all_projects = Project.where("projects.person_id = ?", @person.id) 
     
     @projects = @all_projects
 
@@ -60,6 +61,39 @@ class ProjectsController < ApplicationController
 
     render :layout => 'profile'
   end
+
+  def admin 
+    render :layout => 'profile'
+  end
+
+  def budget 
+    render :layout => 'profile'
+  end
+
+  def messages 
+    render :layout => 'profile'
+  end
+
+  def tasks 
+    render :layout => 'profile'
+  end
+
+  def calendar 
+    render :layout => 'profile'
+  end
+
+  def services 
+    render :layout => 'profile'
+  end
+
+  def participants 
+    render :layout => 'profile'
+  end
+
+  def documents 
+    render :layout => 'profile'
+  end
+
 
   # GET /projects/1
   # GET /projects/1.json

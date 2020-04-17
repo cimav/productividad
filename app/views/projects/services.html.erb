@@ -2,5 +2,4 @@
 <div class="product">
   <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
   <%= render 'project_menu', project: @project, person: @person  %>
-  <%= render 'edit_form', project: @project, person: @person  %>
 </div>

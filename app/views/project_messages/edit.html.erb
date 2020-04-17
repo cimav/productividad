@@ -1,0 +1,34 @@
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Mensajes', project_project_messages_path(@person.shortname, @project) %></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+  	<%= link_to project_project_message_path(@person.shortname, @project, @project_message), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<%= form_for @project_message, :url => project_project_message_path(@person.shortname, @project), local: true do |form| %>
+<div class="field">
+  <p class="control title-input"><%= form.text_field :title, class:'input', required: true, placeholder: 'Asunto' %></p>
+</div>
+
+<div class="field">
+  <p class="control single-rich"><%= form.rich_text_area :content %></p>
+</div>
+
+<div class="actions is-pulled-right">
+    <%= form.submit 'Guardar', class:'button is-link' %>
+  </div>
+<% end %>

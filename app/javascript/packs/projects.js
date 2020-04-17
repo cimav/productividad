@@ -33,6 +33,16 @@ $(document).on('click', '#add-project', function() {
  
 });
 
+$(document).on('click', '.project-card', function() {
+  var url =  $(this).data('url');
+  window.location = url;
+});
+
+$(document).on('click', '.message-item', function() {
+  var url =  $(this).data('url');
+  window.location = url;
+});
+
 
 $(document).on('change', '.filter-select', function() {
   var status = $('#filter-status').val()

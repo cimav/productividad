@@ -11,6 +11,7 @@ capybara-*.html
 *.orig
 /public
 /private
+/storage
 yarn-error.log
 rerun.txt
 run.sh
