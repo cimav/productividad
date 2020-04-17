@@ -102,6 +102,7 @@ $rainbow-8: #c51162;
 
 .project-card {
   cursor: pointer;
+  overflow: hidden;
 }
 
 .project-card-title {
@@ -167,4 +168,10 @@ $rainbow-8: #c51162;
 
 .message-meta {
   color: #607d8b;
+}
+
+.message-admin-item {
+  font-size: 90%;
+  padding: 0 !important;
+  margin: 0 !important;
 }
