@@ -1,0 +1,53 @@
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Participantes', project_project_participants_path(@person.shortname, @project) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+  	<a href="<%= new_project_project_participant_path(@person.shortname, @project) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus"></i></span></a>
+    <a href="<%= project_administar_participantes_porcentajes_path(@person.shortname, @project) %>" class="button is-primary"><span class="icon is-small"><i class="fas fa-percentage"></i></span></a>
+  </div>
+</div>
+<table class="table is-fullwidth is-striped">
+  <tr>
+    <th>Líder</th>
+    <th colspan="2">Nombre</th>
+    <th>Rol</th>
+    <th style="width: 13em; text-align: right;">Participación</th>
+    <th>
+    </th>
+  </tr>
+  <% @project.project_participants.where('status = ?', ProjectParticipant::ACTIVE).order('participation DESC').each do |participant| %>
+    <tr>
+      <td style="text-align: center; width: 1em;">
+        <% if participant.role_type == ProjectParticipant::LEADER %>
+          <span class="icon is-small has-text-warning"><i class="fas fa-star"></i></span>
+        <% end %>
+      </td>
+      <td style="width: 32px;">
+        <figure class="image is-24x24"><img class="is-rounded" src="<%= participant.person.display_url rescue '' %>" title="<%= participant.person.full_name %>"></figure>
+      </td>
+      <td><%= link_to participant.person.full_name, "/perfiles/#{participant.person.shortname}" %></td>
+      <td><%= participant.role %></td>
+      <td style="width: 13em; text-align: right;"><%= participant.participation %>%</td>
+      <td class="participant-actions">
+        <a href="<%= edit_project_project_participant_path(@person.shortname, @project, participant) %>"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
+        <% if participant.participant_type != ProjectParticipant::LEADER %>
+          <%= link_to project_project_participant_path(@person.shortname, @project, participant), data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
+            <span class="icon is-small"><i class="fas fa-trash"></i></span>
+          <% end %>
+        <% end %>
+
+      </td>
+    </tr>
+  <% end %>
+</table>

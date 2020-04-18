@@ -22,10 +22,37 @@
   <%= @project.research_type_text %><br>
   <%= @project.source_type_text %> (<%= @project.source %>)
 </div>
+
 <h2>Objetivo</h2>
 <p><%= @project.objectives %></p>
+
 <h2>Resultados Esperados</h2>
 <p><%= @project.results %></p>
+
+<h2>Participantes</h2>
+<table class="table is-fullwidth is-striped">
+  <tr>
+    <th>Líder</th>
+    <th colspan="2">Nombre</th>
+    <th>Rol</th>
+    <th style="width: 13em; text-align: right;">Participación</th>
+  </tr>
+  <% @project.project_participants.where('status = ?', ProjectParticipant::ACTIVE).order('participation DESC').each do |participant| %>
+    <tr>
+      <td style="text-align: center; width: 1em;">
+        <% if participant.role_type == ProjectParticipant::LEADER %>
+          <span class="icon is-small has-text-warning"><i class="fas fa-star"></i></span>
+        <% end %>
+      </td>
+      <td style="width: 32px;">
+        <figure class="image is-24x24"><img class="is-rounded" src="<%= participant.person.display_url rescue '' %>" title="<%= participant.person.full_name %>"></figure>
+      </td>
+      <td><%= link_to participant.person.full_name, "/perfiles/#{participant.person.shortname}" %></td>
+      <td><%= participant.role %></td>
+      <td style="width: 13em; text-align: right;"><%= participant.participation %>%</td>
+    </tr>
+  <% end %>
+</table>
 
   
 </div>

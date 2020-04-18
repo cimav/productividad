@@ -175,3 +175,15 @@ $rainbow-8: #c51162;
   padding: 0 !important;
   margin: 0 !important;
 }
+
+.message-author {
+  margin-bottom: 1em;
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #eee;
+}
+
+.participant-actions {
+  a {
+    padding-right: 1em;
+  }
+}

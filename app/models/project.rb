@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   belongs_to :person  
   has_many :activity_logs, :as => :item
   has_many :project_messages
+  has_many :project_participants
 
   has_rich_text :objectives
   has_rich_text :results

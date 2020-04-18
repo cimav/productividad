@@ -26,7 +26,7 @@ $(document).on('click', '#add-project', function() {
                })
     .done(function( data ) {
       var project_id = data.id;
-      url = url + '/' + project_id + '/editar';
+      url = url + '/' + project_id + '/administrar/informacion';
       window.location = url;
     })
   }

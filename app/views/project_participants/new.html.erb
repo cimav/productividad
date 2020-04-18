@@ -1,0 +1,102 @@
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Participantes', project_project_participants_path(@person.shortname, @project) %></li>
+        <li><a>Nuevo Participante</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to project_project_participants_path(@person.shortname, @project), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<%= form_for @project_participant, :url => project_project_participants_path(@person.shortname, @project), local: true do |form| %>
+
+
+  <% 
+    person_type_default = 1  # Empleado
+    person_types = PersonType.order(:name).pluck(:id, :name)
+    type_options = {}
+    person_types.each do |p|
+      type_options[p[1]] = p[0]
+    end
+    # type_options[ProductParticipant::PARTICIPANT_TYPE[ProductParticipant::IS_EXTERNAL]] = ProductParticipant::IS_EXTERNAL
+    participant_type_id = person_type_default
+   %>
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :participant_type, 'Participante', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <div class="select">
+          <%= select_tag :participant_type, options_for_select(type_options, participant_type_id), class: 'participant-type-select', 'data-participant-id': 'new',id: "participant_type_new" %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control">
+        <div class="select" id="select_person_new" >
+          <%= render 'product_participants/participant_select', type_id: participant_type_id, participant_id: 'new', selected_value: 0 %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+    
+
+
+        
+
+
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :role_type, 'Tipo de participación', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = ProjectParticipant::ROLE_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :role_type, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :role, 'Rol en el proyecto', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <p class="control"><%= form.text_field :role, class:'input', required: true, placeholder: 'Rol' %></p>
+    </div>
+  </div>
+  </div>
+
+
+<div class="actions is-pulled-right">
+    <%= form.submit 'Guardar', class:'button is-link' %>
+  </div>
+<% end %>

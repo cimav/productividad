@@ -127,6 +127,12 @@ class ProjectsController < ApplicationController
     @project.last_date = @project.start_date
 
     if @project.save
+      leader = @project.project_participants.new
+      leader.person_id = current_user.id
+      leader.participation = 100
+      leader.role_type = ProjectParticipant::LEADER
+      leader.role = "Lider del proyecto"
+      leader.save
       log = @project.activity_logs.new 
       log.message = "Proyecto agregado: #{@project.name}"
       log.person_id = current_user.id
