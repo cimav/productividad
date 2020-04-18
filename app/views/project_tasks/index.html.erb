@@ -1,0 +1,22 @@
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Tareas', project_project_tasks_path(@person.shortname, @project) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+  	<a href="<%= project_administrar_tareas_nueva_lista_path(@person.shortname, @project) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus"></i></span> <span>Agregar Lista</span></a> 
+  </div>
+</div>
+<div id="tasks-area">
+<%= render 'task_lists', project: @project, person: @person  %>
+</div>
+

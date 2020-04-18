@@ -1,0 +1,21 @@
+<% project.project_task_lists.where("status = ?", ProjectTaskList::ACTIVE).order('position DESC').each do |list| %>
+  <div class="task-list-header">
+    <div class="task-list-name"><%= list.name %></div>
+    <div class="task-list-content"><%= list.content %></div>
+  </div>
+  <div class="task-list-tasks">
+    <% list.project_tasks.where('status = ?', ProjectTask::ACTIVE).order(:done).each do |task| %>
+      <div class="task-item">
+      	<% checked = task.done == ProjectTask::DONE ? 'checked="checked':'' %>
+        <input type="checkbox" data-url="<%= marcar_project_project_task_path(person.shortname, project, task) %>" data-url-list="<%= project_administrar_tareas_listas_path(person.shortname, project) %>"class="task-checkbox" <%= checked %>> <span class="task-name"><a href="<%= project_project_task_path(person.shortname, project, task) %>"><%= task.name %></a></span><br>
+        <div class="task-extra">
+          <figure class="image is-16x16"><img class="is-rounded" src="<%= task.assigned.display_url rescue '' %>" title="<%= task.assigned.full_name %>"></figure>
+          <%= task.assigned.full_name %>
+        </div>
+      </div>
+    <% end %>
+    <div class="task-item">
+      <input type="checkbox" id="new-task" disabled class="task-checkbox"> <a href="<%= new_project_project_task_path(person.shortname, project) %>?list=<%= list.id %>" class="button is-rounded is-small">Agregar tarea</a>
+    </div>
+  </div>
+<% end %>

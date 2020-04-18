@@ -31,4 +31,8 @@ class ProjectParticipant < ApplicationRecord
   	ROLE_TYPES[participant_type.to_i]
   end
 
+  def full_name
+    person.full_name
+  end
+
 end

@@ -3,6 +3,7 @@ class Project < ApplicationRecord
   has_many :activity_logs, :as => :item
   has_many :project_messages
   has_many :project_participants
+  has_many :project_task_lists
 
   has_rich_text :objectives
   has_rich_text :results

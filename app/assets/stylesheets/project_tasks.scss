@@ -1,0 +1,57 @@
+// Place all the styles related to the ProjectTasks controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.task-list-header {
+  padding: 1em 0;
+  border-bottom: 1px solid #eee;
+}
+
+.task-list-name {
+  font-weight: bold;	
+  font-size: 1.2em;
+}
+
+.task-list-content {
+  font-size: 80%;
+}
+
+.task-item {
+  padding: 0.5em 0;
+}
+
+.task-checkbox {
+  margin-right: 8px;
+  font-size: 2em;
+}
+
+.task-name {
+  font-weight: 500;
+}
+
+.task-extra {
+  margin-left: 24px;
+  margin-top: 4px;
+  color: #666;
+  font-size: 80%;
+  figure {
+    float: left;
+    margin-right: 4px;
+  }
+}
+
+.task-list-tasks-admin {
+  margin: 0;
+  padding: 4px 0 0 0;
+  input {
+    float: left;
+    padding-top: 3px;
+  }
+  figure {
+    float: left;
+    padding-top: 3px;
+  }
+  .task-name {
+    padding-left: 4px;
+  }
+}

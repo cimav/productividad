@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_17_222354) do
+ActiveRecord::Schema.define(version: 2020_04_18_015740) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -579,6 +579,33 @@ ActiveRecord::Schema.define(version: 2020_04_17_222354) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["country_id"], name: "index_project_reviewers_on_country_id"
     t.index ["person_id"], name: "index_project_reviewers_on_person_id"
+  end
+
+  create_table "project_task_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "project_id"
+    t.bigint "person_id"
+    t.string "name"
+    t.integer "position"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_project_task_lists_on_person_id"
+    t.index ["project_id"], name: "index_project_task_lists_on_project_id"
+  end
+
+  create_table "project_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "project_task_list_id"
+    t.bigint "person_id"
+    t.string "name"
+    t.integer "position"
+    t.integer "assigned_to"
+    t.integer "done"
+    t.date "done_date"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_project_tasks_on_person_id"
+    t.index ["project_task_list_id"], name: "index_project_tasks_on_project_task_list_id"
   end
 
   create_table "projects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

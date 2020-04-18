@@ -28,14 +28,23 @@ Rails.application.routes.draw do
           resources :project_messages, :path => 'administrar/mensajes'
 
           resources :project_participants, :path => 'administrar/participantes'
-          get 'administar/participantes/porcentajes' => 'project_participants#percentages'
-          post 'administar/participantes/porcentajes/guardar' => 'project_participants#percentages_save'
+          get 'administrar/participantes/porcentajes' => 'project_participants#percentages'
+          post 'administrar/participantes/porcentajes/guardar' => 'project_participants#percentages_save'
+
+          
+          get 'administrar/tareas/nueva-lista' => 'project_tasks#new_list'
+          get 'administrar/tareas/listas' => 'project_tasks#task_lists'
+          resources :project_tasks, :path => 'administrar/tareas' do
+            member do
+              post 'marcar' => 'project_tasks#mark'
+            end
+          end
+          post 'administrar/tareas/nueva-lista/guardar' => 'project_tasks#new_list_save'
 
           member do
             get 'administrar' => 'projects#admin'
             get 'administrar/informacion' => 'projects#edit'
             get 'administrar/presupuesto' => 'projects#budget'
-            get 'administrar/tareas' => 'projects#tasks'
             get 'administrar/calendario' => 'projects#calendar'
             get 'administrar/servicios' => 'projects#services'
             get 'administrar/documentos' => 'projects#documents'

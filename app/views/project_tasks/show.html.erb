@@ -1,0 +1,42 @@
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level project-actions">
+  <div class="level-left">
+    <div class="message-title-header"><span class="project-tab-title"><%= @project_task.name %></span></div>
+  </div>
+  <div class="level-right">
+    <% if @project_task.project_task_list.person_id == current_user.id %>
+      <a href="<%= edit_project_project_task_path(@person.shortname, @project) %>" class="button is-link"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
+      <%= link_to project_project_task_path(@person.shortname, @project), data: {:confirm => '¿Confirmar?'}, class: 'button is-danger', :method => :delete do %>
+        <span class="icon is-small"><i class="fas fa-trash" aria-hidden="true"></i></span>
+      <% end %>
+    <% end %>
+
+  	<%= link_to project_project_tasks_path(@person.shortname, @project), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="media message-author">
+  <div class="media-left">
+    <figure class="image is-48x48"><img class="is-rounded" src="<%= @project_task.person.display_url rescue '' %>" title="<%= @project_task.person.full_name %>"></figure>
+  </div>
+  <div class="media-content">
+    <div class="content">
+      <div class="message-extra">
+        <% if @project_task.assigned_to == @project_task.person_id %>
+        Tarea creada por: <figure class="image is-16x16"><img class="is-rounded" src="<%= @project_task.person.display_url rescue '' %>" title="<%= @project_task.person.full_name %>"></figure>
+            <%= link_to @project_task.person.full_name, "/perfiles/#{@project_task.person.shortname}" %>
+        <% end %>
+      </div>
+      <strong><%= @project_task.person.full_name %></strong><br>
+      <%= @project_task.created_at %>
+      
+    </div>
+  </div>
+</div>
+<%= @project_task.content %>

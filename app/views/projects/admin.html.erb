@@ -58,9 +58,26 @@
   <div class="columns">
 
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/tareas">
+      <div class="card project-card" data-url="<%= project_project_tasks_path(@person.shortname, @project) %>">
         <div class="project-card-title project-card-title-tareas">Tareas</div>
-        <div class="project-card-icon"><span class="icon project-card-icon-tareas"><i class="fas fa-list-alt"></i></span></div>
+        <% lists = @project.project_task_lists.where("status = ?", ProjectTaskList::ACTIVE).order('position DESC').limit(3) %>
+        <% if lists.count <= 0 %>
+          <div class="project-card-icon"><span class="icon project-card-icon-tareas"><i class="fas fa-list-alt"></i></span></div>
+        <% end %>
+        <% lists.each do |list| %>
+          <br><strong><%= list.name %></strong>
+          <div class="task-list-tasks-admin">
+            <% list.project_tasks.where('status = ?', ProjectTask::ACTIVE).order(:done).each do |task| %>
+              <div class="task-item-admin">
+                <% checked = task.done == ProjectTask::DONE ? 'checked="checked':'' %>
+                <input type="checkbox" class="task-checkbox" <%= checked %> disabled>  
+                <figure class="image is-16x16"><img class="is-rounded" src="<%= task.assigned.display_url rescue '' %>" title="<%= task.assigned.full_name %>"></figure>
+                 <span class="task-name"><%= task.name %></span>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+        <div class="white-gradient"></div>
       </div>
     </div>
     

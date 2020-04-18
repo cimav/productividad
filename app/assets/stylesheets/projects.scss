@@ -182,10 +182,30 @@ $rainbow-8: #c51162;
   margin: 0 !important;
 }
 
+.project-actions {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1em;
+  margin-bottom: 0.5em !important;
+  .button {
+    margin-left: 0.5em;
+  }
+}
+
 .message-author {
   margin-bottom: 1em;
-  padding-bottom: 0.5em;
+  padding: 0 0 0.5em 0;
   border-bottom: 1px solid #eee;
+}
+
+.message-extra {
+  float: right;
+  margin: 4px 0 0 0;
+  color: #666;
+  font-size: 80%;
+  figure {
+    float: left;
+    margin-right: 4px;
+  }
 }
 
 .participant-actions {
