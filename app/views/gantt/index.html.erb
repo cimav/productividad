@@ -1,0 +1,41 @@
+<% content_for :head do %>
+    <%= stylesheet_link_tag 'https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css' %>
+    <%= javascript_include_tag 'https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js' %>
+    <%= javascript_include_tag 'http://export.dhtmlx.com/gantt/api.js' %>
+<% end %>
+<%= render 'projects/project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
+</div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Calendario', project_project_tasks_path(@person.shortname, @project) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+  	<button onclick="gantt.exportToPDF()" class="button"><span class="icon is-small"><i class="fas fa-file-pdf"></i></span> <span>PDF</span></button> 
+  	<button onclick="gantt.exportToPNG()" class="button"><span class="icon is-small"><i class="fas fa-image"></i></span> <span>PNG</span></button> 
+  </div>
+</div>
+
+<div id="gantt_here" style='width:100%; height:800px;'></div>
+
+<script>
+	gantt.i18n.setLocale("es");
+    gantt.config.xml_date="%Y-%m-%d %H:%i";
+
+    gantt.config.order_branch = true;
+    gantt.config.order_branch_free = true;
+
+    gantt.init("gantt_here");
+    gantt.load("/gantt-api/<%= @project.id %>/data");
+
+    var dp = new gantt.dataProcessor("/gantt-api/<%= @project.id %>");
+    dp.init(gantt);
+    dp.setTransactionMode("REST");
+</script>

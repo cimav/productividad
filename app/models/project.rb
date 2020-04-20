@@ -4,6 +4,8 @@ class Project < ApplicationRecord
   has_many :project_messages
   has_many :project_participants
   has_many :project_task_lists
+  has_many :gantt_tasks
+  has_many :gantt_links
 
   has_rich_text :objectives
   has_rich_text :results

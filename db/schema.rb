@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_18_015740) do
+ActiveRecord::Schema.define(version: 2020_04_20_183506) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.integer "attachable_id"
@@ -275,6 +275,29 @@ ActiveRecord::Schema.define(version: 2020_04_18_015740) do
     t.integer "status"
     t.text "description"
     t.index ["person_id"], name: "index_experiences_on_person_id"
+  end
+
+  create_table "gantt_links", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "project_id"
+    t.integer "source"
+    t.integer "target"
+    t.string "link_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_gantt_links_on_project_id"
+  end
+
+  create_table "gantt_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "project_id"
+    t.string "text"
+    t.datetime "start_date"
+    t.integer "duration"
+    t.integer "parent"
+    t.decimal "progress", precision: 10
+    t.integer "sortorder"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["project_id"], name: "index_gantt_tasks_on_project_id"
   end
 
   create_table "indexers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

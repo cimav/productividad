@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   resources :person_types
   scope 'configuracion' do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
@@ -12,6 +13,18 @@ Rails.application.routes.draw do
       resources :countries
     end
   end 
+
+  scope '/gantt-api/:project_id' do
+    get "/data", :to => "gantt#data"
+
+    post "/task", :to => "gantt_tasks#add"
+    put "/task/:id", :to => "gantt_tasks#update"
+    delete "/task/:id", :to => "gantt_tasks#delete"
+
+    post "/link", :to => "gantt_links#add"
+    put "/link/:id", :to => "gantt_links#update"
+    delete "/link/:id", :to => "gantt_links#delete"
+  end
 
   
   
@@ -45,11 +58,13 @@ Rails.application.routes.draw do
             get 'administrar' => 'projects#admin'
             get 'administrar/informacion' => 'projects#edit'
             get 'administrar/presupuesto' => 'projects#budget'
-            get 'administrar/calendario' => 'projects#calendar'
+            get 'administrar/calendario' => 'gantt#index'
             get 'administrar/servicios' => 'projects#services'
             get 'administrar/documentos' => 'projects#documents'
           end
         end
+
+
         resources :journal_articles, :path => 'articulos-en-revistas'
         resources :conference_papers, :path => 'articulos-en-conferencias'
         resources :conference_works, :path => 'trabajos'

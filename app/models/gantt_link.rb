@@ -1,0 +1,2 @@
+class GanttLink < ApplicationRecord
+end

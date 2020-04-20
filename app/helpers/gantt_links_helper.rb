@@ -1,0 +1,2 @@
+module GanttLinksHelper
+end
