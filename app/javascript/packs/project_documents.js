@@ -1,6 +1,10 @@
 import Bulma from '@vizuaalog/bulmajs';
 
-$(document).on('change', '#documents-order', function() {
+$(document).on('change', '#upload_files', function() {
+  document.getElementById("new_project_document").submit();
+});
+
+$(document).on('change', '#file-upload', function() {
   window.location = window.location.href.split(/[?#]/)[0] + '?orden=' + $(this).val();
 });
 

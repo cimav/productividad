@@ -59,6 +59,7 @@ Rails.application.routes.draw do
               post 'nueva-carpeta-guardar' => 'project_documents#save_new_folder'
               get 'nuevo-documento' => 'project_documents#new_document'
               post 'nuevo-documento-guardar' => 'project_documents#save_new_document'
+              post 'subir-archivos' => 'project_documents#upload_files'
             end
           end
 

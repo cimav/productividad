@@ -8,3 +8,9 @@
   <div class="document-name"><%= @project_document.name %></div>
   <%= @project_document.content %>
 <% end %>
+
+<% if @project_document.file_type == ProjectDocument::UPLOAD %>
+  <div class="document-name"><%= @project_document.name %></div>
+  <%= @project_document.content %>
+  <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">Descargar</a>
+<% end %>

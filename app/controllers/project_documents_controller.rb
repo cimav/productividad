@@ -12,12 +12,21 @@ class ProjectDocumentsController < ApplicationController
     @project_document = ProjectDocument.new
     @project_document.parent = -1
     @project_document.file_type = ProjectDocument::FOLDER
+
+    @new_project_document = ProjectDocument.new
+    @new_project_document.parent = 0
+    @new_project_document.file_type = ProjectDocument::UPLOAD
+
     render :layout => 'profile'
   end
 
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @new_project_document = ProjectDocument.new
+    @new_project_document.parent = @project_document.id
+    @new_project_document.file_type = ProjectDocument::UPLOAD
+
   	if @project_document.status == ProjectDocument::DELETED
   	  redirect_to project_project_documents_path(@person.shortname, @project)
   	else
@@ -60,6 +69,25 @@ class ProjectDocumentsController < ApplicationController
     @project_document.parent     = params[:id]
     if @project_document.save
       redirect_to project_project_document_path(@person.shortname, @project, @project_document), notice: 'Documento creado'
+    end
+  end
+
+  def upload_files
+    params[:upload_files].each do |f|
+      @project_document = @project.project_documents.new
+      @project_document.person_id  = current_user.id
+      @project_document.status     = ProjectDocument::ACTIVE
+      @project_document.parent     = params[:id].to_i == -1 ? 0 : params[:id]
+      @project_document.file_type  = ProjectDocument::UPLOAD
+      @project_document.name       = f.original_filename
+      @project_document.file       = f
+      @project_document.save
+    end
+    notice = "Documentos subidos"
+    if params[:id].to_i == -1
+      redirect_to project_project_documents_path(@person.shortname, @project), notice: notice
+    else
+      redirect_to project_project_document_path(@person.shortname, @project, params[:id]), notice: notice
     end
   end
 

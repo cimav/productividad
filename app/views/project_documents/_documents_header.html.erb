@@ -114,7 +114,7 @@
             <span>Crear documento</span>
           </a>
           
-          <a href="#" class="dropdown-item">
+          <a onclick ="javascript:document.getElementById('upload_files').click();" class="dropdown-item">
             <span class="icon is-small"><i class="fas fa-upload" aria-hidden="true"></i></span>
             <span>Subir archivos</span>
           </a>
@@ -140,4 +140,6 @@
     <% end %>
   </div>
 </div>
-
+<%= form_for @new_project_document, :url => subir_archivos_project_project_document_path(@person.shortname, @project, @new_project_document.parent), local: true, html: { multipart: true } do |form| %>
+<input id="upload_files" type="file" multiple style="display: none;" name="upload_files[]"/>
+<% end %>
