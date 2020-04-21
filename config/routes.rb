@@ -39,12 +39,10 @@ Rails.application.routes.draw do
       scope '/perfiles/:email' do
         resources :projects, :path => 'proyectos' do 
           resources :project_messages, :path => 'administrar/mensajes'
+
           get 'administrar/participantes/porcentajes' => 'project_participants#percentages'
           post 'administrar/participantes/porcentajes/guardar' => 'project_participants#percentages_save'
           resources :project_participants, :path => 'administrar/participantes'
-          
-          
-
           
           get 'administrar/tareas/nueva-lista' => 'project_tasks#new_list'
           get 'administrar/tareas/listas' => 'project_tasks#task_lists'
@@ -55,13 +53,18 @@ Rails.application.routes.draw do
           end
           post 'administrar/tareas/nueva-lista/guardar' => 'project_tasks#new_list_save'
 
+          resources :project_documents, :path => 'administrar/documentos' do
+            member do
+              
+            end
+          end
+
           member do
             get 'administrar' => 'projects#admin'
             get 'administrar/informacion' => 'projects#edit'
             get 'administrar/presupuesto' => 'projects#budget'
             get 'administrar/calendario' => 'gantt#index'
             get 'administrar/servicios' => 'projects#services'
-            get 'administrar/documentos' => 'projects#documents'
           end
         end
 

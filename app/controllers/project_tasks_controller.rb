@@ -81,7 +81,7 @@ class ProjectTasksController < ApplicationController
     @project_task = ProjectTask.new
     @project_task.project_task_list_id = params[:list]
     @project_task.assigned_to = current_user.id
-    @project_task.done == ProjectTask::NOT_DONE
+    @project_task.done = ProjectTask::NOT_DONE
     render :layout => 'profile'
   end
 
@@ -97,6 +97,7 @@ class ProjectTasksController < ApplicationController
   	  @project_task_list = ProjectTaskList.find(project_task_params[:project_task_list_id])
       @project_task = @project_task_list.project_tasks.build(project_task_params)
       @project_task.person_id  = current_user.id
+      @project_task.done = ProjectTask::NOT_DONE
       @project_task.status     = ProjectTask::ACTIVE
 
       if @project_task.save

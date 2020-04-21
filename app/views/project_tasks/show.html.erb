@@ -23,17 +23,17 @@
 </div>
 <div class="media message-author">
   <div class="media-left">
-    <figure class="image is-48x48"><img class="is-rounded" src="<%= @project_task.person.display_url rescue '' %>" title="<%= @project_task.person.full_name %>"></figure>
+    <figure class="image is-48x48"><img class="is-rounded" src="<%= @project_task.assigned.display_url rescue '' %>" title="<%= @project_task.assigned.full_name %>"></figure>
   </div>
   <div class="media-content">
     <div class="content">
       <div class="message-extra">
-        <% if @project_task.assigned_to == @project_task.person_id %>
+        <% if @project_task.assigned_to != @project_task.person_id %>
         Tarea creada por: <figure class="image is-16x16"><img class="is-rounded" src="<%= @project_task.person.display_url rescue '' %>" title="<%= @project_task.person.full_name %>"></figure>
             <%= link_to @project_task.person.full_name, "/perfiles/#{@project_task.person.shortname}" %>
         <% end %>
       </div>
-      <strong><%= @project_task.person.full_name %></strong><br>
+      <strong><%= @project_task.assigned.full_name %></strong><br>
       <%= @project_task.created_at %>
       
     </div>

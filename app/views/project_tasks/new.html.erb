@@ -36,7 +36,7 @@
         <td><%= form.label :assigned_to, 'Asignada a:', class:'label' %></td>
         <td>
           <div class="select">
-            <%= form.collection_select :assigned_to, @project.project_participants.order(:participation),:id,:full_name %>
+            <%= form.collection_select :assigned_to, @project.project_participants.order(:participation),:person_id,:full_name %>
           </div>
         </td>
       </tr>
