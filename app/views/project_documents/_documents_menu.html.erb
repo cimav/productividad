@@ -1,0 +1,81 @@
+<%= render 'projects/project_header', project: project, person: person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to project.name, administrar_project_path(person.shortname, project) %></h1>
+  <%= render 'projects/project_menu', project: project, person: person  %>
+</div>
+
+<div class="level product-actions folder-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Documentos', project_project_documents_path(person.shortname, project) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <select id="documents-order">
+          <option value="name">Ordenar por nombre</option>
+          <option value="name">Ordenar por creación</option>
+          <option value="name">Ordenar por modificación</option>
+        </select>
+      </div>
+    </div>
+  	<div class="dropdown is-right project-documents-new-menu">
+      <div class="dropdown-trigger">
+        <button class="button is-success" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+          <span>Nuevo…</span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a href="#" class="dropdown-item">
+            <span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span>
+            <span>Crear carpeta</span>
+          </a>
+          <a class="dropdown-item">
+            <span class="icon is-small"><i class="fas fa-file" aria-hidden="true"></i></span>
+            <span>Crear documento</span>
+          </a>
+          <a href="#" class="dropdown-item">
+            <span class="icon is-small"><i class="fas fa-upload" aria-hidden="true"></i></span>
+            <span>Subir archivos</span>
+          </a>
+          <hr class="dropdown-divider">
+          <a href="#" class="dropdown-item">
+            <span class="icon is-small"><i class="fab fa-google-drive" aria-hidden="true"></i></span>
+            <span>Enlace a Google Drive</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% if project_document && project_document.parent > 0 %>
+<% puts "--------" %>
+<% puts project_document.parent %>
+<div class="level folder-path">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="<%= project_project_documents_path(person.shortname, project) %>"><span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span><span class="w1">&nbsp;</span></a></li>
+
+        <% 
+          document_parents = []  
+          d = project_document
+          document_parents << d
+          while d.parent != 0 do
+            d = project_document.parent_document
+            document_parents.unshift(d)
+          end
+        %>
+        <% document_parents.each do |folder| %>
+          <li><a href="<%= project_project_document_path(person.shortname, project, folder) %>"><%= folder.name %></a></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+</div>
+<% end %>

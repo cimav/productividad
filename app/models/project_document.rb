@@ -1,8 +1,11 @@
 class ProjectDocument < ApplicationRecord
   belongs_to :person  
-  belongs_to :project  
+  belongs_to :project 
+  belongs_to :parent_document, foreign_key: 'parent', class_name: 'ProjectDocument', optional: true 
   has_one_attached :file
   has_rich_text :content
+
+
 
   ACTIVE = 1
   DELETED = 99

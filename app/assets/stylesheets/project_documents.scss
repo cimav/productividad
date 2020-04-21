@@ -2,6 +2,8 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$folder-color: #fffde7;
+$folder-bg: #ffe082;
 
 .project-documents-new-menu {
   .project-documents-new-menu-options {
@@ -10,3 +12,77 @@
     }
   }
 }
+
+.document-item {
+  width: 170px;
+  min-height: 200px;
+  margin: 1em;
+  float: left;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.document-item-header { 
+  border-radius: 8px 8px 0 0;
+  height: 1.5em;
+}
+
+.document-item-header-actions { 
+  float: right;
+  margin-right: 0.5em;
+  .icon {
+    margin-top: 2px;
+  }
+}
+
+.document-item-title {
+  text-align: center;
+  font-weight: bold;
+}
+
+.folder-header {
+  background-color: $folder-bg;
+  border-bottom: 1px solid $folder-color;
+  margin-bottom: 1em;
+  .icon {
+    color: $folder-color;
+  }
+}
+
+.folder-tab {
+  border-radius: 8px 16px 0 0;
+  background-color: $folder-color;
+
+  width: 60%;
+  clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+  float: left;
+}
+
+.document-item-folder {
+  background-color: $folder-color;
+  border: 1px solid $folder-bg !important;
+}
+
+.folder-path {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1em;
+  font-size: 80%;
+  .icon {
+    color: $folder-bg !important;
+  }
+  nav {
+    font-weight: 500 !important;
+    a { color: #666; }
+  }
+}
+
+.folder-actions {
+  margin-bottom: 1em !important;
+}
+
+.document-name {
+  font-weight: bold;
+  font-size: 2em;
+}
+

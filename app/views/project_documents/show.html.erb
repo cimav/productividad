@@ -1,0 +1,10 @@
+<%= render 'documents_header', project: @project, person: @person, project_document: @project_document  %>
+
+<% if @project_document.file_type == ProjectDocument::FOLDER %>
+  <%= render 'documents_list', project: @project, person: @person, project_document: @project_document, parent_id: @project_document.id  %>
+<% end %>
+
+<% if @project_document.file_type == ProjectDocument::DOCUMENT %>
+  <div class="document-name"><%= @project_document.name %></div>
+  <%= @project_document.content %>
+<% end %>

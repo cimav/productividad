@@ -9,6 +9,8 @@ class ProjectDocumentsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @project_document = ProjectDocument.new
+    @project_document.parent = -1
     render :layout => 'profile'
   end
 
