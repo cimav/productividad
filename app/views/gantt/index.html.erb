@@ -32,6 +32,24 @@
     gantt.config.order_branch = true;
     gantt.config.order_branch_free = true;
 
+    var person_opts = [
+      <% @project.project_participants.each do |p| %>
+        { key: <%= p.person_id %>, label: '<%= p.full_name %>' },
+      <% end %>
+    ];
+     
+    gantt.config.lightbox.sections = [
+        {name:"description", height:38, map_to:"text", type:"textarea", focus:true},
+        {name:"person_id",   height:22, map_to:"person_id", type:"select", options:person_opts},
+        {name:"time",        height:72, map_to:"auto", type:"duration"}
+    ];
+
+    gantt.locale.labels.section_person_id = "Responsable";
+
+    gantt.templates.rightside_text = function(start, end, task){
+      return (Math.floor(task.progress * 100)) + '% ' + task.person_full_name;
+    };
+
     gantt.init("gantt_here");
     gantt.load("/gantt-api/<%= @project.id %>/data");
 

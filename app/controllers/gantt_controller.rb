@@ -23,9 +23,11 @@ class GanttController < ApplicationController
       :data => tasks.order(:sortorder).map{|task|{
         :id => task.id,
         :text => task.text,
+        :person_id => task.person_id,
+        :person_full_name => task.person.full_name,
         :start_date => task.start_date.to_formatted_s(:db),
         :duration => task.duration,
-        :progress => task.progress,
+        :progress => '%.2f'%(task.progress.to_f/100),
         :parent => task.parent,
         :open => true
       }},

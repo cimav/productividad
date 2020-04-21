@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_183506) do
 
   create_table "gantt_tasks", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.bigint "project_id"
+    t.bigint "person_id"
     t.string "text"
     t.datetime "start_date"
     t.integer "duration"
@@ -297,6 +298,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_183506) do
     t.integer "sortorder"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_gantt_tasks_on_person_id"
     t.index ["project_id"], name: "index_gantt_tasks_on_project_id"
   end
 

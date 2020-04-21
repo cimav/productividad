@@ -1,4 +1,6 @@
 class GanttTask < ApplicationRecord
+  belongs_to :person
+  
   def self.updateOrder(taskId, target)
     nextTask = false
     targetId = target

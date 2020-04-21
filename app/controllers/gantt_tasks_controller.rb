@@ -1,14 +1,26 @@
 class GanttTasksController < ApplicationController
+  before_action :auth_required
+
   protect_from_forgery
 
   def update
     task = GanttTask.find(params["id"])
+    puts "ACTUALIZA"
+    puts params
+    puts "-----------------"
     task.text = params["text"]
+    task.person_id = params["person_id"]
     task.start_date = params["start_date"]
     task.duration = params["duration"]
-    task.progress = params["progress"] || 0
+    if params["progress"]
+      task.progress = (params["progress"].to_f * 100).floor
+    end
     task.parent = params["parent"]
     task.save
+    puts params["progress"]
+    puts params["progress"].to_f * 100
+    puts task.progress
+    puts "------------------"
 
     if(params['target'])
       GanttTask.updateOrder(task.id, params['target'])
@@ -19,10 +31,10 @@ class GanttTasksController < ApplicationController
 
   def add
     maxOrder = GanttTask.maximum("sortorder") || 0
-
     task = GanttTask.create(
       :project_id => params[:project_id],
       :text => params["text"],
+      :person_id => params["person_id"],
       :start_date=> params["start_date"],
       :duration => params["duration"],
       :progress => params["progress"] || 0,

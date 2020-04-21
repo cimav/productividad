@@ -97,14 +97,15 @@
                  gdepth[gtask.id] = gdepth[gtask.parent] + 1
                end 
             end %>
-          <table class="gantt-table">
+          <table class="gantt-table table">
             <tr>
-              <th>Actividad</th>
+              <th colspan="2">Actividad</th>
               <th>Inicio</th>
               <th style="text-align: center;">Días</th>
             </tr>
             <% gantt_tasks.each do |gtask| %>
               <tr>
+                <td><figure class="image is-16x16"><img class="is-rounded" src="<%= gtask.person.display_url rescue '' %>" title="<%= gtask.person.full_name %>"></figure></td>
                 <td class="depth-<%= gdepth[gtask.id] %>"><%= gtask.text %></td>
                 <td><%= gtask.start_date.strftime("%F") %></td>
                 <td style="text-align: center;"><%= gtask.duration %></td>

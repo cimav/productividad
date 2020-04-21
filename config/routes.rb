@@ -39,10 +39,11 @@ Rails.application.routes.draw do
       scope '/perfiles/:email' do
         resources :projects, :path => 'proyectos' do 
           resources :project_messages, :path => 'administrar/mensajes'
-
-          resources :project_participants, :path => 'administrar/participantes'
           get 'administrar/participantes/porcentajes' => 'project_participants#percentages'
           post 'administrar/participantes/porcentajes/guardar' => 'project_participants#percentages_save'
+          resources :project_participants, :path => 'administrar/participantes'
+          
+          
 
           
           get 'administrar/tareas/nueva-lista' => 'project_tasks#new_list'
