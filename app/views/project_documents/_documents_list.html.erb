@@ -1,5 +1,14 @@
 <div id="new-folder"></div>
-<% project.project_documents.where("parent = ? AND status = ?", parent_id, ProjectDocument::ACTIVE).order('created_at DESC').each do |document| %>
+<% 
+  if params['orden'] == 'nombre' 
+    documents_order = 'name' 
+  elsif params['orden'] == 'modificacion' 
+    documents_order = 'updated_at DESC' 
+  else
+    documents_order = 'created_at DESC'
+  end
+%>
+<% project.project_documents.where("parent = ? AND status = ?", parent_id, ProjectDocument::ACTIVE).order(documents_order).each do |document| %>
   <a class="document-link" href="<%= project_project_document_path(person.shortname, project, document) %>">
   <% if document.file_type == ProjectDocument::FOLDER %>
     <div class="document-item document-item-folder">

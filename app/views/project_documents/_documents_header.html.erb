@@ -66,10 +66,26 @@
     <% if project_document.file_type == ProjectDocument::FOLDER  %>
     <div class="product-filters">
       <div class="select">
+        <% 
+          if params['orden'] == 'nombre' 
+            selected_nombre = 'selected' 
+            selected_creacion = ''
+            selected_modificacion = ''
+          elsif params['orden'] == 'modificacion' 
+            selected_nombre = '' 
+            selected_creacion = ''
+            selected_modificacion = 'selected'
+          else
+            selected_nombre = '' 
+            selected_creacion = 'selected'
+            selected_modificacion = ''
+          end
+
+        %>
         <select id="documents-order">
-          <option value="name">Ordenar por nombre</option>
-          <option value="name">Ordenar por creación</option>
-          <option value="name">Ordenar por modificación</option>
+          <option value="nombre" <%= selected_nombre %>>Ordenar por nombre</option>
+          <option value="creacion" <%= selected_creacion %>>Ordenar por creación</option>
+          <option value="modificacion" <%= selected_modificacion %>>Ordenar por modificación</option>
         </select>
       </div>
     </div>
