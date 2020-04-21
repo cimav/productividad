@@ -5,9 +5,6 @@ class GanttTasksController < ApplicationController
 
   def update
     task = GanttTask.find(params["id"])
-    puts "ACTUALIZA"
-    puts params
-    puts "-----------------"
     task.text = params["text"]
     task.person_id = params["person_id"]
     task.start_date = params["start_date"]
@@ -17,10 +14,6 @@ class GanttTasksController < ApplicationController
     end
     task.parent = params["parent"]
     task.save
-    puts params["progress"]
-    puts params["progress"].to_f * 100
-    puts task.progress
-    puts "------------------"
 
     if(params['target'])
       GanttTask.updateOrder(task.id, params['target'])

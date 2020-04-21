@@ -1,0 +1,28 @@
+<div class="card project-card" data-url="<%= project_project_participants_path(person.shortname, project) %>">
+  <div class="project-card-title project-card-title-participantes">Participantes</div>
+  <% participants = project.project_participants.where('status = ?', ProjectParticipant::ACTIVE).order('participation DESC') %>
+  <% if participants.count <= 0 %>
+    <div class="empty-project-card">
+      <div class="project-card-icon"><span class="icon project-card-icon-participantes"><i class="fas fa-user-friends"></i></span></div>
+      <div class="empty-project-card-message">Aún no se han definido los participantes del proyecto.</div>
+    </div>
+  <% else %>
+    <% participants.each do |participant| %>
+	  <article class="media participant-admin-item">
+	    <div class="media-left">
+	      <figure class="image is-24x24"><img class="is-rounded" src="<%= participant.person.display_url rescue '' %>" title="<%= participant.person.full_name %>"></figure>
+	    </div>
+	    <div class="media-content">
+	      <div class="content">
+	        <% if participant.role_type == ProjectParticipant::LEADER %>
+	          <span class="icon is-small has-text-warning"><i class="fas fa-star"></i></span>
+	        <% end %>
+	        <strong><%= participant.person.full_name %></strong><br>
+	        <%= participant.role %> 
+	      </div>
+	    </div>
+	  </article>
+    <% end %>
+    <div class="white-gradient"></div>
+  <% end %>
+</div>

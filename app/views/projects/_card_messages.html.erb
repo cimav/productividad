@@ -1,0 +1,23 @@
+<div class="card project-card" data-url="<%= project_project_messages_path(person.shortname, project) %>">
+  <div class="project-card-title project-card-title-mensajes">Mensajes</div>
+  <% messages = project.project_messages.where("status = ?", ProjectMessage::ACTIVE).order('created_at DESC').limit(5) %>
+  <% if messages.count == 0 %>
+    <div class="empty-project-card">
+      <div class="project-card-icon"><span class="icon project-card-icon-mensajes"><i class="fas fa-comments"></i></span></div>
+      <div class="empty-project-card-message">Aún no hay mensajes en el proyecto.</div>
+    </div>
+  <% else %>
+    <table class="project-card-table table">
+      <% messages.each do |message| %>
+        <tr>
+          <td class="td-small"><figure class="image is-16x16"><img class="is-rounded" src="<%= message.person.display_url rescue '' %>" title="<%= message.person.full_name %>"></figure></td>
+          <td>
+            <strong><%= message.title %></strong><br>
+            <%= strip_tags(message.content.to_s)[0...50] %>...
+          </td>
+        </tr>
+      <% end %> 
+    </table>     
+    <div class="white-gradient"></div>
+  <% end %>
+</div>

@@ -123,20 +123,27 @@ $rainbow-8: #c51162;
 .project-card-title-participantes  { border-bottom: 2px solid $rainbow-7; }
 .project-card-title-documentos     { border-bottom: 2px solid $rainbow-8; }
 
-.project-card-icon {
-  margin: 24px 0;
-  text-align: center;
-  font-size: 5em;
+.empty-project-card {
+  .project-card-icon {
+    margin: 20px 0;
+    text-align: center;
+    font-size: 5em;
+  }
+  .empty-project-card-message {
+    font-size: 80%;
+    color: #666;
+    text-align: center;
+  }
 }
 
-.project-card-icon-informacion    { color: $rainbow-1; }
-.project-card-icon-presupuesto    { color: $rainbow-2; }
-.project-card-icon-mensajes       { color: $rainbow-3; }
-.project-card-icon-tareas         { color: $rainbow-4; }
-.project-card-icon-calendario     { color: $rainbow-5; }
-.project-card-icon-servicios      { color: $rainbow-6; }
-.project-card-icon-participantes  { color: $rainbow-7; }
-.project-card-icon-documentos     { color: $rainbow-8; }
+.project-card-icon-informacion    { color: lighten($rainbow-1, 10); }
+.project-card-icon-presupuesto    { color: lighten($rainbow-2, 10); }
+.project-card-icon-mensajes       { color: lighten($rainbow-3, 10); }
+.project-card-icon-tareas         { color: lighten($rainbow-4, 10); }
+.project-card-icon-calendario     { color: lighten($rainbow-5, 10); }
+.project-card-icon-servicios      { color: lighten($rainbow-6, 10); }
+.project-card-icon-participantes  { color: lighten($rainbow-7, 10); }
+.project-card-icon-documentos     { color: lighten($rainbow-8, 10); }
 
 
 .project-edit {
@@ -212,4 +219,35 @@ $rainbow-8: #c51162;
   a {
     padding-right: 1em;
   }
+}
+
+.project-card-table {
+  width: 100%;
+  
+  tr {
+    font-size: 80%;
+    
+  }
+
+  td {
+    padding: 4px !important;
+    margin: 0 !important;
+  }
+
+  .td-small {
+    width: 10px !important;
+    text-align: center;
+    figure {
+      margin: 0;
+      padding: 0;
+    }
+  }
+  
+  .depth-0 { padding-left: 0 !important; }
+  .depth-1 { padding-left: 1em!important; }
+  .depth-2 { padding-left: 2em !important; }
+  .depth-3 { padding-left: 3em !important; }
+  .depth-4 { padding-left: 4em !important; }
+  .depth-5 { padding-left: 5em !important; }
+  .depth-6 { padding-left: 6em !important; } 
 }

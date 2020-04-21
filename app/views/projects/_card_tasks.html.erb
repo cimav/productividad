@@ -1,0 +1,27 @@
+<div class="card project-card" data-url="<%= project_project_tasks_path(person.shortname, project) %>">
+  <div class="project-card-title project-card-title-tareas">Tareas</div>
+  <% lists = project.project_task_lists.where("status = ?", ProjectTaskList::ACTIVE).order('position DESC').limit(3) %>
+  <% if lists.count <= 0 %>
+    <div class="empty-project-card">
+      <div class="project-card-icon"><span class="icon project-card-icon-tareas"><i class="fas fa-list-alt"></i></span></div>
+      <div class="empty-project-card-message">Aún no hay tareas en el proyecto.</div>
+    </div>
+  <% else %>
+	<% lists.each do |list| %>
+	  <table class="project-card-table table">
+	    <tr><th colspan="3"><%= list.name %></th></tr>
+	    <% list.project_tasks.where('status = ?', ProjectTask::ACTIVE).order(:done).each do |task| %>
+	      <% checked = task.done == ProjectTask::DONE ? 'checked="checked':'' %>
+	      <tr>
+	      	<td class="td-small"><input type="checkbox" class="task-checkbox" <%= checked %> disabled></td>
+            <td class="td-small"><figure class="image is-16x16"><img class="is-rounded" src="<%= task.assigned.display_url rescue '' %>" title="<%= task.assigned.full_name %>"></figure></td>
+            <td>
+              <%= task.name %>
+            </td>
+          </tr>
+        <% end %>
+	  </table>
+	<% end %>
+	<div class="white-gradient"></div>
+  <% end %>
+</div>

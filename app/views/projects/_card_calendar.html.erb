@@ -1,0 +1,37 @@
+<div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/calendario">
+  <div class="project-card-title project-card-title-calendario">Calendario</div>
+  <% gantt_tasks = @project.gantt_tasks.order(:sortorder).limit(10) %>
+  <% if gantt_tasks.count <= 0 %>
+    <div class="empty-project-card">
+      <div class="project-card-icon"><span class="icon project-card-icon-calendario"><i class="fas fa-calendar"></i></span></div>
+      <div class="empty-project-card-message">Aún no se ha definido el Diagrama de Gantt del proyecto.</div>
+    </div>
+  <% else %>
+    <%  
+      gdepth = {} 
+      gantt_tasks.each do |gtask| 
+        if gtask.parent == 0
+          gdepth[gtask.id] = 0
+        else
+          gdepth[gtask.id] = gdepth[gtask.parent] + 1
+        end 
+      end 
+    %>
+    <table class="project-card-table table">
+      <tr>
+        <th colspan="2">Actividad</th>
+        <th>Inicio</th>
+        <th style="text-align: center;">Días</th>
+      </tr>
+      <% gantt_tasks.each do |gtask| %>
+        <tr>
+          <td class="td-small"><figure class="image is-16x16"><img class="is-rounded" src="<%= gtask.person.display_url rescue '' %>" title="<%= gtask.person.full_name %>"></figure></td>
+          <td class="depth-<%= gdepth[gtask.id] %>"><%= gtask.text %></td>
+          <td><%= gtask.start_date.strftime("%F") %></td>
+          <td style="text-align: center;"><%= gtask.duration %></td>
+        </tr>
+      <% end %>
+    </table>
+    <div class="white-gradient"></div>
+  <% end %>
+</div>

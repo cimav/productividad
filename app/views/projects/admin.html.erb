@@ -3,166 +3,43 @@
 <div class="product">
 <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
 <div class="project-cards-area">
+
   <div class="columns">
-    
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/informacion">
-        <div class="project-card-title project-card-title-informacion">Información</div>
-        <div class="project-card-content">
-          <strong>Investigación: </strong> <%= @project.research_type_text %><br>
-          <strong>Origen: </strong> <%= @project.source_type_text %> (<%= @project.source %>)<br>
-          <% objectives = strip_tags(@project.objectives.to_s)[0...200] %>
-          <% results = strip_tags(@project.results.to_s)[0...200] %>
-          <p><strong>Objetivos:</strong> <%= objectives %></p>
-          <p><strong>Resultados Esperados:</strong> <%= results %></p>
-        </div>
-        <div class="white-gradient"></div>
-      </div>
+      <%= render 'card_information', project: @project, person: @person  %>
     </div>
 
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/presupuesto">
-        <div class="project-card-title project-card-title-presupuesto">Presupuesto</div>
-        <div class="project-card-icon"><span class="icon project-card-icon-informacion "><i class="fas fa-dollar-sign"></i></span></div>
-      </div>   
+      <%= render 'card_budget', project: @project, person: @person  %>
     </div>
 
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= project_project_messages_path(@person.shortname, @project) %>">
-        <div class="project-card-title project-card-title-mensajes">Mensajes</div>
-        <% messages = @project.project_messages.where("status = ?", ProjectMessage::ACTIVE).order('created_at DESC').limit(5) %>
-        <% if messages.count == 0 %>
-          <div class="project-card-icon"><span class="icon project-card-icon-mensajes"><i class="fas fa-comments"></i></span></div>
-        </div>
-        <% end %>
-        <div class="project-card-content">
-        <% messages.each do |message| %>
-          <article class="media message-admin-item" data-url="<%= project_project_message_path(@person.shortname, @project, message) %>">
-            <div class="media-left">
-              <figure class="image is-24x24"><img class="is-rounded" src="<%= message.person.display_url rescue '' %>" title="<%= message.person.full_name %>"></figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <strong><%= message.title %></strong><br>
-                <%= strip_tags(message.content.to_s)[0...50] %>...
-              </div>
-            </div>
-          </article>
-        <% end %> 
-        </div>     
-        <div class="white-gradient"></div>
-      </div>
+      <%= render 'card_messages', project: @project, person: @person  %>
     </div>
   </div>
 
   <div class="columns">
-
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= project_project_tasks_path(@person.shortname, @project) %>">
-        <div class="project-card-title project-card-title-tareas">Tareas</div>
-        <% lists = @project.project_task_lists.where("status = ?", ProjectTaskList::ACTIVE).order('position DESC').limit(3) %>
-        <% if lists.count <= 0 %>
-          <div class="project-card-icon"><span class="icon project-card-icon-tareas"><i class="fas fa-list-alt"></i></span></div>
-        <% end %>
-        <% lists.each do |list| %>
-          <br><strong><%= list.name %></strong>
-          <div class="task-list-tasks-admin">
-            <% list.project_tasks.where('status = ?', ProjectTask::ACTIVE).order(:done).each do |task| %>
-              <div class="task-item-admin">
-                <% checked = task.done == ProjectTask::DONE ? 'checked="checked':'' %>
-                <input type="checkbox" class="task-checkbox" <%= checked %> disabled>  
-                <figure class="image is-16x16"><img class="is-rounded" src="<%= task.assigned.display_url rescue '' %>" title="<%= task.assigned.full_name %>"></figure>
-                 <span class="task-name"><%= task.name %></span>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-        <div class="white-gradient"></div>
-      </div>
+      <%= render 'card_tasks', project: @project, person: @person  %>
     </div>
     
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/calendario">
-        <div class="project-card-title project-card-title-calendario">Calendario</div>
-        <% gantt_tasks = @project.gantt_tasks.order(:sortorder).limit(10) %>
-        <% if gantt_tasks.count <= 0 %>
-           <div class="project-card-icon"><span class="icon project-card-icon-calendario"><i class="fas fa-calendar"></i></span></div>
-
-        <% else %>
-          <% gdepth = {} %>
-          <% gantt_tasks.each do |gtask| 
-               if gtask.parent == 0
-                 gdepth[gtask.id] = 0
-               else
-                 gdepth[gtask.id] = gdepth[gtask.parent] + 1
-               end 
-            end %>
-          <table class="gantt-table table">
-            <tr>
-              <th colspan="2">Actividad</th>
-              <th>Inicio</th>
-              <th style="text-align: center;">Días</th>
-            </tr>
-            <% gantt_tasks.each do |gtask| %>
-              <tr>
-                <td><figure class="image is-16x16"><img class="is-rounded" src="<%= gtask.person.display_url rescue '' %>" title="<%= gtask.person.full_name %>"></figure></td>
-                <td class="depth-<%= gdepth[gtask.id] %>"><%= gtask.text %></td>
-                <td><%= gtask.start_date.strftime("%F") %></td>
-                <td style="text-align: center;"><%= gtask.duration %></td>
-              </tr>
-            <% end %>
-          </table>
-        <% end %>
-
-    
-        <div class="white-gradient"></div>
-      </div>
+      <%= render 'card_calendar', project: @project, person: @person  %>
     </div>
     
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/servicios">
-        <div class="project-card-title project-card-title-servicios">Servicios</div>
-        <div class="project-card-icon"><span class="icon project-card-icon-servicios"><i class="fas fa-flask"></i></span></div>
-      </div>
+      <%= render 'card_services', project: @project, person: @person  %>
     </div>
   
   </div>
   <div class="columns">
     
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= project_project_participants_path(@person.shortname, @project) %>">
-        <div class="project-card-title project-card-title-participantes">Participantes</div>
-        <% participants = @project.project_participants.where('status = ?', ProjectParticipant::ACTIVE).order('participation DESC') %>
-        <% if participants.count <= 0 %>
-          <div class="project-card-icon"><span class="icon project-card-icon-participantes"><i class="fas fa-user-friends"></i></span></div>
-        <% end %>
-        <div class="project-card-content">
-        <% participants.each do |participant| %>
-          <article class="media participant-admin-item">
-            <div class="media-left">
-              <figure class="image is-24x24"><img class="is-rounded" src="<%= participant.person.display_url rescue '' %>" title="<%= participant.person.full_name %>"></figure>
-            </div>
-            <div class="media-content">
-              <div class="content">
-                <% if participant.role_type == ProjectParticipant::LEADER %>
-                  <span class="icon is-small has-text-warning"><i class="fas fa-star"></i></span>
-                <% end %>
-                <strong><%= participant.person.full_name %></strong><br>
-                <%= participant.role %> 
-              </div>
-            </div>
-          </article>
-        <% end %>
-        </div>
-        <div class="white-gradient"></div>
-      </div>
+      <%= render 'card_participants', project: @project, person: @person  %>
     </div>
     
     <div class="column is-one-third">
-      <div class="card project-card" data-url="<%= projects_path(@person.shortname) %>/<%= @project.id %>/administrar/documentos">
-        <div class="project-card-title project-card-title-documentos">Documentos</div>
-        <div class="project-card-icon"><span class="icon project-card-icon-documentos"><i class="fas fa-file"></i></span></div>
-      </div>
+      <%= render 'card_documents', project: @project, person: @person  %>
     </div>
   </div>
 </div>
