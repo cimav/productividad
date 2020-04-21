@@ -1,5 +1,6 @@
+<div id="new-folder"></div>
 <% project.project_documents.where("parent = ? AND status = ?", parent_id, ProjectDocument::ACTIVE).order('created_at DESC').each do |document| %>
-  <a href="<%= project_project_document_path(person.shortname, project, document) %>">
+  <a class="document-link" href="<%= project_project_document_path(person.shortname, project, document) %>">
   <% if document.file_type == ProjectDocument::FOLDER %>
     <div class="document-item document-item-folder">
       <div class="document-item-header folder-header">
@@ -9,6 +10,7 @@
       </div>
       <div class="document-item-title"><%= document.name %></div>
       <div class="document-item-content"></div>
+      <div class="white-gradient"></div>
     </div>
   <% end %>
 
@@ -21,6 +23,7 @@
       </div>
       <div class="document-item-title"><%= document.name %></div>
       <div class="document-item-content"><%= document.content %></div>
+      <div class="white-gradient"></div>
     </div>
   <% end %>
   </a>

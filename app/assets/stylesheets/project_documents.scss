@@ -13,14 +13,37 @@ $folder-bg: #ffe082;
   }
 }
 
+.document-link {
+  color: #666 !important;
+}
+
 .document-item {
+  overflow: hidden;
   width: 170px;
   min-height: 200px;
+  max-height: 200px;
   margin: 1em;
   float: left;
   border-radius: 8px;
   border: 1px solid #ddd;
   cursor: pointer;
+}
+
+.document-item-folder-new {
+  cursor: default !important;
+}
+
+.document-item-folder-save {
+  margin: 3em 1em 1em 1em;
+  text-align: center;
+  .button {
+    margin-bottom: 1em;
+  }
+
+  .save-folder-button {
+    border: 1px solid $folder-bg !important;
+    background-color: $folder-bg !important;
+  }
 }
 
 .document-item-header { 
@@ -39,6 +62,23 @@ $folder-bg: #ffe082;
 .document-item-title {
   text-align: center;
   font-weight: bold;
+  font-size: 14px;
+
+  input {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: $folder-color;
+    border: 0;
+    &:focus{
+      outline: none;
+    }
+  }
+}
+
+.document-item-content {
+  margin: 1em;
 }
 
 .folder-header {
@@ -65,20 +105,12 @@ $folder-bg: #ffe082;
 }
 
 .folder-path {
-  border-bottom: 1px solid #eee;
-  padding-bottom: 1em;
   font-size: 80%;
+  font-weight: bold !important;
+  a { color: #666; }
   .icon {
     color: $folder-bg !important;
   }
-  nav {
-    font-weight: 500 !important;
-    a { color: #666; }
-  }
-}
-
-.folder-actions {
-  margin-bottom: 1em !important;
 }
 
 .document-name {

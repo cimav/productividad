@@ -55,7 +55,10 @@ Rails.application.routes.draw do
 
           resources :project_documents, :path => 'administrar/documentos' do
             member do
-              
+              get 'nueva-carpeta' => 'project_documents#new_folder'
+              post 'nueva-carpeta-guardar' => 'project_documents#save_new_folder'
+              get 'nuevo-documento' => 'project_documents#new_document'
+              post 'nuevo-documento-guardar' => 'project_documents#save_new_document'
             end
           end
 

@@ -1,0 +1,21 @@
+<%= form_for @project_document, :url => nueva_carpeta_guardar_project_project_document_path(@person.shortname, @project, @project_document.parent), local: true do |form| %>
+  <div class="document-item document-item-folder document-item-folder-new">
+    <div class="document-item-header folder-header">
+      <div class="folder-tab">&nbsp;</div>
+      <div class="is-clearfix document-item-header-actions"></div>
+      <div class="is-clearfix"></div>
+    </div>
+    <div class="document-item-title">
+      <%= form.text_field :name, required: true %>
+      <script>
+      	fs = document.getElementById('project_document_name');
+        fs.focus();
+        fs.select();
+      </script>
+    </div>
+    <div class="document-item-folder-save">
+      <%= form.submit 'Guardar', class:'button is-rounded is-small is-fullwidth is-success' %>
+      <a id="cancel-new-folder" class="button is-rounded is-fullwidth is-small">Cancelar</a>
+    </div>
+  </div>
+<% end %>

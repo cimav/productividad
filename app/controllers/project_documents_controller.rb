@@ -11,6 +11,7 @@ class ProjectDocumentsController < ApplicationController
   def index
     @project_document = ProjectDocument.new
     @project_document.parent = -1
+    @project_document.file_type = ProjectDocument::FOLDER
     render :layout => 'profile'
   end
 
@@ -21,6 +22,44 @@ class ProjectDocumentsController < ApplicationController
   	  redirect_to project_project_documents_path(@person.shortname, @project)
   	else
       render :layout => 'profile'
+    end
+  end
+
+  def new_folder
+    @project_document = ProjectDocument.new
+    @project_document.name = "Sin Título"
+    @project_document.parent = params[:id] == 'root' ? 0 : params[:id] 
+    @project_document.file_type = ProjectDocument::FOLDER
+    render :layout => false
+  end
+
+  def save_new_folder
+    @project_document = @project.project_documents.build(project_document_params)
+    @project_document.person_id  = current_user.id
+    @project_document.status     = ProjectDocument::ACTIVE
+    @project_document.file_type  = ProjectDocument::FOLDER
+    @project_document.parent     = params[:id] == 'root' ? 0 : params[:id] 
+    if @project_document.save
+      redirect_to project_project_document_path(@person.shortname, @project, @project_document), notice: 'Carpeta creada'
+    end
+  end
+
+  def new_document
+    @project_document = ProjectDocument.new
+    @project_document.name = "Nuevo documento…"
+    @project_document.parent = params[:id]
+    @project_document.file_type = ProjectDocument::DOCUMENT
+    render :layout => 'profile'
+  end
+
+  def save_new_document
+    @project_document = @project.project_documents.build(project_document_params)
+    @project_document.person_id  = current_user.id
+    @project_document.status     = ProjectDocument::ACTIVE
+    @project_document.file_type  = ProjectDocument::DOCUMENT
+    @project_document.parent     = params[:id]
+    if @project_document.save
+      redirect_to project_project_document_path(@person.shortname, @project, @project_document), notice: 'Documento creado'
     end
   end
 
@@ -47,7 +86,7 @@ class ProjectDocumentsController < ApplicationController
         log = @project.activity_logs.new 
         log.document = "documento agregado #{@project_document.id}"
         log.person_id = current_user.id
-        log.save
+        log.save                  
         format.html { redirect_to project_project_documents_path(@person.shortname, @project), notice: 'Documento publicado' }
         format.json { render :show, status: :ok, location: @project_document }
       end

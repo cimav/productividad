@@ -1,0 +1,20 @@
+<%= render 'documents_header', project: @project, person: @person, project_document: @project_document  %>
+
+<%= form_for @project_document, :url => nuevo_documento_guardar_project_project_document_path(@person.shortname, @project, @project_document.parent), local: true do |form| %>
+  <div class="field">
+    <p class="control title-input"><%= form.text_field :name, class:'input', required: true %></p>
+    <script>
+      fs = document.getElementById('project_document_name');
+      fs.focus();
+      fs.select();
+    </script>
+  </div>
+
+  <div class="field">
+    <p class="control single-rich"><%= form.rich_text_area :content %></p>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Publicar documento', class:'button is-success' %>
+  </div>
+<% end %>

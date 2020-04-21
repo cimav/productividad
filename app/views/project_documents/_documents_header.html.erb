@@ -4,67 +4,17 @@
   <%= render 'projects/project_menu', project: project, person: person  %>
 </div>
 
-<div class="level product-actions folder-actions">
-  <div class="level-left">
-    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
-      <ul>
-        <li><%= link_to 'Documentos', project_project_documents_path(person.shortname, project) %></li>
-      </ul>
-    </nav>
-  </div>
-  <div class="level-right">
-    <% if project_document.file_type != ProjectDocument::FOLDER %>
-    <% end %>
-    <% if project_document.file_type == ProjectDocument::FOLDER %>
-    <div class="product-filters">
-      <div class="select">
-        <select id="documents-order">
-          <option value="name">Ordenar por nombre</option>
-          <option value="name">Ordenar por creación</option>
-          <option value="name">Ordenar por modificación</option>
-        </select>
-      </div>
-    </div>
-  	<div class="dropdown is-right project-documents-new-menu">
-      <div class="dropdown-trigger">
-        <button class="button is-success" aria-haspopup="true" aria-controls="dropdown-menu">
-          <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
-          <span>Nuevo…</span>
-        </button>
-      </div>
-      <div class="dropdown-menu" id="dropdown-menu" role="menu">
-        <div class="dropdown-content project-documents-new-menu-options">
-          <a href="#" class="dropdown-item">
-            <span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span>
-            <span>Crear carpeta</span>
-          </a>
-          <a class="dropdown-item">
-            <span class="icon is-small"><i class="fas fa-file" aria-hidden="true"></i></span>
-            <span>Crear documento</span>
-          </a>
-          <a href="#" class="dropdown-item">
-            <span class="icon is-small"><i class="fas fa-upload" aria-hidden="true"></i></span>
-            <span>Subir archivos</span>
-          </a>
-          <hr class="dropdown-divider">
-          <a href="#" class="dropdown-item">
-            <span class="icon is-small"><i class="fab fa-google-drive" aria-hidden="true"></i></span>
-            <span>Enlace a Google Drive</span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <% end %>
-  </div>
-</div>
-
 <% 
   can_get_path = true
   if project_document.parent >= 0
     document_parents = []  
     
     if project_document.file_type == ProjectDocument::FOLDER
-      d = project_document
+      if !project_document.new_record?
+        d = project_document
+      else
+         d = project_document.parent_document
+      end
     else 
       if project_document.parent > 0
         d = project_document.parent_document
@@ -84,18 +34,94 @@
   end 
 %>
 
-<% if can_get_path %>
-<div class="level folder-path">
+
+<div class="level product-actions folder-actions">
   <div class="level-left">
     <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
-      <ul>
-        <li><a href="<%= project_project_documents_path(person.shortname, project) %>"><span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span><span class="w1">&nbsp;</span></a></li>
+      <ul class="<%= can_get_path ? 'folder-path' : '' %>">
+        <% if can_get_path %>
+          <li><a href="<%= project_project_documents_path(person.shortname, project) %>"><span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span><span class="w1">&nbsp;</span></a></li>
+          <% document_parents.each do |folder| %>
+            <li><a href="<%= project_project_document_path(person.shortname, project, folder) %>"><%= folder.name %></a></li> 
 
-        <% document_parents.each do |folder| %>
-          <li><a href="<%= project_project_document_path(person.shortname, project, folder) %>"><%= folder.name %></a></li> 
+          <% end %>
+        <% else %>
+          <li><%= link_to 'Documentos', project_project_documents_path(person.shortname, project) %></li>
         <% end %>
       </ul>
     </nav>
   </div>
+  <div class="level-right">
+    <% if project_document.file_type != ProjectDocument::FOLDER  %>
+      <% if can_get_path %>
+        <%= link_to project_project_document_path(person.shortname, project, project_document.parent_document), class: 'button' do %>
+          <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+        <% end %>
+      <% else %>
+        <%= link_to project_project_documents_path(person.shortname, project), class: 'button' do %>
+          <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+        <% end %>
+      <% end %>
+    <% end %>
+    <% if project_document.file_type == ProjectDocument::FOLDER  %>
+    <div class="product-filters">
+      <div class="select">
+        <select id="documents-order">
+          <option value="name">Ordenar por nombre</option>
+          <option value="name">Ordenar por creación</option>
+          <option value="name">Ordenar por modificación</option>
+        </select>
+      </div>
+    </div>
+  	<div class="dropdown is-right is-hoverable project-documents-new-menu">
+      <div class="dropdown-trigger">
+        <button class="button is-success" aria-haspopup="true" aria-controls="dropdown-menu">
+          <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+        </button>
+      </div>
+      <div class="dropdown-menu" id="dropdown-menu" role="menu">
+        <div class="dropdown-content project-documents-new-menu-options">
+          <% 
+          if project_document.new_record? 
+            target_folder = 'root'
+          else 
+            target_folder = project_document.id
+          end 
+          %>
+          <a id="add-new-folder" data-url="<%= nueva_carpeta_project_project_document_path(person.shortname, project, target_folder) %>" class="dropdown-item">
+            <span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span>
+            <span>Crear carpeta</span>
+          </a>
+
+          <a href="<%= nuevo_documento_project_project_document_path(person.shortname, project, target_folder) %>"class="dropdown-item">
+            <span class="icon is-small"><i class="fas fa-file" aria-hidden="true"></i></span>
+            <span>Crear documento</span>
+          </a>
+          
+          <a href="#" class="dropdown-item">
+            <span class="icon is-small"><i class="fas fa-upload" aria-hidden="true"></i></span>
+            <span>Subir archivos</span>
+          </a>
+          <hr class="dropdown-divider">
+          <a href="#" class="dropdown-item">
+            <span class="icon is-small"><i class="fab fa-google-drive" aria-hidden="true"></i></span>
+            <span>Enlace a Google Drive</span>
+          </a>
+        </div>
+      </div>
+      <% if project_document.parent <= 0 || project_document.new_record? %> 
+        <% if can_get_path %>
+          <%= link_to project_project_documents_path(person.shortname, project), class: 'button' do %>
+            <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to project_project_document_path(person.shortname, project, project_document.parent_document), class: 'button' do %>
+          <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+        <% end %>
+      <% end %>
+    </div>
+    <% end %>
+  </div>
 </div>
-<% end %>
+
