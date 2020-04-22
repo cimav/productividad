@@ -48,11 +48,17 @@ class ProjectDocument < ApplicationRecord
         "icons/google-other.svg"
       else
         case File.extname(name)
-          when ".xlsx" || ".xls"
+          when ".xlsx" 
             "icons/xls.svg"
-          when ".docx" || ".doc"
+          when ".docx" 
             "icons/doc.svg"
-          when ".pptx" || ".ppt"
+          when ".pptx"
+            "icons/ppt.svg"
+          when ".xls" 
+            "icons/xls.svg"
+          when ".doc" 
+            "icons/doc.svg"
+          when ".ppt"
             "icons/ppt.svg"
           else 
             "icons/file.svg"

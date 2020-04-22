@@ -8,9 +8,9 @@
       <div class="document-item-title"><%= document.name %></div>
       <div class="document-item-content">
       	<div class="project-documents-list">
-      	<% if level <= 1 %>
+      	<% if level == 1 %>
       	  <% ProjectDocument.where("parent = ? AND status = ?", document.id, ProjectDocument::ACTIVE).each do |folder_item| %>
-      	    <%= render 'document_item', document: folder_item, level: level + 1  %>
+      	    <%= render 'project_documents/document_item', document: folder_item, level: level + 1  %>
       	  <% end %>
       	<% end %>
       	</div> 

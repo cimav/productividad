@@ -4,6 +4,24 @@ $(document).on('change', '#upload_files', function() {
   document.getElementById("new_project_document").submit();
 });
 
+$(document).on('keyup', '#project_document_url', function() {
+  var url = $(this).val();
+  var icon = $("#google-icon").attr("src");
+  if (url.includes('spreadsheet')) {
+  	$('#google-sheet-radio').prop('checked', true);
+    icon = $("#google-icon-sheet").val();
+  } else if (url.includes('document')) {
+  	$('#google-doc-radio').prop('checked', true);
+  	icon = $("#google-icon-doc").val();
+  } else if (url.includes('presentation')) {
+  	$('#google-slide-radio').prop('checked', true);
+  	icon = $("#google-icon-slide").val();
+  } else {
+  	$('#google-other-radio').prop('checked', true);
+  }
+  $("#google-icon").attr("src", icon);
+});
+
 $(document).on('change', '#documents-order', function() {
   window.location = window.location.href.split(/[?#]/)[0] + '?orden=' + $(this).val();
 });

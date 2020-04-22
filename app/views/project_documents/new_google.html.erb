@@ -1,6 +1,14 @@
 <%= render 'documents_header', project: @project, person: @person, project_document: @project_document  %>
 
 <%= form_for @project_document, :url => nuevo_google_guardar_project_project_document_path(@person.shortname, @project, @project_document.parent), local: true do |form| %>
+<%= hidden_field_tag "google-icon-sheet",  asset_path("icons/google-sheet.svg") %>
+<%= hidden_field_tag "google-icon-doc",  asset_path("icons/google-doc.svg") %>
+<%= hidden_field_tag "google-icon-slide",  asset_path("icons/google-slide.svg") %>
+<div class="columns">
+  <div class="column is-narrow">
+    <%= image_tag @project_document.file_type_icon, id: "google-icon" %>
+  </div>
+  <div class="column">
   <div class="field">
   	<strong>Título del documento:</strong><br>
     <p class="control"><%= form.text_field :name, class:'input', required: true %></p>
@@ -22,13 +30,13 @@
     <table class="documents-radio">
       <tr>
       <td>
-  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_DOC %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_DOC] %>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_DOC, id: "google-doc-radio" %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_DOC] %>
   	  </td><td>
-  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_SHEET %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_SHEET] %>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_SHEET, id: "google-sheet-radio" %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_SHEET] %>
   	  </td><td>
-  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_SLIDE %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_SLIDE] %>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_SLIDE, id: "google-slide-radio" %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_SLIDE] %>
   	  </td><td>
-  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_OTHER %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_OTHER] %>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_OTHER, id: "google-other-radio" %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_OTHER] %>
   	  </td>
       </tr>
   	</table>  
@@ -43,4 +51,6 @@
   <div class="actions is-pulled-right">
     <%= form.submit 'Publicar documento', class:'button is-success' %>
   </div>
+  </div>
+</div>
 <% end %>

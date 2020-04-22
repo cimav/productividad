@@ -43,6 +43,25 @@ $folder-bg: #ffe082;
   }
 }
 
+
+.documents-card-items {
+  margin: 8px;
+  .document-item {
+    margin: 0 !important;
+    margin-right: 8px !important;
+    margin-bottom: 8px !important;
+    width: 77px !important;
+    min-height: 80px !important;
+    max-height: 80px !important;
+    float: left;
+    .document-item-title { 
+      font-size: 60%;
+    }
+  }
+}
+
+
+
 .document-item-folder-new {
   cursor: default !important;
 }
@@ -189,4 +208,8 @@ $folder-bg: #ffe082;
   img {
     max-height: 120px !important;
   }
+}
+
+#google-icon {
+  width: 100px !important;
 }
