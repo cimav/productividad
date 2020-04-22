@@ -8,47 +8,11 @@
     documents_order = 'created_at DESC'
   end
 %>
+
 <div class="project-documents-list">
 <% project.project_documents.where("parent = ? AND status = ?", parent_id, ProjectDocument::ACTIVE).order(documents_order).each do |document| %>
   <a class="document-link" href="<%= project_project_document_path(person.shortname, project, document) %>">
-  <% if document.file_type == ProjectDocument::FOLDER %>
-    <div class="document-item document-item-folder">
-      <div class="document-item-header folder-header">
-        <div class="folder-tab">&nbsp;</div>
-        <div class="is-clearfix document-item-header-actions"></div>
-        <div class="is-clearfix"></div>
-      </div>
-      <div class="document-item-title"><%= document.name %></div>
-      <div class="document-item-content"></div>
-      <div class="white-gradient"></div>
-    </div>
-  <% end %>
-
-  <% if document.file_type == ProjectDocument::DOCUMENT %>
-    <div class="document-item">
-      <div class="document-item-header">
-        &nbsp;
-        <div class="document-item-header-actions"></div>
-        <div class="is-clearfix"></div>
-      </div>
-      <div class="document-item-title"><%= document.name %></div>
-      <div class="document-item-content"><%= document.content %></div>
-      <div class="white-gradient"></div>
-    </div>
-  <% end %>
-
-  <% if document.file_type == ProjectDocument::UPLOAD %>
-    <div class="document-item">
-      <div class="document-item-header">
-        &nbsp;
-        <div class="document-item-header-actions"></div>
-        <div class="is-clearfix"></div>
-      </div>
-      <div class="document-item-title"><%= document.name %></div>
-      <div class="document-item-content"></div>
-      <div class="white-gradient"></div>
-    </div>
-  <% end %>
+    <%= render 'document_item', document: document, level: 1  %>
   </a>
 <% end %>
 <div class="is-clearfix"></div>

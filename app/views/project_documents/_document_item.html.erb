@@ -1,0 +1,52 @@
+<% if document.file_type == ProjectDocument::FOLDER %>
+    <div class="document-item document-item-folder">
+      <div class="document-item-header folder-header">
+        <div class="folder-tab">&nbsp;</div>
+        <div class="is-clearfix document-item-header-actions"></div>
+        <div class="is-clearfix"></div>
+      </div>
+      <div class="document-item-title"><%= document.name %></div>
+      <div class="document-item-content">
+      	<div class="project-documents-list">
+      	<% if level <= 1 %>
+      	  <% ProjectDocument.where("parent = ? AND status = ?", document.id, ProjectDocument::ACTIVE).each do |folder_item| %>
+      	    <%= render 'document_item', document: folder_item, level: level + 1  %>
+      	  <% end %>
+      	<% end %>
+      	</div> 
+
+      </div>
+    </div>
+  <% end %>
+
+  <% if document.file_type == ProjectDocument::DOCUMENT %>
+    <div class="document-item">
+      <div class="document-item-header">
+        &nbsp;
+        <div class="document-item-header-actions"></div>
+        <div class="is-clearfix"></div>
+      </div>
+      <div class="document-item-title"><%= document.name %></div>
+      <div class="document-item-content"><%= document.content %></div>
+    </div>
+  <% end %>
+
+  <% if document.file_type == ProjectDocument::UPLOAD %>
+    <div class="document-item">
+      <div class="document-item-header">
+        &nbsp;
+        <div class="document-item-header-actions"></div>
+        <div class="is-clearfix"></div>
+      </div>
+      <div class="document-item-title"><%= document.name %></div>
+      <div class="document-item-content document-item-content-upload">
+        <% if document.file.previewable? %>
+        <%= image_tag(document.file.preview(resize: "300x300>")) %>
+        <% elsif document.file.variable? %>
+          <%= image_tag(document.file.variant(resize: "300x300>")) %>
+        <% else %>
+          <span class="icon"><i class="fas fa-file" aria-hidden="true"></i></span>
+        <% end %>
+      </div>
+    </div>
+  <% end %>

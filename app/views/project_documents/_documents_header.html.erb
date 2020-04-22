@@ -99,7 +99,7 @@
         <div class="dropdown-content project-documents-new-menu-options">
           <% 
           if project_document.new_record? 
-            target_folder = 'root'
+            target_folder = 0
           else 
             target_folder = project_document.id
           end 
@@ -124,6 +124,9 @@
             <span>Enlace a Google Drive</span>
           </a>
         </div>
+        <%= form_for @new_project_document, :url => subir_archivos_project_project_document_path(@person.shortname, @project, @new_project_document.parent), local: true, html: { multipart: true } do |form| %>
+          <input id="upload_files" type="file" multiple style="display: none;" name="upload_files[]"/>
+        <% end %>
       </div>
       <% if project_document.parent <= 0 || project_document.new_record? %> 
         <% if can_get_path %>
@@ -140,6 +143,3 @@
     <% end %>
   </div>
 </div>
-<%= form_for @new_project_document, :url => subir_archivos_project_project_document_path(@person.shortname, @project, @new_project_document.parent), local: true, html: { multipart: true } do |form| %>
-<input id="upload_files" type="file" multiple style="display: none;" name="upload_files[]"/>
-<% end %>
