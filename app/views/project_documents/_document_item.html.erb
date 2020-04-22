@@ -45,8 +45,26 @@
         <% elsif document.file.variable? %>
           <%= image_tag(document.file.variant(resize: "300x300>")) %>
         <% else %>
-          <span class="icon"><i class="fas fa-file" aria-hidden="true"></i></span>
+          <%= image_tag document.file_type_icon %>
         <% end %>
       </div>
     </div>
+  <% end %>
+
+  <% if document.file_type == ProjectDocument::GOOGLE_DOC ||
+        document.file_type == ProjectDocument::GOOGLE_SHEET ||
+        document.file_type == ProjectDocument::GOOGLE_SLIDE ||
+        document.file_type == ProjectDocument::GOOGLE_OTHER  %>
+
+    <div class="document-item">
+      <div class="document-item-header">
+        &nbsp;
+        <div class="document-item-header-actions"></div>
+        <div class="is-clearfix"></div>
+      </div>
+      <div class="document-item-title"><%= document.name %></div>
+      <div class="document-item-content document-item-content-upload">
+          <%= image_tag document.file_type_icon %>
+      </div>
+    </div>   
   <% end %>

@@ -33,7 +33,7 @@ $folder-bg: #ffe082;
     margin: 0 !important;
     margin-right: 8px !important;
     margin-bottom: 8px !important;
-    width: 75px !important;
+    width: 77px !important;
     min-height: 80px !important;
     max-height: 80px !important;
     float: left;
@@ -73,10 +73,16 @@ $folder-bg: #ffe082;
   }
 }
 
+.documents-radio {
+  td {
+    padding-right: 2em;
+  }
+}
+
 .document-item-title {
   text-align: center;
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   margin: 0 0.5em;
 
   input {
@@ -122,10 +128,16 @@ $folder-bg: #ffe082;
 .document-show-upload {
   text-align: center;
   .document-show-upload-preview {
-    font-size: 10em;
+    
     img {
       max-height: 300px !important;
       border: 1px solid #eee;
+    }
+  }
+  .document-show-upload-icon {
+    img {
+      max-height: 150px !important;
+      border: 0 !important;
     }
   }
   .document-item-title {
@@ -133,6 +145,28 @@ $folder-bg: #ffe082;
   } 
   .document-show-upload-actions {
     text-align: center;
+  }
+}
+
+.document-show-google {
+  text-align: center;
+  .document-item-title {
+    text-align: center;
+  } 
+  .document-show-google-icon {
+    img {
+      max-height: 150px !important;
+    }
+  }
+  .document-show-google-actions {
+    text-align: center;
+    margin-top: 1em;
+  }
+  .notes {
+    margin-top: 2em;
+    border-top: 1px solid #eee;
+    padding-top: 1em;
+    text-align: left;
   }
 }
 

@@ -60,6 +60,8 @@ Rails.application.routes.draw do
               get 'nuevo-documento' => 'project_documents#new_document'
               post 'nuevo-documento-guardar' => 'project_documents#save_new_document'
               post 'subir-archivos' => 'project_documents#upload_files'
+              get 'nuevo-google' => 'project_documents#new_google'
+              post 'nuevo-google-guardar' => 'project_documents#save_new_google'
             end
           end
 

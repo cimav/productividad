@@ -18,7 +18,9 @@
         <% elsif @project_document.file.variable? %>
           <%= image_tag(@project_document.file.variant(resize: "500x500>")) %>
         <% else %>
-    	    <span class="icon"><i class="fas fa-file" aria-hidden="true"></i></span>
+    	    <div class="document-show-upload-icon">
+            <%= image_tag @project_document.file_type_icon %>
+          </div>
     	  <% end %>
       </a>
   	</div>
@@ -27,5 +29,27 @@
     <div class="document-show-upload-actions">
       <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">Descargar</a> &bull; <a>Reemplazar con nueva versión</a>
     </div>
+  </div>
+<% end %>
+
+<% if @project_document.file_type == ProjectDocument::GOOGLE_DOC ||
+      @project_document.file_type == ProjectDocument::GOOGLE_SHEET ||
+      @project_document.file_type == ProjectDocument::GOOGLE_SLIDE ||
+      @project_document.file_type == ProjectDocument::GOOGLE_OTHER
+ %>
+  <div class="document-show-google">
+    <div class="document-show-google-icon">
+      <%= image_tag @project_document.file_type_icon %>
+    </div>
+    <div class="document-name"><%= @project_document.name %></div>
+    <div class="document-show-google-actions">
+      <a href="<%= @project_document.url %>" class="button is-rounded">Ver en Google</a>
+    </div>
+    <% if @project_document.content != '' %>
+      <div class="notes">
+        <strong>Notas:</strong>
+        <%= @project_document.content %>
+      </div>
+    <% end %>
   </div>
 <% end %>

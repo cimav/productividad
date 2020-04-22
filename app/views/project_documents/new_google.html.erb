@@ -1,0 +1,46 @@
+<%= render 'documents_header', project: @project, person: @person, project_document: @project_document  %>
+
+<%= form_for @project_document, :url => nuevo_google_guardar_project_project_document_path(@person.shortname, @project, @project_document.parent), local: true do |form| %>
+  <div class="field">
+  	<strong>Título del documento:</strong><br>
+    <p class="control"><%= form.text_field :name, class:'input', required: true %></p>
+    <script>
+      fs = document.getElementById('project_document_name');
+      fs.focus();
+      fs.select();
+    </script>
+  </div>
+
+  <div class="field">
+  	<strong>Liga a Google Drive:</strong><br>
+    <p class="control"><%= form.text_field :url, class:'input', required: true, placeholder: "Ejemplo: http://docs.google.com/..." %></p>
+  </div>
+
+  <div class="field">
+  	<strong>Tipo de documento:</strong><br>
+  	<p>
+    <table class="documents-radio">
+      <tr>
+      <td>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_DOC %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_DOC] %>
+  	  </td><td>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_SHEET %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_SHEET] %>
+  	  </td><td>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_SLIDE %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_SLIDE] %>
+  	  </td><td>
+  		<%= form.radio_button :file_type, ProjectDocument::GOOGLE_OTHER %> <%= ProjectDocument::DOC_TYPES[ProjectDocument::GOOGLE_OTHER] %>
+  	  </td>
+      </tr>
+  	</table>  
+  	</p>
+  </div>
+
+  <div class="field">
+  	<strong>Notas:</strong><br>
+    <p class="control"><%= form.rich_text_area :content %></p>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Publicar documento', class:'button is-success' %>
+  </div>
+<% end %>

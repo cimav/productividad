@@ -72,6 +72,24 @@ class ProjectDocumentsController < ApplicationController
     end
   end
 
+  def new_google
+    @project_document = ProjectDocument.new
+    @project_document.name = "Nuevo documento…"
+    @project_document.parent = params[:id]
+    @project_document.file_type = ProjectDocument::GOOGLE_OTHER
+    render :layout => 'profile'
+  end
+
+  def save_new_google
+    @project_document = @project.project_documents.build(project_document_params)
+    @project_document.person_id  = current_user.id
+    @project_document.status     = ProjectDocument::ACTIVE
+    @project_document.parent     = params[:id]
+    if @project_document.save
+      redirect_to project_project_document_path(@person.shortname, @project, @project_document), notice: 'Documento creado'
+    end
+  end
+
   def upload_files
     params[:upload_files].each do |f|
       @project_document = @project.project_documents.new
@@ -84,7 +102,7 @@ class ProjectDocumentsController < ApplicationController
       @project_document.save
     end
     notice = "Documentos subidos"
-    if params[:id].to_i == -1
+    if params[:id].to_i == -1 || params[:id].to_i == 0
       redirect_to project_project_documents_path(@person.shortname, @project), notice: notice
     else
       redirect_to project_project_document_path(@person.shortname, @project, params[:id]), notice: notice
