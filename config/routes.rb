@@ -62,6 +62,7 @@ Rails.application.routes.draw do
               post 'subir-archivos' => 'project_documents#upload_files'
               get 'nuevo-google' => 'project_documents#new_google'
               post 'nuevo-google-guardar' => 'project_documents#save_new_google'
+              post 'reemplazar-archivo' => 'project_documents#replace_file'
             end
           end
 

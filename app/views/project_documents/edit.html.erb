@@ -1,7 +1,7 @@
 <% @document_edit = true %>
 <%= render 'documents_header', project: @project, person: @person, project_document: @project_document   %>
 
-<%= form_for @project_document, :url => project_project_document_path(@person.shortname, @project, @project_document), local: true do |form| %>
+<%= form_for @project_document, :url => project_project_document_path(@person.shortname, @project, @project_document), local: true, html: { multipart: true } do |form| %>
   <% if @project_document.file_type == ProjectDocument::FOLDER %>
     <%= render 'folder_edit', project: @project, person: @person, project_document: @project_document, form: form  %>
   <% end %>

@@ -43,7 +43,7 @@
   	</div>
     <div class="document-name"><%= @project_document.name %></div>
     <div class="document-show-upload-actions">
-      <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">Descargar</a> &bull; <a>Reemplazar con nueva versión</a>
+      <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">Descargar</a> &bull; <a onclick ="javascript:document.getElementById('replace_file').click();" >Reemplazar con nueva versión</a>
     </div>
     <% if @project_document.content != '' %>
       <div class="notes">
@@ -52,6 +52,10 @@
       </div>
     <% end %>
   </div>
+
+  <%= form_with url: reemplazar_archivo_project_project_document_path(@person.shortname, @project, @new_project_document.parent), local: true, html: { multipart: true, id: "replace-file-form" } do |form| %>
+    <input id="replace_file" type="file" style="display: none;" name="replace_file"/>
+  <% end %>
 <% end %>
 
 <% if @project_document.file_type == ProjectDocument::GOOGLE_DOC ||
@@ -67,7 +71,7 @@
     <div class="document-show-google-actions">
       <a href="<%= @project_document.url %>" class="button is-rounded">Ver en Google</a>
     </div>
-    <% if @project_document.content != '' %>
+    <% if @project_document.content.blank? %>
       <div class="notes">
         <strong>Notas:</strong>
         <%= @project_document.content %>

@@ -2,7 +2,7 @@ class ProjectDocumentsController < ApplicationController
   before_action :auth_required
 
   before_action :set_project
-  before_action :set_project_document, only: [:show, :edit, :update, :destroy]
+  before_action :set_project_document, only: [:show, :edit, :update, :destroy, :replace_file]
   before_action :set_person
 
 
@@ -106,6 +106,20 @@ class ProjectDocumentsController < ApplicationController
       @project_document.save
     end
     notice = "Documentos subidos"
+    if params[:id].to_i == -1 || params[:id].to_i == 0
+      redirect_to project_project_documents_path(@person.shortname, @project), notice: notice
+    else
+      redirect_to project_project_document_path(@person.shortname, @project, params[:id]), notice: notice
+    end
+  end
+
+  def replace_file
+    f = params[:replace_file]
+    @project_document.person_id  = current_user.id
+    @project_document.name       = f.original_filename
+    @project_document.file       = f
+    @project_document.save
+    notice = "Documento reemplazado"
     if params[:id].to_i == -1 || params[:id].to_i == 0
       redirect_to project_project_documents_path(@person.shortname, @project), notice: notice
     else

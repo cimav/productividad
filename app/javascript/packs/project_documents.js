@@ -4,6 +4,10 @@ $(document).on('change', '#upload_files', function() {
   document.getElementById("new_project_document").submit();
 });
 
+$(document).on('change', '#replace_file', function() {
+  document.getElementById("replace-file-form").submit();
+});
+
 $(document).on('keyup', '#project_document_url', function() {
   var url = $(this).val();
   var icon = $("#google-icon").attr("src");
