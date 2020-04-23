@@ -60,6 +60,8 @@ class ProjectDocument < ApplicationRecord
             "icons/doc.svg"
           when ".ppt"
             "icons/ppt.svg"
+          when ".zip"
+            "icons/zip.svg"
           else 
             "icons/file.svg"
         end
