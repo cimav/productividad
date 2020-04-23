@@ -12,7 +12,7 @@ class Project < ApplicationRecord
   has_rich_text :results
 
   DEFINITION  = 1
-  NEGOTATION  = 2
+  NEGOTIATION  = 2
   IN_PROCESS = 3
   CONCLUDED   = 4
   SUSPENDED   = 5
@@ -21,12 +21,32 @@ class Project < ApplicationRecord
 
   STATUS = {
   	DEFINITION  => 'En definición',
-    NEGOTATION  => 'En negociación',
+    NEGOTIATION  => 'En negociación',
     IN_PROCESS => 'En proceso',
     CONCLUDED   => 'Concluido',
     SUSPENDED   => 'Suspendido',
     CANCELED    => 'Cancelado',
     REJECTED    => 'Rechazado'
+  }
+
+  STATUS_CLASS = {
+    DEFINITION  => 'is-primary',
+    NEGOTIATION  => 'is-link',
+    IN_PROCESS  => 'is-info',
+    CONCLUDED   => 'is-success',
+    SUSPENDED   => 'is-danger',
+    CANCELED    => 'is-danger',
+    REJECTED    => 'is-danger'
+  }
+
+  STATUS_TEXT_CLASS = {
+    DEFINITION  => 'has-text-primary',
+    NEGOTIATION  => 'has-text-link',
+    IN_PROCESS  => 'has-text-info',
+    CONCLUDED   => 'has-text-success',
+    SUSPENDED   => 'has-text-danger',
+    CANCELED    => 'has-text-danger',
+    REJECTED    => 'has-text-danger'
   }
 
   MIXED         = 1
@@ -73,22 +93,7 @@ class Project < ApplicationRecord
   end
 
   def status_class
-    case status 
-    when DEFINITION
-      "is-info"
-    when NEGOTATION
-      "is-link"
-    when IN_PROCCESS
-      "is-success"
-    when CONCLUDED
-      "is-primary"
-    when SUSPENDED
-      "is-danger"  
-    when CANCELED
-      "is-danger"  
-    when REJECTED
-      "is-danger"  
-    end
+    STATUS_CLASS[status.to_i]
   end
 
   def field_text(f)

@@ -2,6 +2,94 @@
 
 <div class="product">
 <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+<div class="status-menu">
+  <div class="dropdown is-hoverable">
+    <div class="dropdown-trigger">
+      <button class="button <%= @project.status_class %>" aria-haspopup="true" aria-controls="dropdown-menu">
+        <span><%= @project.status_text %></span>
+        <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+      </button>
+    </div>
+    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+      <%
+      definition_status  = [Project::NEGOTIATION] 
+      negotiation_status = [Project::DEFINITION] 
+      in_proccess_status = [Project::NEGOTIATION, Project::CONCLUDED] 
+      concluded_status   = [Project::IN_PROCESS] 
+      canceled_status    = [Project::DEFINITION, Project::NEGOTIATION, Project::IN_PROCESS, Project::SUSPENDED] 
+      suspended_status   = [Project::IN_PROCESS] 
+      rejected_status    = [Project::DEFINITION, Project::NEGOTIATION] 
+      %>
+
+      <% if definition_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::DEFINITION] %>"><i class="fas fa-circle" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::DEFINITION] %></span>
+          </a>
+        </div>
+      <% end %>
+
+      <% if negotiation_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::NEGOTIATION] %>"><i class="fas fa-handshake" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::NEGOTIATION] %></span>
+          </a>
+        </div>
+      <% end %>
+
+      <% if in_proccess_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::IN_PROCESS] %>"><i class="fas fa-play" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::IN_PROCESS] %></span>
+          </a>
+        </div>
+      <% end %>
+   
+      <% if concluded_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::CONCLUDED] %>"><i class="fas fa-check" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::CONCLUDED] %></span>
+          </a>
+        </div>
+      <% end %>
+
+      <% if suspended_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::SUSPENDED] %>"><i class="fas fa-pause" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::SUSPENDED] %></span>
+          </a>
+        </div>
+      <% end %>
+
+      <% if canceled_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::CANCELED] %>"><i class="fas fa-times" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::CANCELED] %></span>
+          </a>
+        </div>
+      <% end %>
+
+      <% if rejected_status.include? @project.status %>
+        <div class="dropdown-content project-documents-new-menu-options">
+          <a class="dropdown-item">
+            <span class="icon <%= Project::STATUS_TEXT_CLASS[Project::REJECTED] %>"><i class="fas fa-times" aria-hidden="true"></i></span>
+            <span><%= Project::STATUS[Project::REJECTED] %></span>
+          </a>
+        </div>
+      <% end %>
+
+
+    </div>
+  </div>
+</div>
+
+
 <div class="project-cards-area">
 
   <div class="columns">
