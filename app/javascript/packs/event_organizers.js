@@ -35,11 +35,4 @@ $(document).on('click', '#add-event-organizer', function() {
 });
 
 
-$(document).on('change', '.filter-select', function() {
-  var year = $('#filter-year').val()
-  var url =  $(this).data('url') + '/muestra/' + year;
-  window.location = url;
-});
-
-
 

@@ -35,12 +35,6 @@ $(document).on('click', '#add-association-member', function() {
 });
 
 
-$(document).on('change', '.filter-select', function() {
-  var year = $('#filter-year').val()
-  var url =  $(this).data('url') + '/muestra/' + year;
-  window.location = url;
-});
-
 $(document).on('change', '#association_member_status', function() {
   $("#association-end").toggle();
 });

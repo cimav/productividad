@@ -40,15 +40,4 @@ $(document).on('click', '#add-patent', function() {
 });
 
 
-$(document).on('change', '.filter-select', function() {
-  var status = $('#filter-status').val()
-  var year = $('#filter-year').val()
-  var url =  $(this).data('url') + '/muestra/' + status
-  if (year != 'todos') {
-    url = url + '/' + year;
-  }
-  window.location = url;
-});
-
-
 

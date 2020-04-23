@@ -42,9 +42,4 @@ $(document).on('click', '#add-project-reviewer', function() {
 });
 
 
-$(document).on('change', '.filter-select', function() {
-  var year = $('#filter-year').val()
-  var url =  $(this).data('url') + '/muestra/' + year;
-  window.location = url;
-});
 
