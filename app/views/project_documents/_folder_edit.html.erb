@@ -1,0 +1,20 @@
+<div class="columns">
+  <div class="column is-narrow upload-preview-edit">
+    <%= render 'document_item', document: @project_document, level: 1  %>
+  </div>
+  <div class="column">
+  <div class="field">
+  	<strong>Nombre de la carpeta:</strong><br>
+    <p class="control"><%= form.text_field :name, class:'input', required: true %></p>
+  </div>
+
+  <div class="field">
+  	<strong>Notas:</strong><br>
+    <p class="control"><%= form.rich_text_area :content %></p>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <a href="<%= project_project_document_path(person.shortname, project, project_document) %>" class="button">Cancelar</a> <%= form.submit 'Actualizar', class:'button is-success' %>
+  </div>
+  </div>
+ </div>

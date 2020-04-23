@@ -17,6 +17,7 @@
   </div>
 </div>
 <% if @project_document.file_type == ProjectDocument::FOLDER %>
+  <%= @project_document.content %>
   <%= render 'documents_list', project: @project, person: @person, project_document: @project_document, parent_id: @project_document.id  %>
 <% end %>
 

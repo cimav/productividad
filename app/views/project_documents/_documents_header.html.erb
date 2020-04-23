@@ -5,6 +5,8 @@
 </div>
 
 <% 
+  document_edit = @document_edit rescue false
+
   can_get_path = true
   if project_document.parent >= 0
     document_parents = []  
@@ -51,7 +53,7 @@
     </nav>
   </div>
   <div class="level-right">
-    <% if project_document.file_type != ProjectDocument::FOLDER  %>
+    <% if !document_edit && project_document.file_type != ProjectDocument::FOLDER  %>
       <% if can_get_path %>
         <%= link_to project_project_document_path(person.shortname, project, project_document.parent_document), class: 'button' do %>
           <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
@@ -62,7 +64,7 @@
         <% end %>
       <% end %>
     <% end %>
-    <% if project_document.file_type == ProjectDocument::FOLDER  %>
+    <% if !document_edit && project_document.file_type == ProjectDocument::FOLDER  %>
     <div class="product-filters">
       <div class="select">
         <% 
