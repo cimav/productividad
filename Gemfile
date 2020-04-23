@@ -58,3 +58,4 @@ gem 'carrierwave'
 
 gem 'image_processing', '~> 1.0'
 gem 'poppler' 
+gem 'rails-i18n'

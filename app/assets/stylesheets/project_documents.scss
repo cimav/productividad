@@ -316,3 +316,9 @@ $folder-bg: #ffe082;
   display: inline-block;
   background-color: darken($folder-bg, 25%);
 }
+
+.document-extra {
+  font-size: 80%;
+  color: #666;
+  margin-bottom: 2em;
+}

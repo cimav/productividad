@@ -46,6 +46,9 @@
       </a>
   	</div>
     <div class="document-name"><%= @project_document.name %></div>
+    <div class="document-extra">
+      Publicado por <%= @project_document.person.full_name %> &bull; <%= I18n.l(@project_document.updated_at, format: :long)  %> &bull; <%= number_to_human_size(@project_document.file.byte_size) %> 
+    </div>
     <div class="document-show-upload-actions">
       <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">Descargar</a> &bull; <a onclick ="javascript:document.getElementById('replace_file').click();" >Reemplazar con nueva versión</a>
     </div>
