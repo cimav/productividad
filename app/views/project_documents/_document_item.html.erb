@@ -1,21 +1,27 @@
 <% if document.file_type == ProjectDocument::FOLDER %>
+    <% if level == 1 %>
+      <% document_childs = ProjectDocument.where("parent = ? AND status = ?", document.id, ProjectDocument::ACTIVE) %>
+    <% end %>
     <div class="document-item document-item-folder">
       <div class="document-item-header folder-header">
         <div class="folder-tab">&nbsp;</div>
-        <div class="is-clearfix document-item-header-actions"></div>
-        <div class="is-clearfix"></div>
+        <div class="document-item-header-actions">
+          <% if level == 1 && document_childs.count > 3 %>
+            <span class="folder-tag"><%= document_childs.count %></span>
+          <% end %>
+        </div>
       </div>
       <div class="document-item-title"><%= document.name %></div>
       <div class="document-item-content">
       	<div class="project-documents-list">
       	<% if level == 1 %>
-      	  <% ProjectDocument.where("parent = ? AND status = ?", document.id, ProjectDocument::ACTIVE).each do |folder_item| %>
+      	  <% document_childs.each do |folder_item| %>
       	    <%= render 'project_documents/document_item', document: folder_item, level: level + 1  %>
       	  <% end %>
       	<% end %>
       	</div> 
-
       </div>
+      <div class="document-folder-gradient"></div>
     </div>
   <% end %>
 
@@ -28,6 +34,7 @@
       </div>
       <div class="document-item-title"><%= document.name %></div>
       <div class="document-item-content"><%= document.content %></div>
+      <div class="document-white-gradient"></div>
     </div>
   <% end %>
 
@@ -38,7 +45,6 @@
         <div class="document-item-header-actions"></div>
         <div class="is-clearfix"></div>
       </div>
-      <div class="document-item-title"><%= document.name %></div>
       <div class="document-item-content document-item-content-upload">
         <% if document.file.previewable? %>
         <%= image_tag(document.file.preview(resize: "300x300>")) %>
@@ -48,6 +54,8 @@
           <%= image_tag document.file_type_icon %>
         <% end %>
       </div>
+      <div class="document-item-title"><%= document.name %></div>
+      <div class="document-white-gradient"></div>
     </div>
   <% end %>
 
@@ -62,9 +70,8 @@
         <div class="document-item-header-actions"></div>
         <div class="is-clearfix"></div>
       </div>
+      <div class="document-item-content document-item-content-upload"><%= image_tag document.file_type_icon %></div>
       <div class="document-item-title"><%= document.name %></div>
-      <div class="document-item-content document-item-content-upload">
-          <%= image_tag document.file_type_icon %>
-      </div>
+      <div class="document-white-gradient"></div>
     </div>   
   <% end %>

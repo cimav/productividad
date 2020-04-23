@@ -17,7 +17,12 @@ $folder-bg: #ffe082;
   color: #666 !important;
 }
 
+.card.document-item {
+  
+}
+
 .document-item {
+  position: relative;
   overflow: hidden;
   width: 200px;
   min-height: 200px;
@@ -40,6 +45,21 @@ $folder-bg: #ffe082;
     .document-item-title { 
       font-size: 60%;
     }
+    img {
+      max-height: 32px !important;
+    }
+    .document-item-header { 
+      border-radius: 4px 4px 0 0 !important;
+      height: 10px;
+    }
+    .document-item-title {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .document-item-content {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
   }
 }
 
@@ -54,6 +74,24 @@ $folder-bg: #ffe082;
     min-height: 80px !important;
     max-height: 80px !important;
     float: left;
+    .document-item-title { 
+      font-size: 60%;
+    }
+    img {
+      max-height: 32px !important;
+    }
+    .document-item-header { 
+      border-radius: 4px 4px 0 0 !important;
+      height: 10px;
+    }
+    .document-item-title {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+    .document-item-content {
+      margin: 0 !important;
+      padding: 0 !important;
+    }
     .document-item-title { 
       font-size: 60%;
     }
@@ -118,7 +156,7 @@ $folder-bg: #ffe082;
 }
 
 .document-item-content {
-  margin: 1em;
+  margin: 0 0.5em 1em 1em;
 }
 
 .folder-header {
@@ -142,6 +180,10 @@ $folder-bg: #ffe082;
 .document-item-folder {
   background-color: $folder-color;
   border: 1px solid $folder-bg !important;
+
+  .document-item-title {
+    margin-bottom: 1em;
+  }
 }
 
 .document-show-upload {
@@ -234,4 +276,43 @@ $folder-bg: #ffe082;
 .document-options {
   right: 14px;
   position: absolute;
+}
+
+.document-white-gradient {
+  position: absolute; 
+  bottom: 0; 
+  left: 0;
+  width: 100%; 
+  text-align: center; 
+  margin: 0; padding: 14px 0;   
+  background-image: linear-gradient(to bottom, transparent, white);
+}
+
+.document-folder-gradient {
+  position: absolute; 
+  bottom: 0; 
+  left: 0;
+  width: 100%; 
+  text-align: center; 
+  margin: 0; 
+  padding: 20px 0 8px 0;   
+  background-image: linear-gradient(to bottom, transparent, $folder-color);
+  font-size: 80% !important;
+  color: darken($folder-bg, 40%);
+}
+
+.folder-tag {
+  position: absolute;
+  top: 2px;
+  margin: 0;
+  right: 12px;
+  font-size: 70% !important;
+  color: $folder-color;
+  padding: 2px 4px 4px 4px;
+  text-align: center;
+  height: 16px;
+  min-width: 16px;
+  border-radius: 50%;
+  display: inline-block;
+  background-color: darken($folder-bg, 25%);
 }
