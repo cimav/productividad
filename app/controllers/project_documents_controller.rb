@@ -188,9 +188,10 @@ class ProjectDocumentsController < ApplicationController
   def destroy
     @project_document.status = ProjectDocument::DELETED
     @project_document.save
-    respond_to do |format|
-      format.html { redirect_to project_project_documents_path(@person.shortname, @project), notice: 'El documento ha sido eliminado.' }
-      format.json { head :no_content }
+    if params[:id].to_i == -1 || params[:id].to_i == 0
+      redirect_to project_project_documents_path(@person.shortname, @project), notice: notice
+    else
+      redirect_to project_project_document_path(@person.shortname, @project, params[:id]), notice: notice
     end
   end
 
