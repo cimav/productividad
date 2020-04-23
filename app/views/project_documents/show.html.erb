@@ -27,7 +27,7 @@
 
 <% if @project_document.file_type == ProjectDocument::DOCUMENT %>
   <div class="document-name"><%= @project_document.name %></div>
-  <%= @project_document.content %>
+  <div class="document-content"><%= @project_document.content %></div>
 <% end %>
 
 <% if @project_document.file_type == ProjectDocument::UPLOAD %>
@@ -49,7 +49,7 @@
     <div class="document-show-upload-actions">
       <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">Descargar</a> &bull; <a onclick ="javascript:document.getElementById('replace_file').click();" >Reemplazar con nueva versión</a>
     </div>
-    <% if @project_document.content != '' %>
+    <% if strip_tags(@project_document.content.to_s)  != '' %>
       <div class="notes">
         <strong>Notas:</strong>
         <%= @project_document.content %>
@@ -75,7 +75,7 @@
     <div class="document-show-google-actions">
       <a href="<%= @project_document.url %>" class="button is-rounded">Ver en Google</a>
     </div>
-    <% if @project_document.content.blank? %>
+    <% if strip_tags(@project_document.content.to_s)  != '' %>
       <div class="notes">
         <strong>Notas:</strong>
         <%= @project_document.content %>
