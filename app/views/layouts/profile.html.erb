@@ -1,12 +1,42 @@
 <% content_for :content do %>
   <div class="container is-fullhd profile-container">
     <div class="columns">
+      <div class="column is-narrow profile-small-sidebar">
+
+        
+        <div class="dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <figure class="image is-48x48 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <%= render 'profile_menu', person: @person %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="show-sidebar-area">
+          <a id="show-sidebar">
+            <span class="icon is-small"><i class="fas fa-angle-right" aria-hidden="true"></i></span>
+          </a>
+        </div>
+      </div>
       <div class="column is-one-fifth profile-sidebar">
         <div class="profile-header">
-          <figure class="image is-128x128 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure>
-          <strong><%= link_to @person.full_name, "/perfiles/#{@person.shortname}" %></strong><br/>
+          <figure class="image is-48x48 profile-img"><img class="is-rounded" src="<%= @person.display_url rescue '' %>"></figure>
+          <strong>
+            <%= link_to  "/perfiles/#{@person.shortname}" do %>
+              <%= @person.first_name %><br>
+              <%= @person.last_name %>
+            <% end %>
+          </strong>
+          <div class="is-clearfix"></div>
         </div>
         <%= render 'profile_menu', person: @person %>
+        <a id="hide-sidebar">
+          <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+        </a>
       </div>
       <div class="column profile-workarea">
   	    <%= yield %>

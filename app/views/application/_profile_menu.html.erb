@@ -1,4 +1,5 @@
 <aside class="menu">
+  <div class="menu-section">
   <p class="menu-label">
     Investigacion
   </p>
@@ -18,6 +19,8 @@
     <li class="li-evaluador-de-articulos"><%= link_to "Evaluador de Artículos", journal_article_reviewers_path(person.shortname) %></li>
 	  <li class="li-actividades-relevantes"><%= link_to "Actividades Relevantes", relevant_activities_path(person.shortname) %></li>
   </ul>
+  </div>
+  <div class="menu-section">
   <p class="menu-label">
     Posgrado
   </p>
@@ -25,12 +28,16 @@
     <li class="li-posgrado-en-curso"><a>En Curso ⌛</a></li>
     <li class="li-posgrado-graduados"><a>Graduados ⌛</a></li>
   </ul>
+  </div>
+  <div class="menu-section">
   <p class="menu-label">
     Vinculación
   </p>
   <ul class="menu-list">
     <li class="li-vinculacion"><a>Ingresos ⌛</a></li>
   </ul>
+  </div>
+  <div class="menu-section">
   <p class="menu-label">
     Trabajo Interno
   </p>
@@ -39,4 +46,6 @@
     <li class="li-grupos"><a>Brigadas y grupos ⌛</a></li>
     <li class="li-calidad"><a>Calidad ⌛</a></li>
   </ul>
+  </div>
+  <div class="is-clearfix"></div>
 </aside>
