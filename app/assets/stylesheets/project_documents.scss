@@ -147,7 +147,7 @@ $folder-bg: #ffe082;
 .document-show-upload {
   text-align: center;
   .document-show-upload-preview {
-    
+    text-align: center;
     img {
       max-height: 300px !important;
       border: 1px solid #eee;
@@ -164,6 +164,13 @@ $folder-bg: #ffe082;
   } 
   .document-show-upload-actions {
     text-align: center;
+  }
+
+  .notes {
+    border-top: 1px solid #eee;
+    margin-top: 2em;
+    padding-top: 1em;
+    text-align: left;
   }
 }
 
@@ -212,4 +219,15 @@ $folder-bg: #ffe082;
 
 #google-icon {
   width: 100px !important;
+}
+
+.upload-preview-edit {
+  img {
+    width: 200px !important;
+  }
+}
+
+.document-options {
+  right: 14px;
+  position: absolute;
 }

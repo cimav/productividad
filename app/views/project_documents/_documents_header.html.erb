@@ -43,7 +43,6 @@
           <li><a href="<%= project_project_documents_path(person.shortname, project) %>"><span class="icon is-small"><i class="fas fa-folder" aria-hidden="true"></i></span><span class="w1">&nbsp;</span></a></li>
           <% document_parents.each do |folder| %>
             <li><a href="<%= project_project_document_path(person.shortname, project, folder) %>"><%= folder.name %></a></li> 
-
           <% end %>
         <% else %>
           <li><%= link_to 'Documentos', project_project_documents_path(person.shortname, project) %></li>

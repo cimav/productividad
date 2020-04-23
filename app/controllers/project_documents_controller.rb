@@ -34,6 +34,10 @@ class ProjectDocumentsController < ApplicationController
     end
   end
 
+  def edit
+    render :layout => 'profile'
+  end 
+
   def new_folder
     @project_document = ProjectDocument.new
     @project_document.name = "Sin Título"
@@ -153,7 +157,7 @@ class ProjectDocumentsController < ApplicationController
         log = @project.activity_logs.new
         log.person_id = current_user.id
         log.changed_values = changes.to_json
-        log.document = "El documento ha sido actualizado."
+        log.message = "El documento ha sido actualizado."
         log.save
           
         format.html { redirect_to project_project_document_path(@person.shortname, @project, @project_document), notice: 'El documento ha sido actualizado' }

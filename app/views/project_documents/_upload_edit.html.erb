@@ -1,0 +1,27 @@
+<div class="columns">
+  <div class="column is-narrow upload-preview-edit">
+    <% if @project_document.file.previewable? %>
+      <%= image_tag(@project_document.file.preview(resize: "500x500>")) %>
+    <% elsif @project_document.file.variable? %>
+      <%= image_tag(@project_document.file.variant(resize: "500x500>")) %>
+    <% else %>
+      <div class="document-show-upload-icon">
+        <%= image_tag @project_document.file_type_icon %>
+      </div>
+    <% end %>
+  </div>
+  <div class="column">
+  <div class="field">
+  	<div class="document-name"><%= project_document.name %></div>
+  </div>
+
+  <div class="field">
+  	<strong>Notas:</strong><br>
+    <p class="control"><%= form.rich_text_area :content %></p>
+  </div>
+
+  <div class="actions is-pulled-right">
+    <a href="<%= project_project_document_path(person.shortname, project, project_document) %>" class="button">Cancelar</a> <%= form.submit 'Actualizar', class:'button is-success' %>
+  </div>
+  </div>
+</div>

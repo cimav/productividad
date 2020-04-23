@@ -1,12 +1,9 @@
-<%= render 'documents_header', project: @project, person: @person, project_document: @project_document  %>
-
-<%= form_for @project_document, :url => nuevo_google_guardar_project_project_document_path(@person.shortname, @project, @project_document.parent), local: true do |form| %>
 <%= hidden_field_tag "google-icon-sheet",  asset_path("icons/google-sheet.svg") %>
 <%= hidden_field_tag "google-icon-doc",  asset_path("icons/google-doc.svg") %>
 <%= hidden_field_tag "google-icon-slide",  asset_path("icons/google-slide.svg") %>
 <div class="columns">
   <div class="column is-narrow">
-    <%= image_tag @project_document.file_type_icon, id: "google-icon" %>
+    <%= image_tag project_document.file_type_icon, id: "google-icon" %>
   </div>
   <div class="column">
   <div class="field">
@@ -48,11 +45,8 @@
     <p class="control"><%= form.rich_text_area :content %></p>
   </div>
 
+  <div class="actions is-pulled-right">
+    <a href="<%= project_project_document_path(person.shortname, project, project_document) %>" class="button">Cancelar</a> <%= form.submit 'Actualizar', class:'button is-success' %>
+  </div>
   </div>
 </div>
-
-<div class="actions is-pulled-right">
-  <%= form.submit 'Publicar documento', class:'button is-success' %>
-</div>
-
-<% end %>

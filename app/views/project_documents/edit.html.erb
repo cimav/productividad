@@ -1,0 +1,19 @@
+<%= render 'documents_header', project: @project, person: @person, project_document: @project_document  %>
+<%= form_for @project_document, :url => project_project_document_path(@person.shortname, @project, @project_document), local: true do |form| %>
+
+  <% if @project_document.file_type == ProjectDocument::DOCUMENT %>
+    <%= render 'document_edit', project: @project, person: @person, project_document: @project_document, form: form  %>
+  <% end %>
+
+  <% if @project_document.file_type == ProjectDocument::UPLOAD %>
+    <%= render 'upload_edit', project: @project, person: @person, project_document: @project_document, form: form  %>
+  <% end %>
+
+  <% if @project_document.file_type == ProjectDocument::GOOGLE_DOC ||
+    @project_document.file_type == ProjectDocument::GOOGLE_SHEET ||
+    @project_document.file_type == ProjectDocument::GOOGLE_SLIDE ||
+    @project_document.file_type == ProjectDocument::GOOGLE_OTHER
+  %>
+    <%= render 'google_edit', project: @project, person: @person, project_document: @project_document, form: form  %>
+  <% end %>
+<% end %>
