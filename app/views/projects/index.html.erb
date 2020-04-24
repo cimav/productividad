@@ -61,13 +61,20 @@
 <div class="product-item">
   <article class="media">
     <div class="media-left">
-      <%= doc_icon %>
+      <%= render 'status_icon', project: project, person: @person  %>
     </div>
     <div class="media-content">
       <div class="content">
-        <p>
+
           <strong><%= link_to project.name, project_path(@person.shortname, project) %></strong><br>
-          <span class="tag is-light"><%= project.status_text %></span>
+          <small>Del <%= I18n.l(project.start_date, format: :long) rescue '--' %> al <%= I18n.l(project.end_date, format: :long) rescue '--' %></small>
+          <span class="tag"><%= project.research_type_text %></span>
+          <span class="tag">
+            <%= project.source_type_text %> 
+            <% if !project.source.blank? %>
+              %(<%= project.source %>) 
+            <% end %>
+          </span>
         </p>
       </div>
     </div>

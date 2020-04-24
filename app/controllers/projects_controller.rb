@@ -17,7 +17,7 @@ class ProjectsController < ApplicationController
       when "en-definicion"
         status = Project::DEFINITION
       when "en-negociacion"
-        status = Project::NEGOTATION
+        status = Project::NEGOTIATION
       when "en-proceso"
         status = Project::IN_PROCESS
       when "concluidos"
