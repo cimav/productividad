@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :auth_required
 
-  before_action :set_project, only: [:change_status, :change_status_save, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
+  before_action :set_project, only: [:information, :change_status, :change_status_save, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
   before_action :set_person
 
 
@@ -66,19 +66,11 @@ class ProjectsController < ApplicationController
     render :layout => 'profile'
   end
 
+  def information 
+    render :layout => 'profile'
+  end
+
   def budget 
-    render :layout => 'profile'
-  end
-
-  def messages 
-    render :layout => 'profile'
-  end
-
-  def tasks 
-    render :layout => 'profile'
-  end
-
-  def calendar 
     render :layout => 'profile'
   end
 
@@ -86,13 +78,6 @@ class ProjectsController < ApplicationController
     render :layout => 'profile'
   end
 
-  def participants 
-    render :layout => 'profile'
-  end
-
-  def documents 
-    render :layout => 'profile'
-  end
 
   def change_status
     @project_status_change = @project.project_status_changes.new
@@ -107,7 +92,7 @@ class ProjectsController < ApplicationController
     if @project_status_change.save 
       @project.status = @project_status_change.to
       @project.save
-      redirect_to administrar_project_path(@person.shortname, @project), notice: "El proyecto cambio de estado a #{@project.status_text}"
+      redirect_to administrar_informacion_project_path(@person.shortname, @project.id), notice: "El proyecto cambio de estado a #{@project.status_text}"
     end
   end
 
@@ -150,6 +135,16 @@ class ProjectsController < ApplicationController
       leader.role_type = ProjectParticipant::LEADER
       leader.role = "Lider del proyecto"
       leader.save
+
+      status_definition = @project.project_status_changes.new
+      status_definition.from = Project::DEFINITION
+      status_definition.to = Project::DEFINITION
+      status_definition.change_date = @project.start_date
+      status_definition.person_id = current_user.id
+      status_definition.status = ProjectStatusChange::ACTIVE
+      status_definition.save
+
+
       log = @project.activity_logs.new 
       log.message = "Proyecto agregado: #{@project.name}"
       log.person_id = current_user.id
@@ -178,7 +173,7 @@ class ProjectsController < ApplicationController
         log.message = "El proyecto #{@project.id} ha sido actualizado."
         log.save
           
-        format.html { redirect_to edit_project_path(@person.shortname, @project.id), notice: 'El proyecto ha sido actualizado' }
+        format.html { redirect_to administrar_informacion_project_path(@person.shortname, @project.id), notice: 'El proyecto ha sido actualizado' }
         format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }

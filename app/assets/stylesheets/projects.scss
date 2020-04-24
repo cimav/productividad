@@ -265,3 +265,16 @@ $rainbow-8: #c51162;
   }
   margin-bottom: 1em;
 }
+
+.project-status-header {
+  float: right;
+  position: relative;
+}
+
+.project-fields {
+  .column {
+    padding-left: 0 !important;
+    padding-right: 2em;
+    padding-bottom: 0 !important;
+  }
+}

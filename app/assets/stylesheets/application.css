@@ -12,6 +12,7 @@
  *
  *= require bulma/bulma
  *= require bulma-extensions/bulma-calendar/dist/css/bulma-calendar.min.css
+ *= require bulma-extensions/bulma-timeline/dist/css/bulma-timeline.min.css
  *= require actiontext
  *= require_tree .
  *= require_self

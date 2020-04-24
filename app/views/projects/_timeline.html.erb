@@ -1,0 +1,19 @@
+<div class="timeline">
+  <header class="timeline-header">
+    <span class="tag is-grey" title="<%= I18n.l(project.start_date, format: :long) rescue '--'  %>">Inicio</span>
+  </header>
+  <% project.project_status_changes.each do |status_change| %>
+	  <div class="timeline-item <%= Project::STATUS_CLASS[status_change.to.to_i] %>">
+	    <div class="timeline-marker <%= Project::STATUS_CLASS[status_change.to.to_i] %> is-icon">
+          <i class="fa <%= Project::STATUS_ICON[status_change.to.to_i] %>"></i>
+        </div>
+	    <div class="timeline-content">
+	      <p class="heading"><%= I18n.l(status_change.change_date, format: :long) rescue '--' %></p>
+	      <p><%= Project::STATUS_TIMELINE[status_change.to.to_i] rescue '--' %></p>
+	    </div>
+	  </div>
+  <% end %>
+  <header class="timeline-header">
+    <span class="tag is-grey"  title="<%= I18n.l(project.end_date, format: :long) rescue '--'  %>">Fin</span>
+  </header>
+</div>

@@ -1,6 +1,21 @@
-<%= render 'project_header', project: @project, person: @person  %>
+<%= render 'projects/project_header', project: @project, person: @person  %>
 <div class="product">
   <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
-  <%= render 'project_menu', project: @project, person: @person  %>
-  <%= render 'edit_form', project: @project, person: @person  %>
+  <%= render 'projects/project_menu', project: @project, person: @person  %>
 </div>
+
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+        <li><a href="<%= administrar_informacion_project_path(@person.shortname, @project) %>">Información</a></li>
+        <li><a>Editar</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <a href="<%= administrar_informacion_project_path(@person.shortname, @project) %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left"></i></span></a>
+  </div>
+</div>
+
+<%= render 'edit_form', project: @project, person: @person  %>

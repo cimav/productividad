@@ -50,6 +50,16 @@ class Project < ApplicationRecord
     REJECTED    => 'has-text-danger'
   }
 
+  STATUS_TIMELINE = {
+    DEFINITION  => 'Definición del proyecto',
+    NEGOTIATION  => 'Inicio de negociación',
+    IN_PROCESS  => 'Arranque del proyecto',
+    CONCLUDED   => 'Proyecto finalizado',
+    SUSPENDED   => 'Suspensión del proyecto',
+    CANCELED    => 'Cancelación del proyecto',
+    REJECTED    => 'Proyecto rechazado'
+  }
+
   MIXED         = 1
   SECTOR        = 2
   INTERNATIONAL = 3
@@ -75,6 +85,16 @@ class Project < ApplicationRecord
     APPLIED => "Aplicada",
     TECH => "Desarrollo Tecnológico"  
   }
+
+  STATUS_ICON = {
+    Project::DEFINITION  => "fa-circle",
+    Project::NEGOTIATION => "fa-handshake",
+    Project::IN_PROCESS  => "fa-play",
+    Project::CONCLUDED   => "fa-check",
+    Project::SUSPENDED   => "fa-pause",
+    Project::CANCELED    => "fa-times",
+    Project::REJECTED    => "fa-times"
+  }
   
 
   def product_name 
@@ -95,6 +115,14 @@ class Project < ApplicationRecord
 
   def status_class
     STATUS_CLASS[status.to_i]
+  end
+
+  def status_text_class
+    STATUS_TEXT_CLASS[status.to_i]
+  end
+
+  def status_icon
+    STATUS_ICON[status.to_i]
   end
 
   def field_text(f)

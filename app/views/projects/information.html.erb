@@ -1,7 +1,7 @@
 <%= render 'projects/project_header', project: @project, person: @person  %>
 <div class="product">
   <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
-  <%= render 'projects/status_header', project: @project, person: @person  %>
+  <%= render 'status_header', project: @project, person: @person  %>
   <%= render 'projects/project_menu', project: @project, person: @person  %>
 </div>
 
@@ -9,15 +9,14 @@
   <div class="level-left">
     <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Tareas', project_project_tasks_path(@person.shortname, @project) %></li>
+        <li><a>Información</a></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
-  	<a href="<%= project_administrar_tareas_nueva_lista_path(@person.shortname, @project) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus"></i></span> <span>Agregar Lista</span></a> 
+    <%= render 'change_status_dropdown', project: @project, person: @person  %>
+    <a href="<%= administrar_informacion_editar_project_path(@person.shortname, @project) %>" class="button"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
   </div>
 </div>
-<div id="tasks-area">
-<%= render 'task_lists', project: @project, person: @person  %>
-</div>
 
+<%= render 'project_info', project: @project, person: @person, show_participants: false  %>

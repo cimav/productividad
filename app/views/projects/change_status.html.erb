@@ -20,15 +20,6 @@ show_options[Project::SUSPENDED]   = [Project::DEFINITION, Project::NEGOTIATION,
 show_options[Project::CANCELED]    = [Project::IN_PROCESS, Project::SUSPENDED] 
 show_options[Project::REJECTED]    = [Project::DEFINITION, Project::NEGOTIATION] 
 
-status_icon = {}
-status_icon[Project::DEFINITION]  = "fa-circle"
-status_icon[Project::NEGOTIATION] = "fa-handshake"
-status_icon[Project::IN_PROCESS]  = "fa-play"
-status_icon[Project::CONCLUDED]   = "fa-check"
-status_icon[Project::SUSPENDED]   = "fa-pause"
-status_icon[Project::CANCELED]    = "fa-times"
-status_icon[Project::REJECTED]    = "fa-times"
-
 date_title = {}
 date_title[Project::DEFINITION]  = "Fecha de inicio de definición:"
 date_title[Project::NEGOTIATION] = "Fecha de inicio negociación:"
@@ -52,18 +43,20 @@ content_title[Project::REJECTED]    = "Motivo del rechazo:"
 <%= render 'project_header', project: @project, person: @person  %>
 <div class="product">
   <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'status_header', project: @project, person: @person  %>
   <%= render 'project_menu', project: @project, person: @person  %>
 </div>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
       <ul>
-      	<li><a>Información</a></li>
+      	<li><a href="<%= administrar_informacion_project_path(@person.shortname, @project) %>">Información</a></li>
         <li><a>Cambiar Estado</a></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
+    <a href="<%= administrar_informacion_project_path(@person.shortname, @project) %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left"></i></span></a>
   </div>
 </div>
 
@@ -74,7 +67,7 @@ content_title[Project::REJECTED]    = "Motivo del rechazo:"
     <div class="columm is-narrow">
       <div class="change-status-title">
         <div class="tags has-addons">
-          <span class="tag icon is-large <%= Project::STATUS_TEXT_CLASS[new_status] %>"><i class="fas <%= status_icon[new_status]%>" aria-hidden="true"></i></span>
+          <span class="tag icon is-large <%= Project::STATUS_TEXT_CLASS[new_status] %>"><i class="fas <%= Project::STATUS_ICON[new_status] %>" aria-hidden="true"></i></span>
           <span class="tag <%= Project::STATUS_CLASS[new_status] %>"><%= Project::STATUS[new_status] %></span>
         </div>
       </div>
@@ -92,6 +85,7 @@ content_title[Project::REJECTED]    = "Motivo del rechazo:"
     </div>
   </div>
   <div class="actions is-pulled-right">
+    <a href="<%= administrar_informacion_project_path(@person.shortname, @project) %>" class="button">Cancelar</a>
     <%= form.submit 'Actualizar estado', class:"button is-link" %>
   </div>
   

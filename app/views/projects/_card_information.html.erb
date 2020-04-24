@@ -1,12 +1,7 @@
-<div class="card project-card" data-url="<%= projects_path(person.shortname) %>/<%= project.id %>/administrar/informacion">
+<div class="card project-card" data-url="<%= administrar_informacion_project_path(person.shortname, project) %>">
   <div class="project-card-title project-card-title-informacion">Información</div>
   <div class="project-card-content">
-    <strong>Investigación: </strong> <%= project.research_type_text %><br>
-    <strong>Origen: </strong> <%= project.source_type_text %> (<%= project.source %>)<br>
-    <% objectives = strip_tags(project.objectives.to_s)[0...200] %>
-    <% results = strip_tags(project.results.to_s)[0...200] %>
-    <p><strong>Objetivos:</strong> <%= objectives %></p>
-    <p><strong>Resultados Esperados:</strong> <%= results %></p>
+    <%= render 'timeline', project: project, person: person  %>
   </div>
   <div class="white-gradient"></div>
 </div>

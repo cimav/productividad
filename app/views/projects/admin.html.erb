@@ -1,51 +1,50 @@
 <%= render 'project_header', project: @project, person: @person  %>
 
 <div class="product">
-<h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
-<%= render 'change_status_dropdown', project: @project, person: @person  %>
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'status_header', project: @project, person: @person  %>
 
+  <div class="project-cards-area">
 
-<div class="project-cards-area">
+    <div class="columns">
+      <div class="column is-one-third">
+        <%= render 'card_information', project: @project, person: @person  %>
+      </div>
 
-  <div class="columns">
-    <div class="column is-one-third">
-      <%= render 'card_information', project: @project, person: @person  %>
+      <div class="column is-one-third">
+        <%= render 'card_budget', project: @project, person: @person  %>
+      </div>
+
+      <div class="column is-one-third">
+        <%= render 'card_messages', project: @project, person: @person  %>
+      </div>
     </div>
 
-    <div class="column is-one-third">
-      <%= render 'card_budget', project: @project, person: @person  %>
+    <div class="columns">
+      <div class="column is-one-third">
+        <%= render 'card_tasks', project: @project, person: @person  %>
+      </div>
+      
+      <div class="column is-one-third">
+        <%= render 'card_calendar', project: @project, person: @person  %>
+      </div>
+      
+      <div class="column is-one-third">
+        <%= render 'card_services', project: @project, person: @person  %>
+      </div>
+    
     </div>
-
-    <div class="column is-one-third">
-      <%= render 'card_messages', project: @project, person: @person  %>
+    <div class="columns">
+      
+      <div class="column is-one-third">
+        <%= render 'card_participants', project: @project, person: @person  %>
+      </div>
+      
+      <div class="column is-one-third">
+        <%= render 'card_documents', project: @project, person: @person  %>
+      </div>
     </div>
   </div>
-
-  <div class="columns">
-    <div class="column is-one-third">
-      <%= render 'card_tasks', project: @project, person: @person  %>
-    </div>
-    
-    <div class="column is-one-third">
-      <%= render 'card_calendar', project: @project, person: @person  %>
-    </div>
-    
-    <div class="column is-one-third">
-      <%= render 'card_services', project: @project, person: @person  %>
-    </div>
-  
-  </div>
-  <div class="columns">
-    
-    <div class="column is-one-third">
-      <%= render 'card_participants', project: @project, person: @person  %>
-    </div>
-    
-    <div class="column is-one-third">
-      <%= render 'card_documents', project: @project, person: @person  %>
-    </div>
-  </div>
-</div>
 
   
 </div>
