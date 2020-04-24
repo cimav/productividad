@@ -1,6 +1,6 @@
 <div class="card project-card" data-url="<%= project_project_documents_path(person.shortname, project) %>">
   <div class="project-card-title project-card-title-documentos">Documentos</div>   
-  <% documents = project.project_documents.where("parent = 0 AND status = ?", ProjectDocument::ACTIVE) %>
+  <% documents = project.project_documents.where("parent = 0 AND status = ?", ProjectDocument::ACTIVE).order('created_at DESC') %>
   <% if documents.count <= 0 %>
     <div class="empty-project-card">
       <div class="project-card-icon"><span class="icon project-card-icon-documentos"><i class="fas fa-file"></i></span></div>
