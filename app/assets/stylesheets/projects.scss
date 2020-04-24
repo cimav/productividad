@@ -255,3 +255,13 @@ $rainbow-8: #c51162;
 .status-menu {
   text-align: center;
 }
+
+.change-status-title {
+  margin-top: 16px;
+  font-weight: bold;
+  font-size: 1.5em;
+  .tag {
+    font-size: 1em !important;
+  }
+  margin-bottom: 1em;
+}

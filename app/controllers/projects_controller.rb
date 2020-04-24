@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :auth_required
 
-  before_action :set_project, only: [:admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
+  before_action :set_project, only: [:change_status, :change_status_save, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
   before_action :set_person
 
 
@@ -92,6 +92,23 @@ class ProjectsController < ApplicationController
 
   def documents 
     render :layout => 'profile'
+  end
+
+  def change_status
+    @project_status_change = @project.project_status_changes.new
+    render :layout => 'profile'
+  end
+
+  def change_status_save
+    @project_status_change = @project.project_status_changes.new(project_status_change_params)
+    @project_status_change.from = @project.status
+    @project_status_change.person_id = current_user.id
+    @project_status_change.status = ProjectStatusChange::ACTIVE
+    if @project_status_change.save 
+      @project.status = @project_status_change.to
+      @project.save
+      redirect_to administrar_project_path(@person.shortname, @project), notice: "El proyecto cambio de estado a #{@project.status_text}"
+    end
   end
 
 
@@ -202,5 +219,9 @@ class ProjectsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(:name, :external_identificator, :internal_identificator, :source_type, :source, :objectives, :results, :research_type, :start_date, :end_date, :extension_date, :last_date, :status)
+    end
+
+    def project_status_change_params
+      params.require(:project_status_change).permit(:change_date, :content, :to, :status)
     end
 end

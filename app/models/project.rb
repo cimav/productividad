@@ -1,6 +1,7 @@
 class Project < ApplicationRecord
   belongs_to :person  
   has_many :activity_logs, :as => :item
+  has_many :project_status_changes
   has_many :project_messages
   has_many :project_participants
   has_many :project_documents
@@ -34,7 +35,7 @@ class Project < ApplicationRecord
     NEGOTIATION  => 'is-link',
     IN_PROCESS  => 'is-info',
     CONCLUDED   => 'is-success',
-    SUSPENDED   => 'is-danger',
+    SUSPENDED   => 'is-warning',
     CANCELED    => 'is-danger',
     REJECTED    => 'is-danger'
   }
@@ -44,7 +45,7 @@ class Project < ApplicationRecord
     NEGOTIATION  => 'has-text-link',
     IN_PROCESS  => 'has-text-info',
     CONCLUDED   => 'has-text-success',
-    SUSPENDED   => 'has-text-danger',
+    SUSPENDED   => 'has-text-warning',
     CANCELED    => 'has-text-danger',
     REJECTED    => 'has-text-danger'
   }

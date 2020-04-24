@@ -69,6 +69,8 @@ Rails.application.routes.draw do
           member do
             get 'administrar' => 'projects#admin'
             get 'administrar/informacion' => 'projects#edit'
+            get 'administrar/informacion/cambiar-estado' => 'projects#change_status'
+            post 'administrar/informacion/cambiar-estado-guardar' => 'projects#change_status_save'
             get 'administrar/presupuesto' => 'projects#budget'
             get 'administrar/calendario' => 'gantt#index'
             get 'administrar/servicios' => 'projects#services'

@@ -1,0 +1,103 @@
+<%
+new_status = params[:s].to_i
+
+options = [
+  Project::DEFINITION,
+  Project::NEGOTIATION,
+  Project::IN_PROCESS,
+  Project::CONCLUDED,
+  Project::SUSPENDED,
+  Project::CANCELED,
+  Project::REJECTED 
+]
+
+show_options = {}
+show_options[Project::DEFINITION]  = [Project::NEGOTIATION] 
+show_options[Project::NEGOTIATION] = [Project::DEFINITION] 
+show_options[Project::IN_PROCESS]  = [Project::NEGOTIATION, Project::SUSPENDED] 
+show_options[Project::CONCLUDED]   = [Project::CONCLUDED] 
+show_options[Project::SUSPENDED]   = [Project::DEFINITION, Project::NEGOTIATION, Project::IN_PROCESS] 
+show_options[Project::CANCELED]    = [Project::IN_PROCESS, Project::SUSPENDED] 
+show_options[Project::REJECTED]    = [Project::DEFINITION, Project::NEGOTIATION] 
+
+status_icon = {}
+status_icon[Project::DEFINITION]  = "fa-circle"
+status_icon[Project::NEGOTIATION] = "fa-handshake"
+status_icon[Project::IN_PROCESS]  = "fa-play"
+status_icon[Project::CONCLUDED]   = "fa-check"
+status_icon[Project::SUSPENDED]   = "fa-pause"
+status_icon[Project::CANCELED]    = "fa-times"
+status_icon[Project::REJECTED]    = "fa-times"
+
+date_title = {}
+date_title[Project::DEFINITION]  = "Fecha de inicio de definición:"
+date_title[Project::NEGOTIATION] = "Fecha de inicio negociación:"
+date_title[Project::IN_PROCESS]  = "Fecha de arranque:"
+date_title[Project::CONCLUDED]   = "Fecha de termino:"
+date_title[Project::SUSPENDED]   = "Fecha de la suspensión:"
+date_title[Project::CANCELED]    = "Fecha de la cancelación:"
+date_title[Project::REJECTED]    = "Fecha del rechazo:"
+
+content_title = {}
+content_title[Project::DEFINITION]  = "Notas:"
+content_title[Project::NEGOTIATION] = "Notas:"
+content_title[Project::IN_PROCESS]  = "Notas"
+content_title[Project::CONCLUDED]   = "Notas:"
+content_title[Project::SUSPENDED]   = "Motivo de la suspensión:"
+content_title[Project::CANCELED]    = "Motivo de la cancelación:"
+content_title[Project::REJECTED]    = "Motivo del rechazo:"
+%>
+
+
+<%= render 'project_header', project: @project, person: @person  %>
+<div class="product">
+  <h1 class="project-title"><%= link_to @project.name, administrar_project_path(@person.shortname, @project) %></h1>
+  <%= render 'project_menu', project: @project, person: @person  %>
+</div>
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb project-tab-title" aria-label="breadcrumbs">
+      <ul>
+      	<li><a>Información</a></li>
+        <li><a>Cambiar Estado</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+  </div>
+</div>
+
+<% if show_options[new_status] && (show_options[new_status].include? @project.status) %>
+  <%= form_for @project_status_change, :url => administrar_informacion_cambiar_estado_guardar_project_path(@person.shortname, @project), local: true do |form| %>
+  <%= form.hidden_field :to, value: new_status %>
+  <div class="columns">
+    <div class="columm is-narrow">
+      <div class="change-status-title">
+        <div class="tags has-addons">
+          <span class="tag icon is-large <%= Project::STATUS_TEXT_CLASS[new_status] %>"><i class="fas <%= status_icon[new_status]%>" aria-hidden="true"></i></span>
+          <span class="tag <%= Project::STATUS_CLASS[new_status] %>"><%= Project::STATUS[new_status] %></span>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+        <div class="field">
+          <%= form.label :change_date, date_title[new_status], class:'label' %>
+          <p class="control"><%= form.text_field :change_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+        </div>
+
+        <div class="field">
+      	  <%= form.label :content, content_title[new_status], class:'label' %>
+          <p class="control single-rich"><%= form.rich_text_area :content %></p>
+        </div> 
+    </div>
+  </div>
+  <div class="actions is-pulled-right">
+    <%= form.submit 'Actualizar estado', class:"button is-link" %>
+  </div>
+  
+  <% end %>
+<% else %>
+  <div class="notification is-danger">
+    Acción no permitida
+  </div>
+<% end %>

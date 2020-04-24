@@ -1,0 +1,52 @@
+<div class="status-menu">
+<div class="dropdown is-hoverable">
+<div class="dropdown-trigger">
+  <button class="button <%= @project.status_class %>" aria-haspopup="true" aria-controls="dropdown-menu">
+    <span><%= @project.status_text %></span>
+    <span class="icon is-small"><i class="fas fa-angle-down" aria-hidden="true"></i></span>
+  </button>
+</div>
+<div class="dropdown-menu" id="dropdown-menu" role="menu">
+  <%
+  options = [
+    Project::DEFINITION,
+    Project::NEGOTIATION,
+    Project::IN_PROCESS,
+    Project::CONCLUDED,
+    Project::SUSPENDED,
+    Project::CANCELED,
+    Project::REJECTED 
+  ]
+
+  show_options = {}
+  show_options[Project::DEFINITION]  = [Project::NEGOTIATION] 
+  show_options[Project::NEGOTIATION] = [Project::DEFINITION] 
+  show_options[Project::IN_PROCESS]  = [Project::NEGOTIATION, Project::SUSPENDED] 
+  show_options[Project::CONCLUDED]   = [Project::IN_PROCESS] 
+  show_options[Project::SUSPENDED]   = [Project::DEFINITION, Project::NEGOTIATION, Project::IN_PROCESS] 
+  show_options[Project::CANCELED]    = [Project::IN_PROCESS, Project::SUSPENDED] 
+  show_options[Project::REJECTED]    = [Project::DEFINITION, Project::NEGOTIATION] 
+
+  status_icon = {}
+  status_icon[Project::DEFINITION]  = "fa-circle"
+  status_icon[Project::NEGOTIATION] = "fa-handshake"
+  status_icon[Project::IN_PROCESS]  = "fa-play"
+  status_icon[Project::CONCLUDED]   = "fa-check"
+  status_icon[Project::SUSPENDED]   = "fa-pause"
+  status_icon[Project::CANCELED]    = "fa-times"
+  status_icon[Project::REJECTED]    = "fa-times"
+  %>
+  <% options.each do |option| %>
+    <% if show_options[option].include? project.status %>
+      <div class="dropdown-content">
+        <a class="dropdown-item" href="<%= administrar_informacion_cambiar_estado_project_path(person.shortname, project) %>?s=<%= option %>">
+          <span class="icon <%= Project::STATUS_TEXT_CLASS[option] %>"><i class="fas <%= status_icon[option]%>" aria-hidden="true"></i></span>
+          <span><%= Project::STATUS[option] %></span>
+        </a>
+      </div>
+    <% end %>
+  <% end %>
+
+</div>
+</div>
+</div>
