@@ -38,7 +38,7 @@ module ApplicationHelper
   	current_user_roles.include?('SERVICE')
   end
 
-  def is_journals_admin?
+  def is_journal_admin?
     current_user_roles.include?('JOURNALS')
   end
 
