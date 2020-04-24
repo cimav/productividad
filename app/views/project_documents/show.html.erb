@@ -33,17 +33,21 @@
 <% if @project_document.file_type == ProjectDocument::UPLOAD %>
   <div class="document-show-upload">
   	<div class="document-show-upload-preview">
-      <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">
-    	  <% if @project_document.file.previewable? %>
-          <%= image_tag(@project_document.file.preview(resize: "500x500>")) %>
-        <% elsif @project_document.file.variable? %>
-          <%= image_tag(@project_document.file.variant(resize: "500x500>")) %>
-        <% else %>
-    	    <div class="document-show-upload-icon">
-            <%= image_tag @project_document.file_type_icon %>
-          </div>
-    	  <% end %>
-      </a>
+      <% if @project_document.file.content_type.to_s.include? 'video' %>
+        <%= video_tag url_for(@project_document.file), size: "300x300", controls: true %>
+      <% else %>
+        <a href="<%= rails_blob_path(@project_document.file, disposition: "attachment") %>">
+      	  <% if @project_document.file.previewable? %>
+            <%= image_tag(@project_document.file.preview(resize: "500x500>")) %>
+          <% elsif @project_document.file.variable? %>
+            <%= image_tag(@project_document.file.variant(resize: "500x500>")) %>
+          <% else %>
+      	    <div class="document-show-upload-icon">
+              <%= image_tag @project_document.file_type_icon %>
+            </div>
+      	  <% end %>
+        </a>
+      <% end %>
   	</div>
     <div class="document-name"><%= @project_document.name %></div>
     <div class="document-extra">

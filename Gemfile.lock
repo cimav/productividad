@@ -91,6 +91,7 @@ GEM
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
     ffi (1.12.2)
+    ffmpeg (0.2.5)
     gio2 (3.4.1)
       gobject-introspection (= 3.4.1)
     glib2 (3.4.1)
@@ -261,6 +262,7 @@ DEPENDENCIES
   byebug
   capybara (>= 2.15)
   carrierwave
+  ffmpeg
   image_processing (~> 1.0)
   jbuilder (~> 2.7)
   listen (>= 3.0.5, < 3.2)
