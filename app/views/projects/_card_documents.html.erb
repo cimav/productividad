@@ -9,9 +9,7 @@
   <% else %> 
     <div class="documents-card-items">
     <% documents.each do |document| %>
-      <a class="document-link" href="<%= project_project_document_path(person.shortname, project, document) %>">
-        <%= render "project_documents/document_item", document: document, level: 0  %>
-      </a>
+      <%= render "project_documents/document_item", document: document, level: 0  %>
     <% end %>
     </div>
     <div class="white-gradient"></div>
