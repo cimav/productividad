@@ -3,7 +3,7 @@
   <% lists = project.project_task_lists.where("status = ?", ProjectTaskList::ACTIVE).order('position DESC').limit(3) %>
   <% if lists.count <= 0 %>
     <div class="empty-project-card">
-      <div class="project-card-icon"><span class="icon project-card-icon-tareas"><i class="fas fa-list-alt"></i></span></div>
+      <div class="project-card-icon"><span class="icon project-card-icon-tareas"><i class="fas fa-tasks"></i></span></div>
       <div class="empty-project-card-message">Aún no hay tareas en el proyecto.</div>
     </div>
   <% else %>
