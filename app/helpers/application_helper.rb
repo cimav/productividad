@@ -50,49 +50,43 @@ module ApplicationHelper
     current_user_roles.include?('ASSOCIATIONS')
   end
 
+  def custom_icon(color, icon, text)
+    t = template_icon
+    t.sub! 'TEMPLATE-CLASS', "has-text-#{color}"
+    t.sub! 'TEMPLATE-ICON', icon
+    t.sub! 'TEMPLATE-TEXT', text
+    t.sub! 'TEMPLATE-BG', "has-background-#{color}"
+
+    t.html_safe
+  end
+
   def doc_icon
-    '<span class="icon is-large">
-        <span class="fa-stack fa-lg">
-          <i class="fas fa-file fa-stack-2x fa-1x has-text-grey-lighter"></i>
-        </span>
-      </span>'.html_safe
+    custom_icon('light', 'fa-file', '&nbsp')
   end
 
 
   def published_icon
-    '<span class="icon is-large">
-        <span class="fa-stack fa-lg">
-          <i class="fas fa-file fa-stack-2x fa-1x has-text-grey-lighter"></i>
-          <i class="fas fa-check fa-stack-1x has-text-success"></i>
-        </span>
-      </span>'.html_safe
+    custom_icon('success', 'fa-check', 'Publicado')
   end
 
   def accepted_icon
-    '<span class="icon is-large">
-        <span class="fa-stack fa-lg">
-          <i class="fas fa-file fa-stack-2x fa-1x has-text-grey-lighter"></i>
-          <i class="fas fa-thumbs-up fa-stack-1x has-text-link"></i>
-        </span>
-      </span>'.html_safe
+    custom_icon('link', 'fa-thumbs-up', 'Aceptado')
   end
 
   def sent_icon
-    '<span class="icon is-large">
-        <span class="fa-stack fa-lg">
-          <i class="fas fa-file fa-stack-2x has-text-grey-lighter"></i>
-          <i class="fas fa-arrow-right fa-stack-1x has-text-primary"></i>
-        </span>
-      </span>'.html_safe
+    custom_icon('primary', 'fa-paper-plane', 'Enviado')
   end
 
   def rejected_icon
-    '<span class="icon is-large">
-        <span class="fa-stack fa-lg">
-          <i class="fas fa-file fa-stack-2x has-text-grey-lighter"></i>
-          <i class="fas fa-times fa-stack-1x has-text-danger"></i>
-        </span>
-      </span>'.html_safe
+    custom_icon('danger', 'fa-times', 'Rechazado')
   end
+
+  private 
+  def template_icon
+    '<div class="base-icon">
+       <div class="icon TEMPLATE-CLASS"><i class="fas TEMPLATE-ICON" aria-hidden="true"></i></div>
+       <div class="base-label TEMPLATE-BG">TEMPLATE-TEXT</div>
+    </div>'
+  end 
 
 end

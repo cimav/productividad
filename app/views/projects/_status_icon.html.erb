@@ -1,6 +1,5 @@
-<div class="status-icon">
-  <div class="icon <%= project.status_text_class %>"><i class="fas <%= project.status_icon %>" aria-hidden="true"></i></div>
-  <% bg = "#{project.status_class.to_s}"
-     bg.sub! 'is-', 'has-background-' %>
-  <div class="status-label <%= bg %>"><%= project.status_text %></div>
-</div>
+<%
+color = "#{project.status_class.to_s}"
+color.sub! 'is-', ''
+%>
+<%= custom_icon(color, project.status_icon, project.status_text) %>

@@ -278,20 +278,3 @@ $rainbow-8: #c51162;
     padding-bottom: 0 !important;
   }
 }
-
-.status-icon {
-  border: 1px solid #eee;
-  font-size: 50%;
-  text-transform: uppercase;
-  width: 10em;
-  text-align: center;
-  .icon {
-    margin: 1em 0;
-    font-size: 3em;
-  }
-  .status-label {
-    font-weight: 500;
-    padding: 0.5em 4px;
-    color: #fff;
-  }
-}
