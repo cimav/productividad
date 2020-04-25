@@ -51,7 +51,10 @@ module ApplicationHelper
   end
 
   def custom_icon(color, icon, text)
-    t = template_icon
+    t = '<div class="base-icon">
+         <div class="icon TEMPLATE-CLASS"><i class="fas TEMPLATE-ICON" aria-hidden="true"></i></div>
+         <div class="base-label TEMPLATE-BG">TEMPLATE-TEXT</div>
+         </div>'
     t.sub! 'TEMPLATE-CLASS', "has-text-#{color}"
     t.sub! 'TEMPLATE-ICON', icon
     t.sub! 'TEMPLATE-TEXT', text
@@ -80,13 +83,5 @@ module ApplicationHelper
   def rejected_icon
     custom_icon('danger', 'fa-times', 'Rechazado')
   end
-
-  private 
-  def template_icon
-    '<div class="base-icon">
-       <div class="icon TEMPLATE-CLASS"><i class="fas TEMPLATE-ICON" aria-hidden="true"></i></div>
-       <div class="base-label TEMPLATE-BG">TEMPLATE-TEXT</div>
-    </div>'
-  end 
 
 end
