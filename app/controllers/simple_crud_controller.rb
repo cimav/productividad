@@ -8,12 +8,17 @@ class SimpleCrudController < ApplicationController
   	@crud_limit = 15
   	@crud_layout = 'application'
   	@crud_fields = []
+    @crud_filters = []
   	self.add_field(:id, "ID", :integer, {hide: true})
   end
 
   def add_field (field, text, type, options = {})
   	@crud_fields << {field: field, text: text, type: type, options: options}
   end 
+
+  def add_filter(type, fields, options = {})
+    @crud_filters << {type: type, fields: fields, options: options}
+  end
   	
   def crud_attrs 
   	c = []
@@ -24,9 +29,32 @@ class SimpleCrudController < ApplicationController
   end
 
   def index
-    #@entries = @crud_model.pluck(*crud_attrs).map { |p| crud_attrs.zip(p).to_h }
-    @entries = @crud_model.select(crud_attrs).all.limit(@crud_limit)
-    render layout: @crud_layout
+    @entries = @crud_model.select(crud_attrs).all
+    if params[:search] == 'true'
+      i = 0
+      @crud_filters.each do |filter|
+        i = i + 1
+        if filter[:type] == :search
+          where_text = ""
+          sfc = 0
+          filter[:fields].each do |f|
+            sfc = sfc + 1
+            if sfc > 1
+              where_text += " OR "
+            end
+            where_text += "#{f} LIKE :query"
+          end 
+          query = params["f#{i}"]
+          @entries = @entries.where(where_text, query: "%#{query}%")
+        end
+      end 
+      @entries = @entries.limit(@crud_limit)
+      render layout: false
+    else 
+      @entries = @entries.limit(@crud_limit)
+      render layout: @crud_layout
+    end 
+    
   end
 
   def show

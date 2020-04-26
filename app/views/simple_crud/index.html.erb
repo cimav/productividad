@@ -1,51 +1,35 @@
-<div class="container product-index">
-  <div class="level product-actions">
-    <div class="level-left">
-      <nav class="breadcrumb" aria-label="breadcrumbs">
-        <ul>
-          <li><%= link_to @crud_title, polymorphic_path(@crud_model) %></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="level-right">
-      <div class="product-filters">
+<% if params[:search] == 'true' %>
+  <%= render 'simple_crud/index_table' %>
+<% else %>
+  <input type="hidden" id="crud-index-url" value="<%= polymorphic_path(@crud_model) %>">
+  <div class="container product-index">
+    <div class="level product-actions">
+      <div class="level-left">
+        <nav class="breadcrumb" aria-label="breadcrumbs">
+          <ul>
+            <li><%= link_to @crud_title, polymorphic_path(@crud_model) %></li>
+          </ul>
+        </nav>
       </div>
-      <a href="<%= new_polymorphic_path(@crud_model.new) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span></a>
+      <div class="level-right">
+        <div class="product-filters">
+          <% i = 0 %>
+          <% @crud_filters.each do |filter| %>
+            <% i = i + 1 %>
+            <% if filter[:type] == :search %>
+               <input type="text" class="input crud-filter crud-filter-text" id="filter-#{i}" data-id="f<%= i%>">
+            <% end %>
+          <%  end %>
+        </div>
+        <a href="<%= new_polymorphic_path(@crud_model.new) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span></a>
+      </div>
+    </div>
+
+    <div id="crud-index-table">
+    <%= render 'simple_crud/index_table' %>
     </div>
   </div>
-
- 
-<table class="crud-table table is-fullwidth is-hoverable">
-  <tr>
-    <% @crud_fields.each do |f| %>
-      <% next if f[:options][:hide] || f[:options][:hide_index] %>
-      <th><%= f[:text] %></th>
-    <% end %>
-    <th class="crud-actions"></th>
-  </tr>  
-  <% count = 0 %>  
-  <% @entries.each do |entry| %>
-    <% count = count + 1 %>
-    <tr>
-      <% @crud_fields.each do |f| %>
-        <% next if f[:options][:hide] || f[:options][:hide_index] %>
-        <td class="crud-td" onclick="window.location = '<%= polymorphic_path(entry) %>'"><%= entry[f[:field]] %></td>
-      <% end %>
-      <td class="crud-actions">
-        <a href="<%= edit_polymorphic_path(entry) %>"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
-        <%= link_to polymorphic_path(entry), data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
-          <span class="icon is-small"><i class="fas fa-trash" aria-hidden="true"></i></span>
-        <% end %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-<% if count == 0 %>
-  <div class="empty-results">No existen</div>
 <% end %>
-  
-
-</div>
 
 
 
