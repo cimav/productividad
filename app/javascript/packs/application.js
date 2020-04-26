@@ -72,7 +72,6 @@ $(document).on("turbolinks:load", function() {
     var c = $(this).attr('class').replace('project-menu-','').replace('project-menu','').replace(' ','');
     console.log(url + ' incluye *' + c + '*');
     if (url.includes(c)) {
-      console.log('SIIIII');
       $(this).addClass('active'); 
     }
   });
