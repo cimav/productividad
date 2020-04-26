@@ -12,12 +12,12 @@ class SimpleCrudController < ApplicationController
   	self.add_field(:id, "ID", :integer, {hide: true})
   end
 
-  def add_field (field, text, type, options = {})
-  	@crud_fields << {field: field, text: text, type: type, options: options}
+  def add_field (field, text, type, params = {})
+  	@crud_fields << {field: field, text: text, type: type, params: params}
   end 
 
-  def add_filter(type, fields, options = {})
-    @crud_filters << {type: type, fields: fields, options: options}
+  def add_filter(type, fields, params = {})
+    @crud_filters << {type: type, fields: fields, params: params}
   end
   	
   def crud_attrs 
@@ -30,10 +30,17 @@ class SimpleCrudController < ApplicationController
 
   def index
     @entries = @crud_model.select(crud_attrs).all
+    
+    if !params[:page].blank?
+      @page = params[:page].to_i
+    else 
+      @page = 1
+    end
     if params[:search] == 'true'
       i = 0
       @crud_filters.each do |filter|
         i = i + 1
+        
         if filter[:type] == :search
           where_text = ""
           sfc = 0
@@ -47,14 +54,30 @@ class SimpleCrudController < ApplicationController
           query = params["f#{i}"]
           @entries = @entries.where(where_text, query: "%#{query}%")
         end
+
+        if filter[:type] == :select
+          where_text = ""
+          sfc = 0
+          filter[:fields].each do |f|
+            sfc = sfc + 1
+            if sfc > 1
+              where_text += " AND "
+            end
+            where_text += "#{f} = :value"
+          end 
+          value = params["f#{i}"]
+          @entries = @entries.where(where_text, value: value)
+        end
+
       end 
-      @entries = @entries.limit(@crud_limit)
+      @count_all = @entries.count(:all)
+      @entries = @entries.limit(@crud_limit).offset( (@page - 1) * @crud_limit )
       render layout: false
     else 
-      @entries = @entries.limit(@crud_limit)
+      @count_all = @entries.count(:all)
+      @entries = @entries.limit(@crud_limit).offset(  (@page - 1) * @crud_limit )
       render layout: @crud_layout
     end 
-    
   end
 
   def show
@@ -64,8 +87,8 @@ class SimpleCrudController < ApplicationController
   def new
   	@entry = @crud_model.new
   	@crud_fields.each do |f|
-  	  if !f[:options][:default].blank?
-  	  	@entry[f[:field]] = f[:options][:default]
+  	  if !f[:params][:default].blank?
+  	  	@entry[f[:field]] = f[:params][:default]
   	  end
     end
     render layout: @crud_layout

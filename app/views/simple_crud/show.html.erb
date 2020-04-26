@@ -18,7 +18,7 @@
     </div>
   </div>
   <% @crud_fields.each do |f| %>
-    <% next if f[:options][:hide] %>
+    <% next if f[:params][:hide] %>
     <div class="field">
       <label class="label"><%= f[:text] %></label>
       <div class="control">

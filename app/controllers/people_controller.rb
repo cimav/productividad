@@ -14,7 +14,9 @@ class PeopleController < SimpleCrudController
     self.add_field :department_id, "Departamento", :string, {hide_index: true}
     self.add_field :person_id, "Reporta a", :string, {hide_index: true}
 
-    self.add_filter :search, [:first_name, :last_name, :email]
+    self.add_filter :select, [:person_type_id], {options: PersonType.order(:name).pluck(:name, :id) }
+    self.add_filter :search, [:first_name, :last_name, :email], {placeholder: "Busqueda…"}
+    
   end
 end
 

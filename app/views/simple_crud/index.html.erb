@@ -2,7 +2,8 @@
   <%= render 'simple_crud/index_table' %>
 <% else %>
   <input type="hidden" id="crud-index-url" value="<%= polymorphic_path(@crud_model) %>">
-  <div class="container product-index">
+  <input type="hidden" id="crud-index-page" value="<%= @page %>">
+  <div class="container product-index crud-index">
     <div class="level product-actions">
       <div class="level-left">
         <nav class="breadcrumb" aria-label="breadcrumbs">
@@ -12,13 +13,23 @@
         </nav>
       </div>
       <div class="level-right">
-        <div class="product-filters">
+        <div class="product-filters crud-filters">
           <% i = 0 %>
           <% @crud_filters.each do |filter| %>
             <% i = i + 1 %>
+            
             <% if filter[:type] == :search %>
-               <input type="text" class="input crud-filter crud-filter-text" id="filter-#{i}" data-id="f<%= i%>">
+               <% placeholder = filter[:params][:placeholder].blank? ? '' : filter[:params][:placeholder] %>
+               <input type="text" class="input crud-filter crud-filter-text" id="filter-<%= i %>" data-id="f<%= i %>" placeholder="<%= placeholder %>">
             <% end %>
+
+            <% if filter[:type] == :select %>
+              <div class="select">
+                <%= select_tag "filter_#{i}", options_for_select(filter[:params][:options]), class: 'crud-filter crud-filter-select', id: "filter-#{i}", 'data-id': "f#{i}", prompt: "" %>
+              </div>
+            <% end %>
+
+
           <%  end %>
         </div>
         <a href="<%= new_polymorphic_path(@crud_model.new) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span></a>
@@ -26,7 +37,7 @@
     </div>
 
     <div id="crud-index-table">
-    <%= render 'simple_crud/index_table' %>
+      <%= render 'simple_crud/index_table' %>
     </div>
   </div>
 <% end %>

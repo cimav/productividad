@@ -1,17 +1,50 @@
+<% 
+count = @entries.count(:all) 
+entries_start = (@page - 1) * @crud_limit + 1 
+entries_end = entries_start + count - 1
+last_page = @count_all /  @crud_limit + 1
+%>
+<div class="crud-index-header columns">
+  <div class="column">
+  </div>
+  <div class="column is-narrow">
+    <div class="crud-pagination">
+      <% if @count_all > @crud_limit %>
+	    <div class="dropdown is-hoverable">
+	      <div class="dropdown-trigger">
+	        <span aria-haspopup="true" aria-controls="dropdown-menu"><%= "#{entries_start} – #{entries_end} de #{@count_all}" %></span>
+	      </div>
+	      <div class="dropdown-menu" role="menu">
+	        <div class="dropdown-content">
+	          <a data-page="1" class="crud-goto dropdown-item">Primera página</a>
+	          <a data-page="<%= last_page %>" class="crud-goto dropdown-item">Última página</a>
+	        </div>
+	      </div>
+	    </div>
+	    <%
+	    previous_page = @page == 1 ? 1 : @page - 1
+	    next_page = @page == last_page ? last_page : @page + 1
+	    %>
+        <a data-page="<%= previous_page %>" class="crud-goto"><span class="icon"><i class="fas fa-angle-left" aria-hidden="true"></i></span></a>
+        <a data-page="<%= next_page %>" class="crud-goto"><span class="icon"><i class="fas fa-angle-right" aria-hidden="true"></i></span></a>
+      <% else %>
+        <%= "#{entries_start} – #{entries_end} de #{@count_all}" %>
+      <% end %>
+    </div>
+  </div>
+</div>
 <table class="crud-table table is-fullwidth is-hoverable">
   <tr>
     <% @crud_fields.each do |f| %>
-      <% next if f[:options][:hide] || f[:options][:hide_index] %>
+      <% next if f[:params][:hide] || f[:params][:hide_index] %>
       <th><%= f[:text] %></th>
     <% end %>
     <th class="crud-actions"></th>
   </tr>  
-  <% count = 0 %>  
   <% @entries.each do |entry| %>
-    <% count = count + 1 %>
     <tr>
       <% @crud_fields.each do |f| %>
-        <% next if f[:options][:hide] || f[:options][:hide_index] %>
+        <% next if f[:params][:hide] || f[:params][:hide_index] %>
         <td class="crud-td" onclick="window.location = '<%= polymorphic_path(entry) %>'"><%= entry[f[:field]] %></td>
       <% end %>
       <td class="crud-actions">
