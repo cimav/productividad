@@ -7,6 +7,9 @@
         <% if f[:type] == :string %>
           <%= form.text_field :"#{f[:field]}", class:'input' %>
         <% end %>
+        <% if f[:type] == :text %>
+          <%= form.text_area :"#{f[:field]}", class:'textarea' %>
+        <% end %>
         <% if f[:type] == :select %>
           <div class="select">
             <%= form.select :"#{f[:field]}", options_for_select(f[:params][:options], @entry[f[:field]]) %>
