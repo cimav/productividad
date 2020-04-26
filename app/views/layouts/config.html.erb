@@ -10,17 +10,24 @@
         </div>
         <aside class="menu">
 		  <div class="menu-section">
+        <p class="menu-label">Investigación</p>
+        <ul class="menu-list">
+          <li class="li-config-grupos-de-investigacion"><%= link_to "Grupos de Investigación", research_groups_path %></li>
+          <li class="li-config-subgrupos-de-investigacion"><%= link_to "Sub Grupos de Investigación", research_sub_groups_path %></li>
+          <li class="li-config-lineas-de-investigacion"><%= link_to "Líneas de Investigación", research_lines_path %></li>
+        </ul>
 		    <p class="menu-label">Grupos de Trabajo</p>
         <ul class="menu-list">
           <li class="li-config-grupos-de-trabajo"><%= link_to "Grupos de Trabajo", working_groups_path %></li>
           <li class="li-config-rolse-de-grupos-de-trabajo"><%= link_to "Roles de Grupos de Trabajo", working_group_roles_path %></li>
         </ul>
-        <p class="menu-label">Catálogos</p>
+        <p class="menu-label">Organización</p>
 		    <ul class="menu-list">
 		      <li class="li-config-personas"><%= link_to "Personas", people_path %></li>
           <li class="li-config-departamentos"><%= link_to "Departamentos", departments_path %></li>
-          <li class="li-config-grupos-de-investigacion"><%= link_to "Grupos de Investigación", research_groups_path %></li>
-          <li class="li-config-subgrupos-de-investigacion"><%= link_to "Sub Grupos de Investigación", research_sub_groups_path %></li>
+
+        <p class="menu-label">Organización</p>
+        <ul class="menu-list">
           <li class="li-config-paises"><%= link_to "Países", countries_path %></li>
           <li class="li-config-ciudades"><%= link_to "Ciudades", cities_path %></li>
           <li class="li-config-indices"><%= link_to "Índices", indexers_path %></li>
