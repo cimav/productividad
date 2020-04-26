@@ -644,3 +644,51 @@ h1 a {
     }
   }
 }
+
+.config-workarea {
+  min-height: 100vh;
+  padding: 1em !important;
+  background: #fff;
+}
+
+.config-container {
+  height: 100%;
+  .columns {
+    height: 100%;
+    padding: 0 !important;
+    margin: 0 !important;
+  } 
+}
+
+
+.config-header {
+  text-align: left;
+  margin-bottom: 1em;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #eee;
+  .config-title {
+    font-weight: bold;
+    font-size: 1.5em;
+    padding: 0 1em;
+  }
+  figure {
+    float: left;
+  }
+}
+
+.config-sidebar { 
+  min-height: 100vh;
+  position: relative;
+  border-right: 1px solid #eee;
+  .menu-label {
+    margin: 0 !important;
+  }
+
+  .menu {
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+    .active {
+      font-weight: bold;
+    }
+  }
+}

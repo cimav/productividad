@@ -1,0 +1,29 @@
+<div class="container product-index">
+  <div class="level product-actions">
+    <div class="level-left">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><%= link_to @crud_title, polymorphic_path(@crud_model) %></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="level-right">
+      <div class="product-filters">
+      </div>
+      <a href="<%= edit_polymorphic_path(@entry) %>" class="button is-link"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
+      <%= link_to polymorphic_path(@entry), class: "button is-danger", data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
+        <span class="icon is-small"><i class="fas fa-trash" aria-hidden="true"></i></span>
+      <% end %>
+      <a href="<%= polymorphic_path(@crud_model) %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span></a>
+    </div>
+  </div>
+  <% @crud_fields.each do |f| %>
+    <% next if f[:options][:hide] %>
+    <div class="field">
+      <label class="label"><%= f[:text] %></label>
+      <div class="control">
+      	<%= @entry[f[:field]] %>
+      </div>
+    </div>
+  <% end %>
+</div>

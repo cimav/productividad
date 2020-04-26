@@ -1,0 +1,18 @@
+<div class="container product-index">
+  <div class="level product-actions">
+    <div class="level-left">
+      <nav class="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li><%= link_to @crud_title, polymorphic_path(@crud_model) %></li>
+          <li><a>Editar</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="level-right">
+      <div class="product-filters">
+      </div>
+      <a href="<%= polymorphic_path(@crud_model) %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span></a>
+    </div>
+  </div>
+  <%= render 'simple_crud/form' %>
+</div>

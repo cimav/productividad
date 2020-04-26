@@ -1,0 +1,22 @@
+// Place all the styles related to the SimpleCrud controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.crud-actions {
+  width: 8em;
+  min-width: 8em;
+  text-align: right; 
+  .icon {
+    padding-right: 2em;
+  }
+}
+ 
+.crud-table {
+  font-size: 90%;
+  th {
+    white-space: pre;
+  }
+  .crud-td {
+      cursor: pointer;
+  }
+}

@@ -1,0 +1,29 @@
+<% content_for :content do %>
+  <div class="container is-fullhd config-container">
+    <div class="columns">
+      <div class="column is-narrow config-sidebar">
+        <div class="config-header">
+          <div class="config-title">Configuración</div>
+        </div>
+        <aside class="menu">
+		  <div class="menu-section">
+		    <p class="menu-label">Catálogos</p>
+		    <ul class="menu-list">
+		      <li class="li-config-personas"><%= link_to "Personas", people_path %></li>
+          <li class="li-config-departamentos"><%= link_to "Departamentos", departments_path %></li>
+          <li class="li-config-grupos-de-investigacion"><%= link_to "Grupos de Investigación", research_groups_path %></li>
+          <li class="li-config-subgrupos-de-investigacion"><%= link_to "Sub Grupos de Investigación", research_sub_groups_path %></li>
+          <li class="li-config-paises"><%= link_to "Países", countries_path %></li>
+          <li class="li-config-ciudades"><%= link_to "Ciudades", cities_path %></li>
+          <li class="li-config-indices"><%= link_to "Índices", indexers_path %></li>
+		    </ul>
+          </div>
+        </aside> 
+      </div>
+      <div class="column config-workarea">
+  	    <%= yield %>
+      </div>
+    </div>
+  </div>
+<% end %>
+<%= render template: "layouts/application" %>
