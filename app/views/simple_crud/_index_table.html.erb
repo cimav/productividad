@@ -35,8 +35,17 @@ last_page = @count_all /  @crud_limit + 1
 </div>
 <table class="crud-table table is-fullwidth is-hoverable">
   <tr>
+  	<% options_hash = {} %>
     <% @crud_fields.each do |f| %>
       <% next if f[:params][:hide] || f[:params][:hide_index] %>
+      <%
+        if f[:type] == :select
+           options_hash[f[:field]] = {}
+          f[:params][:options].each do |o|
+            options_hash[f[:field]][o[1]] = o[0]
+          end
+        end
+      %>
       <th><%= f[:text] %></th>
     <% end %>
     <th class="crud-actions"></th>
@@ -45,7 +54,14 @@ last_page = @count_all /  @crud_limit + 1
     <tr>
       <% @crud_fields.each do |f| %>
         <% next if f[:params][:hide] || f[:params][:hide_index] %>
-        <td class="crud-td" onclick="window.location = '<%= polymorphic_path(entry) %>'"><%= entry[f[:field]] %></td>
+        <td class="crud-td" onclick="window.location = '<%= polymorphic_path(entry) %>'">
+          <% if f[:type] == :select %>
+            <%= options_hash[f[:field]][entry[f[:field]]] %>
+            <%=  %>
+          <% else %>
+            <%= entry[f[:field]] %>
+          <% end %>
+        </td>
       <% end %>
       <td class="crud-actions">
         <a href="<%= edit_polymorphic_path(entry) %>"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>

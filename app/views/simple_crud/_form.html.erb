@@ -1,11 +1,16 @@
 <%= form_with(model: @entry, local: true) do |form| %>
   <% @crud_fields.each do |f| %>
-    <% next if f[:options][:hide] %>
+    <% next if f[:params][:hide] %>
     <div class="field">
       <%= form.label f[:field], f[:text], class:'label' %>
       <div class="control">
         <% if f[:type] == :string %>
           <%= form.text_field :"#{f[:field]}", class:'input' %>
+        <% end %>
+        <% if f[:type] == :select %>
+          <div class="select">
+            <%= form.select :"#{f[:field]}", options_for_select(f[:params][:options], @entry[f[:field]]) %>
+          </div>
         <% end %>
       </div>
     </div>

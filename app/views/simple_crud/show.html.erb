@@ -17,12 +17,21 @@
       <a href="<%= polymorphic_path(@crud_model) %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span></a>
     </div>
   </div>
+  <% options_hash = {} %>
   <% @crud_fields.each do |f| %>
     <% next if f[:params][:hide] %>
     <div class="field">
       <label class="label"><%= f[:text] %></label>
       <div class="control">
-      	<%= @entry[f[:field]] %>
+        <% if f[:type] == :select
+             options_hash[f[:field]] = {}
+             f[:params][:options].each do |o|
+               options_hash[f[:field]][o[1]] = o[0]
+             end %>
+          <%= options_hash[f[:field]][@entry[f[:field]]] %>
+        <% else %>
+      	  <%= @entry[f[:field]] %>
+        <% end %>
       </div>
     </div>
   <% end %>
