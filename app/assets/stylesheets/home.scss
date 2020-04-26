@@ -662,19 +662,19 @@ h1 a {
 
 
 .config-header {
-  text-align: left;
-  margin-bottom: 1em;
-  padding-bottom: 4px;
+  margin: 0 0 1em 0;
   border-bottom: 1px solid #eee;
-  .config-title {
-    font-weight: bold;
-    font-size: 1.5em;
-    padding: 0 1em;
-  }
-  figure {
+  padding: 0.8em 0 20px 0;
+  font-size: 1em;
+  font-weight: bold;
+
+  .icon {
+    margin-right: 1em;
     float: left;
   }
+
 }
+
 
 .config-sidebar { 
   min-height: 100vh;
