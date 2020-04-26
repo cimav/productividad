@@ -41,7 +41,7 @@ class SimpleCrudController < ApplicationController
       @crud_filters.each do |filter|
         i = i + 1
         
-        if filter[:type] == :search
+        if filter[:type] == :search && !params["f#{i}"].blank?
           where_text = ""
           sfc = 0
           filter[:fields].each do |f|
@@ -55,7 +55,7 @@ class SimpleCrudController < ApplicationController
           @entries = @entries.where(where_text, query: "%#{query}%")
         end
 
-        if filter[:type] == :select
+        if filter[:type] == :select && !params["f#{i}"].blank?
           where_text = ""
           sfc = 0
           filter[:fields].each do |f|
