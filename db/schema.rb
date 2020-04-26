@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_21_063731) do
+ActiveRecord::Schema.define(version: 2020_04_26_075210) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "attachable_id"
@@ -601,6 +601,19 @@ ActiveRecord::Schema.define(version: 2020_04_21_063731) do
     t.index ["person_id"], name: "index_project_reviewers_on_person_id"
   end
 
+  create_table "project_status_changes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "project_id"
+    t.integer "from"
+    t.integer "to"
+    t.date "change_date"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_project_status_changes_on_person_id"
+    t.index ["project_id"], name: "index_project_status_changes_on_project_id"
+  end
+
   create_table "project_task_lists", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "project_id"
     t.bigint "person_id"
@@ -702,6 +715,26 @@ ActiveRecord::Schema.define(version: 2020_04_21_063731) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
+  end
+
+  create_table "working_group_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.bigint "working_group_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["working_group_id"], name: "index_working_group_roles_on_working_group_id"
+  end
+
+  create_table "working_groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.bigint "person_id"
+    t.bigint "organization_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["organization_id"], name: "index_working_groups_on_organization_id"
+    t.index ["person_id"], name: "index_working_groups_on_person_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

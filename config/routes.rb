@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :organizations, :path => 'organizaciones'
       resources :cities, :path => 'ciudades'
       resources :countries, :path => 'paises'
+      resources :working_groups, :path => 'grupos-de-trabajo'
+      resources :working_group_roles, :path => 'roles-de-grupos-de-trabajo'
     end
   end 
 

@@ -10,7 +10,12 @@
         </div>
         <aside class="menu">
 		  <div class="menu-section">
-		    <p class="menu-label">Catálogos</p>
+		    <p class="menu-label">Grupos de Trabajo</p>
+        <ul class="menu-list">
+          <li class="li-config-grupos-de-trabajo"><%= link_to "Grupos de Trabajo", working_groups_path %></li>
+          <li class="li-config-rolse-de-grupos-de-trabajo"><%= link_to "Roles de Grupos de Trabajo", working_group_roles_path %></li>
+        </ul>
+        <p class="menu-label">Catálogos</p>
 		    <ul class="menu-list">
 		      <li class="li-config-personas"><%= link_to "Personas", people_path %></li>
           <li class="li-config-departamentos"><%= link_to "Departamentos", departments_path %></li>
