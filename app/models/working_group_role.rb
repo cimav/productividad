@@ -3,4 +3,5 @@ class WorkingGroupRole < ApplicationRecord
 
   ACTIVE = 1
   INACTIVE = 99
+
 end

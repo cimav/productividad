@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_26_075210) do
+ActiveRecord::Schema.define(version: 2020_04_27_192844) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "attachable_id"
@@ -715,6 +715,22 @@ ActiveRecord::Schema.define(version: 2020_04_26_075210) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "status"
+  end
+
+  create_table "working_group_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "person_id"
+    t.bigint "working_group_id"
+    t.bigint "working_group_role_id"
+    t.text "activities"
+    t.date "start_date"
+    t.date "end_date"
+    t.date "last_date"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_working_group_members_on_person_id"
+    t.index ["working_group_id"], name: "index_working_group_members_on_working_group_id"
+    t.index ["working_group_role_id"], name: "index_working_group_members_on_working_group_role_id"
   end
 
   create_table "working_group_roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|

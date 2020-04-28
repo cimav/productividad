@@ -12,10 +12,16 @@ Rails.application.routes.draw do
       resources :cities, :path => 'ciudades'
       resources :countries, :path => 'paises'
       resources :research_lines, :path => 'lineas-de-investigacion'
-      resources :working_groups, :path => 'grupos-de-trabajo'
+      resources :working_groups, :path => 'grupos-de-trabajo' do
+        resources :working_group_members, :path => 'participantes'
+        get 'participantes/muestra/:year' => 'working_group_members#index'
+      end
       resources :working_group_roles, :path => 'roles-de-grupos-de-trabajo'
+      
     end
+
   end 
+
 
   scope '/gantt-api/:project_id' do
     get "/data", :to => "gantt#data"
@@ -119,6 +125,9 @@ Rails.application.routes.draw do
         get 'evaluador-de-articulos/muestra/:year' => 'journal_article_reviewers#index'
         get 'difusion-y-divulgacion/muestra/:year' => 'popular_sciences#index'
         get 'actividades-relevantes/muestra/:year' => 'relevant_activities#index'
+
+        get 'grupos-de-trabajo/' => 'person_working_groups#index'
+        get 'grupos-de-trabajo/muestra/:year' => 'person_working_groups#index'
       end
     end
   end

@@ -33,6 +33,9 @@
         </a>
         <div class="navbar-dropdown is-right">
           <%= link_to 'Ver mi perfil', my_profile_path, class: 'navbar-item' %>
+          <% current_user.working_groups.each do |wg| %>
+            <%= link_to wg.name, working_group_working_group_members_path(wg.id), class: 'navbar-item' %>
+          <% end %>
           <% if is_admin? %>
             <%= link_to 'Configuración', config_path, class: 'navbar-item' %>
           <% end %>

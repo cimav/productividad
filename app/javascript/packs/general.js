@@ -5,9 +5,9 @@ $(document).on('change', '.filter-select', function() {
   if (typeof status !== 'undefined') {
    url = url + '/' + status
   }
-  if (year != 'todos') {
+  //if (year != 'todos') {
     url = url + '/' + year;
-  }
+  //}
   window.location = url;
 });
 

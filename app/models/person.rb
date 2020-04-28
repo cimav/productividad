@@ -13,6 +13,8 @@ class Person < ApplicationRecord
   has_many   :person_research_lines
   has_many   :research_lines, :through => :person_research_lines
   has_many   :journal_articles
+  has_many   :working_groups
+  has_many   :working_group_members
   
 
   STATUS_ACTIVE = 1

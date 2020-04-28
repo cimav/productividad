@@ -1,0 +1,119 @@
+<div class="container container-product-standalone">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to "Participantes en #{@working_group.name}", working_group_working_group_members_path(@working_group) %></li>
+        <li><a>Nuevo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to working_group_working_group_members_path(@working_group), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+<%= form_with(model: @working_group_member, url: working_group_working_group_member_path(@working_group, @working_group_member), local: true) do |form| %>
+  <% if @working_group_member.errors.any? %>
+
+  <div class="notification is-danger">
+    <button class="delete"></button>
+    <h2><%= pluralize(@working_group_member.errors.count, "error") %> prohibited this working_group_member from being saved:</h2>
+    <ul>
+      <% @working_group_member.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <% end %>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :person_id, 'Persona', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+          <%= form.collection_select :person_id, Person.order(:first_name, :last_name).where(status: Person::STATUS_ACTIVE),:id,:full_name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :working_group_role_id, 'Rol', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <div class="select">
+          <%= form.collection_select :working_group_role_id, @working_group.working_group_roles.order(:name).where(status: WorkingGroupRole::ACTIVE),:id,:name %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :activities, 'Actividad', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :activities, class:'input', required: true %></p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :start_date, 'Inicio', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :start_date, type:'date', class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="field is-horizontal">
+  <div class="field-label is-normal">
+    <%= form.label :status, 'Estado', class:'label' %>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <% options = WorkingGroupMember::STATUS.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+      <p class="control">
+        <div class="select">
+          <%= form.select :status, options, {} %>
+        </div>
+      </p>
+    </div>
+  </div>
+  </div>
+
+  <div class="field is-horizontal">
+    <div class="field-label is-normal">
+      <%= form.label :end_date, 'Termino', class:'label' %>
+    </div>
+    <div class="field-body">
+      <div class="field">
+        <p class="control"><%= form.text_field :end_date, type:'date', class:'input' %></p>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <div class="actions is-pulled-right">
+    <%= form.submit "Guardar", class: 'button is-link' %>
+  </div>
+  <div class="is-clearfix"></div>
+
+<% end %>
+</div>
+</div>
