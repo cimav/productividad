@@ -35,61 +35,61 @@
 
 <% if @laboratory_services.count == 0 %>
   <div class="empty-results">No existen</div>
-<% end %>
-<% total = 0 %>
-<% muestras = 0 %>
-<% @laboratory_services.each do |service| %>
-  <% total += service[8].nil? ? 0 : service[8] %>
-  <% muestras += service[4] %>
-<% end %>
-<div class="columns">
-  <div class="column">
-  	<div class="card number-card">
-      <div class="number-card-number"><%= muestras  %></div>
-      <div class="number-card-title">Servicios</div>
-    </div>
-  </div>
-  <div class="column">
-  	<div class="card number-card">
-      <div class="number-card-number">$<%= number_to_currency(total, unit: '') %></div>
-      <div class="number-card-title">Monto</div>
-    </div>
-  </div>
-  <div class="column">
-  	<div class="card number-card">
-      <div class="number-card-number"><%= (total / 10000).round(2) %></div>
-      <div class="number-card-title">Puntos</div>
-    </div>
-  </div>
-</div>
-
-<table class="table is-fullwidth is-striped lab-services-table">
-  <tr>
-  	<th>Identificador</th>
-  	<th>Fecha</th>
-  	<th>Laboratorio</th>
-  	<th>Servicio</th>
-    <th>Muestras</th>
-    <th>¿Catálogo?</th>
-    <th>Monto para Estímulos</th>
-    <th>Participación</th>
-    <th>Considerar</th>	
-  </tr>
+<% else %>
+  <% total = 0 %>
+  <% muestras = 0 %>
   <% @laboratory_services.each do |service| %>
-    <% monto = service[6].nil? ? 0 : service[6] %>
-    <% considerar = service[8].nil? ? 0 : service[8] %>
-    <tr>
-        <td style="white-space: pre;"><%= service[0] %></td>
-        <td style="white-space: pre;"><%= service[1].strftime("%F") %></td>
-        <td><%= service[2] %></td>
-        <td><%= service[3] %></td>
-        <td style="text-align:right;"><%= service[4] %></td>
-        <td style="text-align: center;"><%= service[5].to_i == 1 ? 'SI' : 'NO' %></td>
-        <td style="text-align:right;">$<%= number_to_currency(monto, unit: '') %></td>
-        <td style="text-align:right;"><%= service[7] %>%</td>
-        <td style="text-align:right;">$<%= number_to_currency(considerar, unit: '') %></td>
-    </tr>
+    <% total += service[8].nil? ? 0 : service[8] %>
+    <% muestras += service[4] %>
   <% end %>
-</table>
+  <div class="columns">
+    <div class="column">
+    	<div class="card number-card">
+        <div class="number-card-number"><%= muestras  %></div>
+        <div class="number-card-title">Servicios</div>
+      </div>
+    </div>
+    <div class="column">
+    	<div class="card number-card">
+        <div class="number-card-number">$<%= number_to_currency(total, unit: '') %></div>
+        <div class="number-card-title">Monto</div>
+      </div>
+    </div>
+    <div class="column">
+    	<div class="card number-card">
+        <div class="number-card-number"><%= (total / 10000).round(2) %></div>
+        <div class="number-card-title">Puntos</div>
+      </div>
+    </div>
+  </div>
 
+  <table class="table is-fullwidth is-striped lab-services-table">
+    <tr>
+    	<th>Identificador</th>
+    	<th>Fecha</th>
+    	<th>Laboratorio</th>
+    	<th>Servicio</th>
+      <th>Muestras</th>
+      <th>¿Catálogo?</th>
+      <th>Monto para Estímulos</th>
+      <th>Participación</th>
+      <th>Considerar</th>	
+    </tr>
+    <% @laboratory_services.each do |service| %>
+      <% monto = service[6].nil? ? 0 : service[6] %>
+      <% considerar = service[8].nil? ? 0 : service[8] %>
+      <tr>
+          <td style="white-space: pre;"><%= service[0] %></td>
+          <td style="white-space: pre;"><%= service[1].strftime("%F") %></td>
+          <td><%= service[2] %></td>
+          <td><%= service[3] %></td>
+          <td style="text-align:right;"><%= service[4] %></td>
+          <td style="text-align: center;"><%= service[5].to_i == 1 ? 'SI' : 'NO' %></td>
+          <td style="text-align:right;">$<%= number_to_currency(monto, unit: '') %></td>
+          <td style="text-align:right;"><%= service[7] %>%</td>
+          <td style="text-align:right;">$<%= number_to_currency(considerar, unit: '') %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 </div>
