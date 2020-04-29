@@ -8,6 +8,7 @@ $(document).on('change', '.filter-select', function() {
   //if (year != 'todos') {
     url = url + '/' + year;
   //}
+  $('#loading').show();
   window.location = url;
 });
 
