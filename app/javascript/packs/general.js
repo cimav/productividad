@@ -11,3 +11,7 @@ $(document).on('change', '.filter-select', function() {
   window.location = url;
 });
 
+
+$(document).on('click', '.profile-menu a', function() {
+  $('#loading').show();
+});
