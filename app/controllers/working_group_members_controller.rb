@@ -45,7 +45,6 @@ class WorkingGroupMembersController < ApplicationController
 
   def create
     @working_group_member = @working_group.working_group_members.new(working_group_member_params)
-    @working_group_member.person_id  = current_user.id
     @working_group_member.last_date = @working_group_member.start_date
     @working_group_member.status     = WorkingGroupMember::ACTIVE
 
