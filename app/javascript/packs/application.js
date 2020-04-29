@@ -61,7 +61,7 @@ $(document).on("turbolinks:load", function() {
 
   $('ul.menu-list li').each(function(i) {
   	var url = window.location.href
-  	var c = $(this).attr('class').replace('li-','');
+  	var c = '/' + $(this).attr('class').replace('li-','');
   	if (url.includes(c)) {
   	  $(this).addClass('active');	
   	}
