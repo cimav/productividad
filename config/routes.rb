@@ -128,6 +128,9 @@ Rails.application.routes.draw do
 
         get 'grupos-de-trabajo/' => 'person_working_groups#index'
         get 'grupos-de-trabajo/muestra/:year' => 'person_working_groups#index'
+
+        get 'servicios-de-laboratorio/' => 'laboratory_services#index'
+        get 'servicios-de-laboratorio/muestra/:year' => 'laboratory_services#index'
       end
     end
   end
