@@ -1,0 +1,91 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Artículos en Conferencias', articulos_en_conferencias_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos"]      = "todos"
+        options["Enviados"]   = "enviados"
+        options["Aceptados"]  = "aceptados"
+        options["Rechazados"] = "rechazados"
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': articulos_en_conferencias_path %>
+      </div>
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': articulos_en_conferencias_path %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% if @conference_papers.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @conference_papers.each do |conference_paper| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= 
+      case conference_paper.status 
+      when ConferencePaper::SENT
+        sent_icon
+      when ConferencePaper::ACCEPTED
+        accepted_icon
+      when ConferencePaper::PUBLISHED
+        published_icon
+      when ConferencePaper::REJECTED
+        rejected_icon  
+      end
+      %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to conference_paper.title, ver_articulo_en_conferencia_path(conference_paper) %></strong>
+          <br>
+          <small><%= conference_paper.authors %></small>
+          <p class="product-dates">
+            <span class="tag <%= conference_paper.status_class %>"><%= conference_paper.status_text %></span>
+            <small>
+              Fecha envío: <%= conference_paper.sent_date %>
+              <% if conference_paper.accepted_date %>
+                &bull; Fecha aceptado: <%= conference_paper.accepted_date %>
+              <% end %>
+              <% if conference_paper.published_date %>
+                &bull; Fecha publicado: <%= conference_paper.published_date %>
+              <% end %>
+            </small>
+          </p>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

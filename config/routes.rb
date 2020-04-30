@@ -231,6 +231,11 @@ Rails.application.routes.draw do
   get '/articulos-en-revistas/muestra/:status' => 'journal_articles#org_index', :format => false
   get '/articulos-en-revistas/:id' => 'journal_articles#org_show', :format => false, :as => :ver_articulo_en_revista
 
+  get '/articulos-en-conferencias/' => 'conference_papers#org_index', :format => false
+  get '/articulos-en-conferencias/muestra/:status/:year' => 'conference_papers#org_index', :format => false
+  get '/articulos-en-conferencias/muestra/:status' => 'conference_papers#org_index', :format => false
+  get '/articulos-en-conferencias/:id' => 'conference_papers#org_show', :format => false, :as => :ver_articulo_en_conferencia
+
   # -------------------------------------------------
   # Profile Routes
   # -------------------------------------------------

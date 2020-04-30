@@ -1,12 +1,9 @@
 class ConferencePapersController < ApplicationController
   before_action :auth_required
 
-  before_action :set_conference_paper, only: [:show, :edit, :update, :destroy]
-  before_action :set_person
+  before_action :set_conference_paper, only: [:org_show, :show, :edit, :update, :destroy]
+  before_action :set_person, except: [:org_index, :org_show]
 
-
-  # GET /conference_papers
-  # GET /conference_papers.json
   def index
 
     year = params[:year]
@@ -55,10 +52,61 @@ class ConferencePapersController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /conference_papers/1
-  # GET /conference_papers/1.json
+  def org_index
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+    case @filter_status
+      when "enviados"
+        status = ConferencePaper::SENT
+      when "aceptados"
+        status = ConferencePaper::ACCEPTED
+      when "publicados"
+        status = ConferencePaper::PUBLISHED
+      when "rechazados"
+        status = ConferencePaper::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+       
+    @all_conference_papers = ConferencePaper.all
+
+    @conference_papers = @all_conference_papers
+
+
+    if params[:status] == 'todos'
+      if !year.blank?
+        @conference_papers = @conference_papers.where("YEAR(last_date) = ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @conference_papers = @conference_papers.where("conference_papers.status = ? AND YEAR(last_date) = ?", status, year)
+    elsif !status.blank?
+      @conference_papers = @conference_papers.where("conference_papers.status = ?", status)
+    else
+      year = Date.today.year
+      @conference_papers = @conference_papers.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @conference_papers = @conference_papers.order(last_date: :desc)
+
+    min_date = @all_conference_papers.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+    puts "AÑO #{@min_year}"
+
+    render :layout => 'org'
+  end
+
+
   def show
     render :layout => 'profile'
+  end
+
+  def org_show
+    render :layout => 'org'
   end
 
   # GET /conference_papers/new
