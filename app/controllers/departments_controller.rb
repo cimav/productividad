@@ -4,6 +4,13 @@ class DepartmentsController < SimpleCrudController
     @crud_title = 'Departamentos'
     @crud_layout = 'config'
     self.add_field :name, "Nombre", :string
+    self.add_field :department_id, "Bajo Departamento", :select, { options: Department.order(:name).pluck(:name, :id)}
+    employees_options = []
+    employees = Person.where(person_type_id: 1).order(:first_name, :last_name).pluck(:id, :first_name, :last_name)
+    employees.each do |e|
+      employees_options << ["#{e[1]} #{e[2]}", e[0]]
+    end
+    self.add_field :person_id, "Administrado por", :select, {hide_index: true, options: employees_options}
     self.add_field :organization_id, "Organización", :select, { options: Organization.order(:name).pluck(:name, :id)}
 
     status_options = []

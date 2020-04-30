@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_27_192844) do
+ActiveRecord::Schema.define(version: 2020_04_30_075114) do
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "attachable_id"
@@ -212,6 +212,8 @@ ActiveRecord::Schema.define(version: 2020_04_27_192844) do
     t.bigint "organization_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "person_id"
+    t.integer "department_id", default: 1
     t.index ["organization_id"], name: "index_departments_on_organization_id"
   end
 
