@@ -221,6 +221,9 @@ Rails.application.routes.draw do
   # -------------------------------------------------
   # ORG Routes
   # -------------------------------------------------
+  get '/departamentos/' => 'departments#list'
+  get '/departamentos/:id' => 'departments#department_show', :as => :ver_departamento
+
   get '/proyectos/' => 'projects#org_index'
   get '/proyectos/muestra/:status/:year' => 'projects#org_index'
   get '/proyectos/muestra/:status' => 'projects#org_index'
@@ -244,6 +247,15 @@ Rails.application.routes.draw do
   get '/libros/muestra/:status/:year' => 'books#org_index'
   get '/libros/muestra/:status' => 'books#org_index'
   get '/libros/:id' => 'books#show', :as => :ver_libro
+
+  # -------------------------------------------------
+  # Department Routes
+  # -------------------------------------------------
+  get '/departamentos/:department_id/proyectos/' => 'projects#department_index', :as => :ver_departamento_proyectos
+  get '/departamentos/:department_id/muestra/:status/:year' => 'projects#department_index'
+  get '/departamentos/:department_id/muestra/:status' => 'projects#department_index'
+  get '/departamentos/:department_id/proyectos/:id' => 'projects#show', :as => :ver_departamento_proyecto
+
 
   # -------------------------------------------------
   # Profile Routes

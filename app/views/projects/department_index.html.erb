@@ -1,0 +1,79 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Proyectos', proyectos_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+
+        options["Todos"]          = "todos"
+        options["En definición"]  = "en-definicion"
+        options["En negociación"] = "en-negociacion"
+        options["En proceso"]     = "en-proceso"
+        options["Concluidos"]     = "concluidos"
+        options["Suspendidos"]    = "suspendidos"
+        options["Cancelados"]     = "cancelados"
+        options["Rechazados"]     = "rechazados"
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': proyectos_path %>
+      </div>
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': proyectos_path %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% if @projects.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @projects.each do |project| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= render 'status_icon', project: project  %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+
+          <strong><%= link_to project.name, ver_departamento_proyecto_path(@department, project) %></strong><br>
+          <small>Del <%= I18n.l(project.start_date, format: :long) rescue '--' %> al <%= I18n.l(project.end_date, format: :long) rescue '--' %></small>
+          <span class="tag"><%= project.research_type_text %></span>
+          <span class="tag">
+            <%= project.source_type_text %> 
+            <% if !project.source.blank? %>
+              %(<%= project.source %>) 
+            <% end %>
+          </span>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

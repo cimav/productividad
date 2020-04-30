@@ -1,0 +1,43 @@
+<% content_for :content do %>
+  <div class="container is-fullhd profile-container">
+    <div class="columns">
+      <div class="column is-narrow profile-small-sidebar">
+        <div class="dropdown is-hoverable">
+          <div class="dropdown-trigger">
+            <figure class="image is-48x48 profile-img"><%= image_tag "org_logo.png" %></figure>
+          </div>
+          <div class="dropdown-menu" id="dropdown-menu" role="menu">
+            <div class="dropdown-content">
+              <div class="dropdown-item">
+                <%= render 'department_menu', department: @department %>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="show-sidebar-area">
+          <a id="show-sidebar">
+            <span class="icon is-small"><i class="fas fa-angle-right" aria-hidden="true"></i></span>
+          </a>
+        </div>
+      </div>
+      <div class="column is-one-fifth profile-sidebar">
+        <div class="profile-header">
+          <figure class="image is-48x48 profile-img"><%= image_tag "org_logo.png" %></figure>
+          <a href="/" class="department-sidebar-title"><%= @department.name %></a>
+          <div class="is-clearfix"></div>
+        </div>
+        <%= render 'department_menu', department: @department %>
+        <a id="hide-sidebar">
+          <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+        </a>
+      </div>
+      <div class="column profile-workarea">
+  	    <%= yield %>
+        <div class="is-clearfix"></div>
+      </div>
+      <div class="is-clearfix"></div>
+    </div>
+    <div class="is-clearfix"></div>
+  </div>
+<% end %>
+<%= render template: "layouts/application" %>

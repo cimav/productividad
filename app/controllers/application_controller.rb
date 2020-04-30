@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
   end
   
   private
+    def set_department
+      department_id = params[:department_id]
+      return nil if department_id.blank?
+
+      @department = Department.find(department_id)
+    end
+
     def set_person
       email = params[:email]
       return nil if email.blank?
@@ -15,7 +22,7 @@ class ApplicationController < ActionController::Base
         email += '@' + main_organization.domain
       end
       @person = Person.find_by_email(email)
-      puts email
+
       if (!@person) 
         #redirect_to profiles_url
         puts "REDIRECT"

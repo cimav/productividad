@@ -15,4 +15,16 @@ class DepartmentsController < SimpleCrudController
     self.add_filter :search, [:name], {placeholder: "Busqueda…"}
 
   end
+
+  def list
+    @departments = Department.where(status: Department::ACTIVE).order(:name)
+
+    render layout: 'org'
+  end 
+
+  def department_show
+    @department = Department.find(params[:id])
+    render layout: 'department'
+  end
+
 end

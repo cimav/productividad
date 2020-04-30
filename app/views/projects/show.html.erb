@@ -1,7 +1,10 @@
 <%
 url_projects = proyectos_path
 url_project =  ver_proyecto_path(@project)
-if !@person.blank?
+if !@department.blank?
+  url_projects = ver_departamento_proyectos_path(@department)
+  url_project = ver_departamento_proyecto_path(@department, @project)
+elsif !@person.blank?
   url_projects = projects_path(@person.shortname)
   url_project = project_path(@person.shortname, @project)
 end

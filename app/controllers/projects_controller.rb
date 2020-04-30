@@ -3,6 +3,7 @@ class ProjectsController < ApplicationController
 
   before_action :set_project, only: [:org_show, :information, :change_status, :change_status_save, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
   before_action :set_person
+  before_action :set_department
 
 
   # GET /projects
@@ -107,6 +108,50 @@ class ProjectsController < ApplicationController
     render :layout => 'org'
   end
 
+  def department_index
+
+    year = params[:year]
+    @filter_status = params[:status] 
+    case @filter_status
+      when "en-definicion"
+        status = Project::DEFINITION
+      when "en-negociacion"
+        status = Project::NEGOTIATION
+      when "en-proceso"
+        status = Project::IN_PROCESS
+      when "concluidos"
+        status = Project::CONCLUDED
+      when "suspendidos"
+        status = Project::SUSPENDED
+      when "cancelados"
+        status = Project::CANCELED
+      when "rechazados"
+        status = Project::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+    # @all_projects = Project.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (projects.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('projects.id') 
+    @all_projects = Project.all
+    @projects = @all_projects
+    if params[:status] == 'todos'
+      if !year.blank?
+        @projects = @projects.where("YEAR(last_date) <= ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @projects = @projects.where("projects.status = ? AND YEAR(last_date) <= ?", status, year)
+    elsif !status.blank?
+      @projects = @projects.where("projects.status = ?", status)
+    else
+      year = Date.today.year
+      @projects = @projects.where("YEAR(last_date) <= ?", year)
+    end
+    @filter_year = year
+    @projects = @projects.order(last_date: :desc)
+    min_date = @all_projects.minimum(:last_date)
+    @min_year = min_date.year rescue year
+    render :layout => 'department'
+  end
+
   def admin 
     render :layout => 'profile'
   end
@@ -144,7 +189,9 @@ class ProjectsController < ApplicationController
 
   def show
     layout = 'org'
-    if !@person.blank?
+    if !@department.blank?
+      layout = 'department'
+    elsif !@person.blank?
       layout = 'profile'
     end
     render :layout => layout

@@ -3,11 +3,10 @@
   <p class="menu-label">General</p>
   <ul class="menu-list">
     <li class="li-inicio"><%= link_to "Inicio", "/" %></li>
-    <li class="li-departamentos"><%= link_to "Departamentos", departamentos_path %></li>
   </ul>
   <p class="menu-label">Investigacion</p>
   <ul class="menu-list">
-    <li class="li-proyectos"><%= link_to "Proyectos", proyectos_path %></li>
+    <li class="li-proyectos"><%= link_to "Proyectos", ver_departamento_proyectos_path(department) %></li>
 	  <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", articulos_en_revistas_path %></li>
 	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", articulos_en_conferencias_path %></li>
 	  <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", difusion_y_divulgacion_path %></li>
