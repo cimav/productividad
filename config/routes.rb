@@ -261,7 +261,7 @@ Rails.application.routes.draw do
   # Profile Routes
   # -------------------------------------------------
   get '/mi-perfil' => 'profiles#my_profile', as:'my_profile'
-  get '/perfiles/:email' => 'profiles#show', :constraints => { :email => /(?!.*\/).*/ }
+  get '/perfiles/:email' => 'profiles#show', :constraints => { :email => /(?!.*\/).*/ }, :as => "show_profile"
 
   # -------------------------------------------------
   # Auth Rules
