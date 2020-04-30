@@ -1,0 +1,91 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Libros', libros_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos"]      = "todos"
+        options["Enviados"]   = "enviados"
+        options["Aceptados"]  = "aceptados"
+        options["Rechazados"] = "rechazados"
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': libros_path %>
+      </div>
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': libros_path %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% if @books.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @books.each do |book| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= 
+      case book.status 
+      when Book::SENT
+        sent_icon
+      when Book::ACCEPTED
+        accepted_icon
+      when Book::PUBLISHED
+        published_icon
+      when Book::REJECTED
+        rejected_icon  
+      end
+      %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to book.title, ver_libro_path(book) %></strong>
+          <br>
+          <small><%= book.authors %></small>
+          <p class="product-dates">
+            <span class="tag <%= book.status_class %>"><%= book.status_text %></span>
+            <small>
+              Fecha envío: <%= book.sent_date %>
+              <% if book.accepted_date %>
+                &bull; Fecha aceptado: <%= book.accepted_date %>
+              <% end %>
+              <% if book.published_date %>
+                &bull; Fecha publicado: <%= book.published_date %>
+              <% end %>
+            </small>
+          </p>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

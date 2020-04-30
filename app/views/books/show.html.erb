@@ -1,16 +1,22 @@
+<%
+url_books= libros_path
+if !@person.blank?
+  url_books = books_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Artículos en Conferencias', books_path(@person.shortname) %></li>
+        <li><%= link_to 'Libros', url_books %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @book.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_book_path(@person.shortname, @book), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_book_path(current_user.shortname, @book), class: 'button is-link' %>
     <% end %>
-    <%= link_to books_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_books, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

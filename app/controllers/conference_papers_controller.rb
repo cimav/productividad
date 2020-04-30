@@ -1,8 +1,8 @@
 class ConferencePapersController < ApplicationController
   before_action :auth_required
 
-  before_action :set_conference_paper, only: [:org_show, :show, :edit, :update, :destroy]
-  before_action :set_person, except: [:org_index, :org_show]
+  before_action :set_conference_paper, only: [:show, :edit, :update, :destroy]
+  before_action :set_person
 
   def index
 
@@ -102,26 +102,23 @@ class ConferencePapersController < ApplicationController
 
 
   def show
-    render :layout => 'profile'
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
   end
 
-  def org_show
-    render :layout => 'org'
-  end
 
-  # GET /conference_papers/new
   def new
     @conference_paper = ConferencePaper.new
     render :layout => 'profile'
   end
 
-  # GET /conference_papers/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /conference_papers
-  # POST /conference_papers.json
   def create
     @conference_paper = ConferencePaper.new
     @conference_paper.title      = params[:title]
@@ -166,8 +163,6 @@ class ConferencePapersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /conference_papers/1
-  # PATCH/PUT /conference_papers/1.json
   def update
     respond_to do |format|
 
@@ -200,8 +195,6 @@ class ConferencePapersController < ApplicationController
     end
   end
 
-  # DELETE /conference_papers/1
-  # DELETE /conference_papers/1.json
   def destroy
     @conference_paper.destroy
     respond_to do |format|
@@ -211,24 +204,10 @@ class ConferencePapersController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_conference_paper
       @conference_paper = ConferencePaper.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def conference_paper_params
       params.require(:conference_paper).permit(:title, :sent_date, :accepted_date, :published_date, :conference_id, :authors, :abstract, :person_id, :status)
     end

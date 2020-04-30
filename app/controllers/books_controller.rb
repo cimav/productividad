@@ -4,9 +4,6 @@ class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
   before_action :set_person
 
-
-  # GET /books
-  # GET /books.json
   def index
 
     year = params[:year]
@@ -50,30 +47,74 @@ class BooksController < ApplicationController
     min_date = @all_books.minimum(:last_date)
     
     @min_year = min_date.year rescue year
+
+    render :layout => 'profile'
+  end
+
+  def org_index
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+    case @filter_status
+      when "enviados"
+        status = Book::SENT
+      when "aceptados"
+        status = Book::ACCEPTED
+      when "publicados"
+        status = Book::PUBLISHED
+      when "rechazados"
+        status = Book::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+       
+    @all_books = Book.all
+
+    @books = @all_books
+
+
+    if params[:status] == 'todos'
+      if !year.blank?
+        @books = @books.where("YEAR(last_date) = ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @books = @books.where("books.status = ? AND YEAR(last_date) = ?", status, year)
+    elsif !status.blank?
+      @books = @books.where("books.status = ?", status)
+    else
+      year = Date.today.year
+      @books = @books.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @books = @books.order(last_date: :desc)
+
+    min_date = @all_books.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
     puts "AÑO #{@min_year}"
 
-    render :layout => 'profile'
+    render :layout => 'org'
   end
 
-  # GET /books/1
-  # GET /books/1.json
+
   def show
-    render :layout => 'profile'
+    layout = 'org'
+    layout = 'profile' if !@person.blank?
+    render :layout => layout
   end
 
-  # GET /books/new
   def new
     @book = Book.new
     render :layout => 'profile'
   end
 
-  # GET /books/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /books
-  # POST /books.json
   def create
     @book = Book.new
     @book.title      = params[:title]
@@ -121,8 +162,6 @@ class BooksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /books/1
-  # PATCH/PUT /books/1.json
   def update
     respond_to do |format|
 
@@ -155,8 +194,6 @@ class BooksController < ApplicationController
     end
   end
 
-  # DELETE /books/1
-  # DELETE /books/1.json
   def destroy
     @book.destroy
     respond_to do |format|
@@ -166,24 +203,10 @@ class BooksController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def book_params
       params.require(:book).permit(:title, :authors, :book_type, :publisher, :is_refereed, :country_id, :status, :sent_date, :accepted_date, :published_date, :pages, :isbn)
     end

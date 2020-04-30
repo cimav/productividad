@@ -1,12 +1,9 @@
 class JournalArticlesController < ApplicationController
   before_action :auth_required
 
-  before_action :set_journal_article, only: [:org_show, :show, :edit, :update, :destroy]
-  before_action :set_person, except: [:org_index, :org_show]
+  before_action :set_journal_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_person
 
-
-  # GET /journal_articles
-  # GET /journal_articles.json
   def index
 
     year = params[:year]
@@ -103,26 +100,23 @@ class JournalArticlesController < ApplicationController
   end
 
   def show
-    render :layout => 'profile'
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
   end
 
-  def org_show
-    render :layout => 'org'
-  end
 
-  # GET /journal_articles/new
   def new
     @journal_article = JournalArticle.new
     render :layout => 'profile'
   end
 
-  # GET /journal_articles/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /journal_articles
-  # POST /journal_articles.json
   def create
     @journal_article = JournalArticle.new
     @journal_article.title      = params[:title]
@@ -142,8 +136,6 @@ class JournalArticlesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /journal_articles/1
-  # PATCH/PUT /journal_articles/1.json
   def update
     respond_to do |format|
 
@@ -176,8 +168,6 @@ class JournalArticlesController < ApplicationController
     end
   end
 
-  # DELETE /journal_articles/1
-  # DELETE /journal_articles/1.json
   def destroy
     @journal_article.destroy
     respond_to do |format|
@@ -187,25 +177,11 @@ class JournalArticlesController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-      puts email
-      if (!@person) 
-        #redirect_to profiles_url
-        puts "REDIRECT"
-      end
-    end
 
-    # Use callbacks to share common setup or constraints between actions.
     def set_journal_article
       @journal_article = JournalArticle.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def journal_article_params
       params.require(:journal_article).permit(:title, :sent_date, :accepted_date, :published_date, :journal_id, :authors, :volume, :issue, :pages, :doi, :abstract, :person_id, :status)
     end

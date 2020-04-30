@@ -221,20 +221,29 @@ Rails.application.routes.draw do
   # -------------------------------------------------
   # ORG Routes
   # -------------------------------------------------
-  get '/proyectos/' => 'projects#org_index', :format => false
-  get '/proyectos/muestra/:status/:year' => 'projects#org_index', :format => false
-  get '/proyectos/muestra/:status' => 'projects#org_index', :format => false
-  get '/proyectos/:id' => 'projects#org_show', :format => false, :as => :ver_proyecto
+  get '/proyectos/' => 'projects#org_index'
+  get '/proyectos/muestra/:status/:year' => 'projects#org_index'
+  get '/proyectos/muestra/:status' => 'projects#org_index'
+  get '/proyectos/:id' => 'projects#show', :as => :ver_proyecto
 
-  get '/articulos-en-revistas/' => 'journal_articles#org_index', :format => false
-  get '/articulos-en-revistas/muestra/:status/:year' => 'journal_articles#org_index', :format => false
-  get '/articulos-en-revistas/muestra/:status' => 'journal_articles#org_index', :format => false
-  get '/articulos-en-revistas/:id' => 'journal_articles#org_show', :format => false, :as => :ver_articulo_en_revista
+  get '/articulos-en-revistas/' => 'journal_articles#org_index'
+  get '/articulos-en-revistas/muestra/:status/:year' => 'journal_articles#org_index'
+  get '/articulos-en-revistas/muestra/:status' => 'journal_articles#org_index'
+  get '/articulos-en-revistas/:id' => 'journal_articles#show', :as => :ver_articulo_en_revista
 
-  get '/articulos-en-conferencias/' => 'conference_papers#org_index', :format => false
-  get '/articulos-en-conferencias/muestra/:status/:year' => 'conference_papers#org_index', :format => false
-  get '/articulos-en-conferencias/muestra/:status' => 'conference_papers#org_index', :format => false
-  get '/articulos-en-conferencias/:id' => 'conference_papers#org_show', :format => false, :as => :ver_articulo_en_conferencia
+  get '/articulos-en-conferencias/' => 'conference_papers#org_index'
+  get '/articulos-en-conferencias/muestra/:status/:year' => 'conference_papers#org_index'
+  get '/articulos-en-conferencias/muestra/:status' => 'conference_papers#org_index'
+  get '/articulos-en-conferencias/:id' => 'conference_papers#show', :as => :ver_articulo_en_conferencia
+
+  get '/difusion-y-divulgacion/' => 'popular_sciences#org_index'
+  get '/difusion-y-divulgacion/muestra/:year' => 'popular_sciences#org_index'
+  get '/difusion-y-divulgacion/:id' => 'popular_sciences#show', :as => :ver_difusion_y_divulgacion
+
+  get '/libros' => 'books#org_index'
+  get '/libros/muestra/:status/:year' => 'books#org_index'
+  get '/libros/muestra/:status' => 'books#org_index'
+  get '/libros/:id' => 'books#show', :as => :ver_libro
 
   # -------------------------------------------------
   # Profile Routes

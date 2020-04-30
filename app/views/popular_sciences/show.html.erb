@@ -1,16 +1,22 @@
+<%
+url_popular_sciences = difusion_y_divulgacion_path
+if !@person.blank?
+  url_popular_sciences = popular_sciences_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Difusión y Divulgación', popular_sciences_path(@person.shortname) %></li>
+        <li><%= link_to 'Difusión y Divulgación', url_popular_sciences %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @popular_science.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_popular_science_path(@person.shortname, @popular_science), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_popular_science_path(current_user.shortname, @popular_science), class: 'button is-link' %>
     <% end %>
-    <%= link_to popular_sciences_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_popular_sciences, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

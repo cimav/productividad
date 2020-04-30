@@ -1,16 +1,22 @@
+<%
+url_conference_papers = articulos_en_conferencias_path
+if !@person.blank?
+  url_conference_papers = conference_papers_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Artículos en Conferencias', conference_papers_path(@person.shortname) %></li>
+        <li><%= link_to 'Artículos en Conferencias', url_conference_papers %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @conference_paper.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_conference_paper_path(@person.shortname, @conference_paper), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_conference_paper_path(current_user.shortname, @conference_paper), class: 'button is-link' %>
     <% end %>
-    <%= link_to conference_papers_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_conference_papers, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

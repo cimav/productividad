@@ -3,7 +3,7 @@
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Difusión y Divulgación', popular_sciences_path(@person.shortname) %></li>
+        <li><%= link_to 'Difusión y Divulgación', difusion_y_divulgacion_path %></li>
       </ul>
     </nav>
   </div>
@@ -27,15 +27,11 @@
           options["Año #{y}"] = y
         end
         %>
-        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': popular_sciences_path(@person.shortname) %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': difusion_y_divulgacion_path %>
       </div>
 
     </div>
-    <% if current_user.id == @person.id %>
-      <%= link_to new_popular_science_path, class:'button is-link' do %>
-        <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
-      <%  end %>
-    <% end %>
+    
   </div>
 </div>
 
@@ -51,7 +47,7 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <strong><%= link_to popular_science.name, popular_science_path(@person.shortname, popular_science) %></strong><br>
+          <strong><%= link_to popular_science.name, ver_difusion_y_divulgacion_path(popular_science) %></strong><br>
           <span class="tag is-light"><%= popular_science.activity_type_text %></span>
           <%= "#{popular_science.start_date}, #{popular_science.location} (#{popular_science.country.name})" %>
         </p>

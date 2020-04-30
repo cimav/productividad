@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   before_action :auth_required
 
   before_action :set_project, only: [:org_show, :information, :change_status, :change_status_save, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
-  before_action :set_person, except: [:org_index, :org_show]
+  before_action :set_person
 
 
   # GET /projects
@@ -107,10 +107,6 @@ class ProjectsController < ApplicationController
     render :layout => 'org'
   end
 
-  def org_show
-    render :layout => 'org'
-  end
-
   def admin 
     render :layout => 'profile'
   end
@@ -146,25 +142,23 @@ class ProjectsController < ApplicationController
   end
 
 
-  # GET /projects/1
-  # GET /projects/1.json
   def show
-    render :layout => 'profile'
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
   end
 
-  # GET /projects/new
   def new
     @project = Project.new
     render :layout => 'profile'
   end
 
-  # GET /projects/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /projects
-  # POST /projects.json
   def create
     @project = Project.new
 
@@ -202,8 +196,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /projects/1
-  # PATCH/PUT /projects/1.json
   def update
     respond_to do |format|
 
@@ -231,8 +223,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # DELETE /projects/1
-  # DELETE /projects/1.json
   def destroy
     @project.destroy
     respond_to do |format|
@@ -242,14 +232,10 @@ class ProjectsController < ApplicationController
   end
 
   private
-    
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_project
       @project = Project.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
       params.require(:project).permit(:name, :external_identificator, :internal_identificator, :source_type, :source, :objectives, :results, :research_type, :start_date, :end_date, :extension_date, :last_date, :status)
     end
