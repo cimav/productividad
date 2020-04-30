@@ -2,8 +2,6 @@
   <div class="container is-fullhd profile-container">
     <div class="columns">
       <div class="column is-narrow profile-small-sidebar">
-
-        
         <div class="dropdown is-hoverable">
           <div class="dropdown-trigger">
             <figure class="image is-48x48 profile-img"><%= image_tag "org_logo.png" %></figure>
@@ -25,11 +23,7 @@
       <div class="column is-one-fifth profile-sidebar">
         <div class="profile-header">
           <figure class="image is-48x48 profile-img"><%= image_tag "org_logo.png" %></figure>
-          <strong>
-            <%= link_to  "/" do %>
-              <%= main_organization.name%>
-            <% end %>
-          </strong>
+          <a href="/" class="organization-shortname"><%= main_organization.shortname %></a>
           <div class="is-clearfix"></div>
         </div>
         <%= render 'org_menu' %>

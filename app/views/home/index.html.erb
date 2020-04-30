@@ -1,3 +1,13 @@
-<div class="container" id="home">
-  <h1 class="title"><%= main_organization.name %></h1>
+<div class="profile-show">
+<div class="level product-actions profile-head">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><a><%= main_organization.name %></a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <a href="<%= main_organization.website %>" class="button"><span class="icon is-small"><i class="fas fa-link" aria-hidden="true"></i></span></a>
+  </div>
 </div>
