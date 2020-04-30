@@ -1,0 +1,52 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Artículos en Revistas', articulos_en_revistas_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to articulos_en_revistas_path, class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+<div class="product">
+
+<h1 class="product-title"><%= @journal_article.title %></h1>
+
+<p class="product-authors"><%= @journal_article.authors %></p>
+<p class="product-extra">
+  <% if @journal_article.status == JournalArticle::PUBLISHED %>
+  <%= @journal_article.published_date %> &bull; <%= @journal_article.journal.name %> / Vol. <%= @journal_article.volume %>, <%= @journal_article.issue %>, PP <%= @journal_article.pages %><br>
+    <% if !@journal_article.doi.blank? %>
+      DOI: <%= link_to "https://doi.org/#{@journal_article.doi}", "https://doi.org/#{@journal_article.doi}"  %>
+    <% end %>
+  <% end %>
+</p>
+
+<p class="product-dates">
+  Fecha envío: <%= @journal_article.sent_date %>
+  <% if @journal_article.accepted_date %>
+    &bull; Fecha aceptado: <%= @journal_article.accepted_date %>
+  <% end %>
+  <% if @journal_article.published_date %>
+    &bull; Fecha publicado: <%= @journal_article.published_date %>
+  <% end %>
+</p>
+<p class="product-status">
+  <span class="tag <%= @journal_article.status_class %>"><%= @journal_article.status_text %></span>
+</p>
+
+<% if !@journal_article.abstract.blank? %>
+<h2>Abstract</h2>
+<p class="abstract"><%= @journal_article.abstract %></p>
+<% end %>
+
+<%= render 'product_files/list', product: @journal_article  %>
+<%= render 'product_participants/list', product: @journal_article  %>
+<%= render 'acknowledgments/list', product: @journal_article  %>
+<%= render 'product_cites/list', product: @journal_article  %>
+  
+</div>

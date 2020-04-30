@@ -1,0 +1,50 @@
+<aside class="menu profile-menu">
+  <div class="menu-section">
+  <p class="menu-label">
+    Investigacion
+  </p>
+  <ul class="menu-list">
+    <li class="li-proyectos"><%= link_to "Proyectos", proyectos_path %></li>
+	  <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", articulos_en_revistas_path %></li>
+	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", conference_papers_path(main_organization.shortname) %></li>
+	  <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", popular_sciences_path(main_organization.shortname) %></li>
+	  <li class="li-libros"><%= link_to "Libros y Capítulos", books_path(main_organization.shortname) %></li>
+	  <li class="li-trabajos"><%= link_to "Trabajos", conference_works_path(main_organization.shortname) %></li>
+	  <li class="li-patentes"><%= link_to "Patentes", patents_path(main_organization.shortname) %></li>
+	  <li class="li-conferencias-por-invitacion"><%= link_to "Conferencias por Invitación", invited_conferences_path(main_organization.shortname) %></li>
+	  <li class="li-asociaciones-y-redes"><%= link_to "Asociaciones y Redes", association_members_path(main_organization.shortname) %></li>
+	  <li class="li-reconocimientos"><%= link_to "Reconocimientos", awards_path(main_organization.shortname) %></li>
+	  <li class="li-organizador-de-eventos"><%= link_to "Organizador de Eventos", event_organizers_path(main_organization.shortname) %></li>
+	  <li class="li-evaluador-de-proyectos"><%= link_to "Evaluador de Proyectos", project_reviewers_path(main_organization.shortname) %></li>
+    <li class="li-evaluador-de-articulos"><%= link_to "Evaluador de Artículos", journal_article_reviewers_path(main_organization.shortname) %></li>
+	  <li class="li-actividades-relevantes"><%= link_to "Actividades Relevantes", relevant_activities_path(main_organization.shortname) %></li>
+  </ul>
+  </div>
+  <div class="menu-section">
+  <p class="menu-label">
+    Posgrado
+  </p>
+  <ul class="menu-list">
+    <li class="li-posgrado-en-curso"><a>En Curso ⌛</a></li>
+    <li class="li-posgrado-graduados"><a>Graduados ⌛</a></li>
+  </ul>
+  </div>
+  <div class="menu-section">
+  <p class="menu-label">
+    Vinculación
+  </p>
+  <ul class="menu-list">
+    <li class="li-vinculacion"><a>Ingresos ⌛</a></li>
+  </ul>
+  </div>
+  <div class="menu-section">
+  <p class="menu-label">
+    Trabajo Interno
+  </p>
+  <ul class="menu-list">
+    <li class="li-servicios-de-laboratorio"><%= link_to "Servicios de Laboratorio", servicios_de_laboratorio_path(main_organization.shortname) %></li>
+    <li class="li-grupos"><%= link_to "Grupos de Trabajo", grupos_de_trabajo_path(main_organization.shortname) %></li>
+  </ul>
+  </div>
+  <div class="is-clearfix"></div>
+</aside>

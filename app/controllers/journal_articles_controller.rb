@@ -1,8 +1,8 @@
 class JournalArticlesController < ApplicationController
   before_action :auth_required
 
-  before_action :set_journal_article, only: [:show, :edit, :update, :destroy]
-  before_action :set_person
+  before_action :set_journal_article, only: [:org_show, :show, :edit, :update, :destroy]
+  before_action :set_person, except: [:org_index, :org_show]
 
 
   # GET /journal_articles
@@ -54,10 +54,60 @@ class JournalArticlesController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /journal_articles/1
-  # GET /journal_articles/1.json
+  def org_index
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+    case @filter_status
+      when "enviados"
+        status = JournalArticle::SENT
+      when "aceptados"
+        status = JournalArticle::ACCEPTED
+      when "publicados"
+        status = JournalArticle::PUBLISHED
+      when "rechazados"
+        status = JournalArticle::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+       
+    #@all_journal_articles = JournalArticle.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (journal_articles.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('journal_articles.id') 
+    @all_journal_articles = JournalArticle.all
+
+    @journal_articles = @all_journal_articles
+
+
+    if params[:status] == 'todos'
+      if !year.blank?
+        @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @journal_articles = @journal_articles.where("journal_articles.status = ? AND YEAR(last_date) = ?", status, year)
+    elsif !status.blank?
+      @journal_articles = @journal_articles.where("journal_articles.status = ?", status)
+    else
+      year = Date.today.year
+      @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @journal_articles = @journal_articles.order(last_date: :desc)
+
+    min_date = @all_journal_articles.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
+  end
+
   def show
     render :layout => 'profile'
+  end
+
+  def org_show
+    render :layout => 'org'
   end
 
   # GET /journal_articles/new

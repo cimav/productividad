@@ -6,7 +6,7 @@
   	  <div class="info-content">
   	  	<strong>Duración:</strong> Del <%= I18n.l(project.start_date, format: :long) rescue '--' %> al <%= I18n.l(project.end_date, format: :long) rescue '--' %><br>
   	  	<strong>Tipo de investigación:</strong> <%= project.research_type_text %><br>
-  	  	<strong>Origen:</strong> <%= project.source_type_text %> 
+  	  	<strong>Origen:</strong> <%= project.source_type_text  %> 
         <% if !project.source.blank? %>
           %(<%= project.source %>) 
         <% end %>

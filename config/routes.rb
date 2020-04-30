@@ -1,10 +1,12 @@
 Rails.application.routes.draw do
-
-  resources :person_types
+  # -------------------------------------------------
+  # Config Routes
+  # -------------------------------------------------
   scope 'configuracion' do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       resources :indexers, :path => 'indices'
       resources :people, :path => 'personas'
+      resources :person_types, :path => 'tipos-de-personas'
       resources :departments, :path => 'departamentos'
       resources :research_groups, :path => 'grupos-de-investigacion'
       resources :research_sub_groups, :path => 'subgrupos-de-investigacion'
@@ -22,7 +24,9 @@ Rails.application.routes.draw do
 
   end 
 
-
+  # -------------------------------------------------
+  # Gantt API
+  # -------------------------------------------------
   scope '/gantt-api/:project_id' do
     get "/data", :to => "gantt#data"
 
@@ -36,13 +40,17 @@ Rails.application.routes.draw do
   end
 
   
-  
+  # -------------------------------------------------
+  # General Routes
+  # -------------------------------------------------
   get '/configuracion' => 'config#index', as:'config'
   get '/reportes' => 'reports#index', as:'reports'
-
   get '/perfiles/' => 'profiles#index', as:'profiles'
 
 
+  # -------------------------------------------------
+  # Admin Routes
+  # -------------------------------------------------
   scope format: false, constraints: { email: /.+/ } do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       scope '/perfiles/:email' do
@@ -135,7 +143,6 @@ Rails.application.routes.draw do
     end
   end
 
-
   get  'experiencia/ui/:person_id' => 'experiences#ui'
   get  'experiencia/editar/:person_id/:experience_id' => 'experiences#edit'
   post 'experiencia/actualiza' => 'experiences#update_experience'
@@ -211,12 +218,28 @@ Rails.application.routes.draw do
      
   end
 
+  # -------------------------------------------------
+  # ORG Routes
+  # -------------------------------------------------
+  get '/proyectos/' => 'projects#org_index', :format => false
+  get '/proyectos/muestra/:status/:year' => 'projects#org_index', :format => false
+  get '/proyectos/muestra/:status' => 'projects#org_index', :format => false
+  get '/proyectos/:id' => 'projects#org_show', :format => false, :as => :ver_proyecto
 
+  get '/articulos-en-revistas/' => 'journal_articles#org_index', :format => false
+  get '/articulos-en-revistas/muestra/:status/:year' => 'journal_articles#org_index', :format => false
+  get '/articulos-en-revistas/muestra/:status' => 'journal_articles#org_index', :format => false
+  get '/articulos-en-revistas/:id' => 'journal_articles#org_show', :format => false, :as => :ver_articulo_en_revista
 
+  # -------------------------------------------------
+  # Profile Routes
+  # -------------------------------------------------
   get '/mi-perfil' => 'profiles#my_profile', as:'my_profile'
   get '/perfiles/:email' => 'profiles#show', :constraints => { :email => /(?!.*\/).*/ }
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
+  # -------------------------------------------------
+  # Auth Rules
+  # -------------------------------------------------
   get '/auth/:provider/callback' => 'sessions#create'
   get '/auth/failure' => 'sessions#failure'
   get '/login' => 'sessions#new'
