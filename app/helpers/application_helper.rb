@@ -1,6 +1,10 @@
 module ApplicationHelper
 
   def authenticated?
+    if session[:user_email].blank? 
+      session[:requested_url] = request.original_url
+      return false
+    end
     if session[:user_auth].blank?
 
       person = Person.where(email: session[:user_email], status: Person::STATUS_ACTIVE).first

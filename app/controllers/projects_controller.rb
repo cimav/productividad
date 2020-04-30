@@ -84,7 +84,7 @@ class ProjectsController < ApplicationController
       else
         @filter_status = 'todos'
     end
-    # @all_projects = Project.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (projects.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('projects.id') 
+    #@all_projects = Project.left_outer_joins(:project_participants).where("(project_participants.person_id=? AND project_participants.status=?) OR (projects.person_id = ?)", @person.id, ProjectParticipant::ACTIVE, @person.id).group('projects.id') 
     @all_projects = Project.all
     @projects = @all_projects
     if params[:status] == 'todos'

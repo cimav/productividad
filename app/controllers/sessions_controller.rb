@@ -7,7 +7,11 @@ class SessionsController < ApplicationController
     session[:user_email] = auth_hash['info']['email']
 
     if authenticated?
-      redirect_to '/'
+      if !session[:requested_url].blank?
+        redirect_to session[:requested_url]
+      else
+        redirect_to '/'
+      end
     else
       @title = "Error 401" 
       @message = "El usuario no está autorizado para utilizar esta aplicación."
