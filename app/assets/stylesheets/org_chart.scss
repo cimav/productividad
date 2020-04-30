@@ -1,0 +1,95 @@
+.org-chart {
+
+  a {
+    color: #000 !important;
+  }
+  
+  ul {
+    position: relative;
+    margin-left: 10vw;
+    padding-top: 1em;
+  }
+
+  ul.org-root {
+    margin: 0 !important;
+    padding-top: 0 !important;
+    &:before {
+      content: none;
+      border: 0;
+    }
+  }
+
+  .org-root-item {
+    &:before {
+      content: none !important;
+      border: 0;
+    }
+  }
+
+  .org-item {
+    background: #fff;
+    padding: 1em;
+    border: 1px solid #ddd;
+    width: 20vw;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	margin-bottom: 1em;
+
+	strong {
+	  font-weight: 500;
+	}
+
+	br {
+	  margin-bottom: 0.5em;
+	}
+
+	figure {
+	  float: left;
+	  margin-right: 0.5em;
+	}
+	
+    &:hover {
+      background-color: #fff8e1;
+      cursor: pointer;
+    }
+  }
+
+  li {
+    position: relative; 
+  }
+
+  ul:before {
+    content: '';
+    border-left: 1px solid #ddd;
+    position: absolute;
+    top: -1em;
+    bottom: 3.1em;
+    left:0;
+    float: right;
+    width: 5vw;
+    margin-left: -5vw;
+  }
+
+  .org-item:before {
+    content:'';
+    border-bottom: 1px solid #ddd;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-top: 2em;
+    width: 5vw;
+    margin-left: -5vw;
+  }
+
+}
+
+.xxx{
+	position: absolute;
+      z-index: -1;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      border-left: 20px dotted #ff0000;
+      transform: translate(-50%);
+}

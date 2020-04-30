@@ -1,3 +1,28 @@
+<%
+@items = {}
+@items[0] = []
+
+def get_childs(parent_id)
+  return "" if @items[parent_id].blank? 
+  ul = "<ul>"
+  @items[parent_id].each do |child|
+    ul += "<li><a href='#{ver_departamento_path(child)}'><div class='org-item'><strong>#{child.name}</strong><br><figure class='image is-24x24'><img class='is-rounded' src='#{child.person.display_url}'></figure> #{child.person.full_name}</div></a>"
+    ul += get_childs(child.id)
+    ul += "</li>"
+  end
+  ul += "</ul>"
+  ul.html_safe
+end
+
+@departments.each do |department| 
+  if department.id == department.department_id
+    @items[0] << department
+  else
+    @items[department.department_id] = [] if @items[department.department_id].blank?
+    @items[department.department_id] << department
+  end
+end 
+%>
 <div class="container product-index">
 <div class="level product-actions">
   <div class="level-left">
@@ -17,22 +42,20 @@
 <% if @departments.count == 0 %>
   <div class="empty-results">No existen</div>
 <% end %>
-<% @departments.each do |department| %>
-<div class="product-item">
-  <article class="media">
-    <div class="media-left">
-      <%= custom_icon('link', 'fa-users') %>
-    </div>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong><%= link_to department.name, ver_departamento_path(department) %></strong>
-          <br>
-          <small>Jefe/Coordinador: TBD</small>
-        </p>
+<div class="org-chart">
+  <ul class="org-root">
+  <% @items[0].each do |root| %>
+    <li>
+      <a href="<%= ver_departamento_path(root) %>">
+      <div class="org-item org-root-item">
+        <strong><%= root.name %></strong><br>
+        <figure class="image is-24x24"><img class="is-rounded" src="<%= root.person.display_url rescue '' %>"></figure> <%= root.person.full_name %>
       </div>
-    </div>
-  </article>
+      </a>
+      <%= get_childs(root.id) %>
+    </li>
+  <% end %>
+  </ul>
 </div>
-<% end %>
+
 </div>
