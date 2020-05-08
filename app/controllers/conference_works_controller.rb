@@ -5,8 +5,6 @@ class ConferenceWorksController < ApplicationController
   before_action :set_person
 
 
-  # GET /conference_works
-  # GET /conference_works.json
   def index
 
     year = params[:year]
@@ -50,30 +48,72 @@ class ConferenceWorksController < ApplicationController
     min_date = @all_conference_works.minimum(:last_date)
     
     @min_year = min_date.year rescue year
-    puts "AÑO #{@min_year}"
 
     render :layout => 'profile'
   end
 
-  # GET /conference_works/1
-  # GET /conference_works/1.json
+  def org_index
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+    case @filter_status
+      when "enviados"
+        status = ConferenceWork::SENT
+      when "aceptados"
+        status = ConferenceWork::ACCEPTED
+      when "publicados"
+        status = ConferenceWork::PUBLISHED
+      when "rechazados"
+        status = ConferenceWork::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+       
+    @all_conference_works = ConferenceWork.all 
+
+    @conference_works = @all_conference_works
+
+
+    if params[:status] == 'todos'
+      if !year.blank?
+        @conference_works = @conference_works.where("YEAR(last_date) = ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @conference_works = @conference_works.where("conference_works.status = ? AND YEAR(last_date) = ?", status, year)
+    elsif !status.blank?
+      @conference_works = @conference_works.where("conference_works.status = ?", status)
+    else
+      year = Date.today.year
+      @conference_works = @conference_works.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @conference_works = @conference_works.order(last_date: :desc)
+
+    min_date = @all_conference_works.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
+  end
+
   def show
-    render :layout => 'profile'
+    layout = 'org'
+    layout = 'profile' if !@person.blank?
+    render :layout => layout
   end
 
-  # GET /conference_works/new
   def new
     @conference_work = ConferenceWork.new
     render :layout => 'profile'
   end
 
-  # GET /conference_works/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /conference_works
-  # POST /conference_works.json
   def create
     @conference_work = ConferenceWork.new
     @conference_work.title      = params[:title]
@@ -119,8 +159,6 @@ class ConferenceWorksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /conference_works/1
-  # PATCH/PUT /conference_works/1.json
   def update
     respond_to do |format|
 
@@ -153,8 +191,6 @@ class ConferenceWorksController < ApplicationController
     end
   end
 
-  # DELETE /conference_works/1
-  # DELETE /conference_works/1.json
   def destroy
     @conference_work.destroy
     respond_to do |format|
@@ -164,24 +200,9 @@ class ConferenceWorksController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_conference_work
       @conference_work = ConferenceWork.find(params[:id])
     end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
     def conference_work_params
       params.require(:conference_work).permit(:title, :sent_date, :accepted_date, :published_date, :conference_id, :authors, :work_type, :person_id, :status)
     end

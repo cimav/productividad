@@ -1,16 +1,22 @@
+<%
+url_conference_works = trabajos_path
+if !@person.blank?
+  url_conference_works  = conference_works _path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Trabajos', conference_works_path(@person.shortname) %></li>
+        <li><%= link_to 'Trabajos', url_conference_works %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @conference_work.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_conference_work_path(@person.shortname, @conference_work), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_conference_work_path(current_user.shortname, @conference_work), class: 'button is-link' %>
     <% end %>
-    <%= link_to conference_works_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_conference_works, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

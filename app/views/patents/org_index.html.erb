@@ -1,0 +1,77 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Patentes', patentes_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos"]      = "todos"
+        options["En Registro"] = "registro"
+        options["En Examen de Forma"] = "examen-de-forma"
+        options["En Publicación"] = "publicacion"
+        options["En Examen de Fondo"] = "examen-de-fondo"
+        options["Con Título Otorgado"] = "titulo-otorgado"
+        options["Rechazadas"] = "rechazada"
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': patentes_path %>
+      </div>
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': patentes_path %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% if @patents.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @patents.each do |patent| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= doc_icon %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to patent.title, ver_patente_path(patent) %></strong>
+          <br>
+          <small><%= patent.authors %></small>
+          <p class="product-dates">
+            <span class="tag <%= patent.status_class %>"><%= patent.status_text %></span>
+            <small>
+              Fecha de registro: <%= patent.register_date %>
+            </small>
+          </p>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

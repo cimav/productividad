@@ -5,8 +5,6 @@ class PatentsController < ApplicationController
   before_action :set_person
 
 
-  # GET /patents
-  # GET /patents.json
   def index
 
     year = params[:year]
@@ -59,25 +57,72 @@ class PatentsController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /patents/1
-  # GET /patents/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+    case @filter_status
+      when "registro"
+        status = Patent::REGISTER
+      when "examen-de-forma"
+        status = Patent::FORM_EXAM
+      when "publicacion"
+        status = Patent::PUBLISHED
+      when "examen-de-fondo"
+        status = Patent::EXAMINATION
+      when "titulo-otorgado"
+        status = Patent::GRANTED
+      when "rechazada"
+        status = Patent::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+       
+    @all_patents = Patent.all
+
+    @patents = @all_patents
+
+
+    if params[:status] == 'todos'
+      if !year.blank?
+        @patents = @patents.where("YEAR(last_date) = ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @patents = @patents.where("patents.status = ? AND YEAR(last_date) = ?", status, year)
+    elsif !status.blank?
+      @patents = @patents.where("patents.status = ?", status)
+    else
+      year = Date.today.year
+      @patents = @patents.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @patents = @patents.order(last_date: :desc)
+
+    min_date = @all_patents.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /patents/new
+  def show
+    layout = 'org'
+    layout = 'profile' if !@person.blank?
+    render :layout => layout
+  end
+
   def new
     @patent = Patent.new
     render :layout => 'profile'
   end
 
-  # GET /patents/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /patents
-  # POST /patents.json
   def create
     @patent = Patent.new
     @patent.title      = params[:title]
@@ -121,8 +166,6 @@ class PatentsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /patents/1
-  # PATCH/PUT /patents/1.json
   def update
     respond_to do |format|
 
@@ -146,8 +189,6 @@ class PatentsController < ApplicationController
     end
   end
 
-  # DELETE /patents/1
-  # DELETE /patents/1.json
   def destroy
     @patent.destroy
     respond_to do |format|
@@ -157,24 +198,10 @@ class PatentsController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_patent
       @patent = Patent.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def patent_params
       params.require(:patent).permit(:title, :register_date, :authors, :person_id, :status)
     end

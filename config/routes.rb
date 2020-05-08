@@ -248,10 +248,15 @@ Rails.application.routes.draw do
   get '/libros/muestra/:status' => 'books#org_index'
   get '/libros/:id' => 'books#show', :as => :ver_libro
 
-  get '/trabajos' => 'books#org_index'
-  get '/trabajos/muestra/:status/:year' => 'books#org_index'
-  get '/trabajos/muestra/:status' => 'books#org_index'
-  get '/trabajos/:id' => 'books#show', :as => :ver_trabajo
+  get '/trabajos' => 'conference_works#org_index'
+  get '/trabajos/muestra/:status/:year' => 'conference_works#org_index'
+  get '/trabajos/muestra/:status' => 'conference_works#org_index'
+  get '/trabajos/:id' => 'conference_works#show', :as => :ver_trabajo
+
+  get '/patentes' => 'patents#org_index'
+  get '/patentes/muestra/:status/:year' => 'patents#org_index'
+  get '/patentes/muestra/:status' => 'patents#org_index'
+  get '/patentes/:id' => 'patents#show', :as => :ver_patente
 
   # -------------------------------------------------
   # Department Routes
