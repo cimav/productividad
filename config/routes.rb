@@ -258,6 +258,41 @@ Rails.application.routes.draw do
   get '/patentes/muestra/:status' => 'patents#org_index'
   get '/patentes/:id' => 'patents#show', :as => :ver_patente
 
+  get '/conferencias-por-invitacion' => 'invited_conferences#org_index'
+  get '/conferencias-por-invitacion/muestra/:status/:year' => 'invited_conferences#org_index'
+  get '/conferencias-por-invitacion/muestra/:status' => 'invited_conferences#org_index'
+  get '/conferencias-por-invitacion/:id' => 'invited_conferences#show', :as => :ver_conferencia_por_invitacion
+
+  get '/asociaciones-y-redes' => 'association_members#org_index'
+  get '/asociaciones-y-redes/muestra/:status/:year' => 'association_members#org_index'
+  get '/asociaciones-y-redes/muestra/:status' => 'association_members#org_index'
+  get '/asociaciones-y-redes/:id' => 'association_members#show', :as => :ver_miembro_asociacion
+
+  get '/reconocimientos' => 'awards#org_index'
+  get '/reconocimientos/muestra/:status/:year' => 'awards#org_index'
+  get '/reconocimientos/muestra/:status' => 'awards#org_index'
+  get '/reconocimientos/:id' => 'awards#show', :as => :ver_reconocimiento
+
+  get '/organizador-de-eventos' => 'event_organizers#org_index'
+  get '/organizador-de-eventos/muestra/:status/:year' => 'event_organizers#org_index'
+  get '/organizador-de-eventos/muestra/:status' => 'event_organizers#org_index'
+  get '/organizador-de-eventos/:id' => 'event_organizers#show', :as => :ver_organizador
+
+  get '/evaluador-de-proyectos' => 'project_reviewers#org_index'
+  get '/evaluador-de-proyectos/muestra/:status/:year' => 'project_reviewers#org_index'
+  get '/evaluador-de-proyectos/muestra/:status' => 'project_reviewers#org_index'
+  get '/evaluador-de-proyectos/:id' => 'project_reviewers#show', :as => :ver_evaluador_de_proyecto
+
+  get '/evaluador-de-articulos' => 'journal_article_reviewers#org_index'
+  get '/evaluador-de-articulos/muestra/:status/:year' => 'journal_article_reviewers#org_index'
+  get '/evaluador-de-articulos/muestra/:status' => 'journal_article_reviewers#org_index'
+  get '/evaluador-de-articulos/:id' => 'journal_article_reviewers#show', :as => :ver_evaluador_de_articulo
+
+  get '/actividades-relevantes' => 'relevant_activities#org_index'
+  get '/actividades-relevantes/muestra/:status/:year' => 'relevant_activities#org_index'
+  get '/actividades-relevantes/muestra/:status' => 'relevant_activities#org_index'
+  get '/actividades-relevantes/:id' => 'relevant_activities#show', :as => :ver_actividad_relevante
+
   # -------------------------------------------------
   # Department Routes
   # -------------------------------------------------

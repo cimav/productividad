@@ -5,8 +5,6 @@ class RelevantActivitiesController < ApplicationController
   before_action :set_person
 
 
-  # GET /relevant_activities
-  # GET /relevant_activities.json
   def index
 
     year = params[:year]
@@ -35,25 +33,51 @@ class RelevantActivitiesController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /relevant_activities/1
-  # GET /relevant_activities/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+       
+    @all_relevant_activities = RelevantActivity.all
+
+    @relevant_activities = @all_relevant_activities
+
+    if !year.blank?
+      if year != 'todos'
+        @relevant_activities = @relevant_activities.where("YEAR(last_date) = ?", year)
+      end
+    else
+      year = Date.today.year
+      @relevant_activities = @relevant_activities.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @relevant_activities = @relevant_activities.order(last_date: :desc)
+
+    min_date = @all_relevant_activities.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /relevant_activities/new
+  def show
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
+  end
+
   def new
     @relevant_activity = RelevantActivity.new
     render :layout => 'profile'
   end
 
-  # GET /relevant_activities/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /relevant_activities
-  # POST /relevant_activities.json
   def create
     @relevant_activity = RelevantActivity.new
     @relevant_activity.name = params[:name]
@@ -76,8 +100,6 @@ class RelevantActivitiesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /relevant_activities/1
-  # PATCH/PUT /relevant_activities/1.json
   def update
     respond_to do |format|
 
@@ -102,8 +124,6 @@ class RelevantActivitiesController < ApplicationController
     end
   end
 
-  # DELETE /relevant_activities/1
-  # DELETE /relevant_activities/1.json
   def destroy
     @relevant_activity.destroy
     respond_to do |format|
@@ -113,24 +133,10 @@ class RelevantActivitiesController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_relevant_activity
       @relevant_activity = RelevantActivity.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def relevant_activity_params
       params.require(:relevant_activity).permit(:name, :description, :start_date, :end_date, :location, :country_id, :person_id)
     end

@@ -1,16 +1,22 @@
+<%
+url_association_members = asociaciones_y_redes_path
+if !@person.blank?
+  url_association_members  = association_members_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Asociaciones y Redes', association_members_path(@person.shortname) %></li>
+        <li><%= link_to 'Asociaciones y Redes', url_association_members %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @association_member.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_association_member_path(@person.shortname, @association_member), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_association_member_path(current_user.shortname, @association_member), class: 'button is-link' %>
     <% end %>
-    <%= link_to association_members_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_association_members, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

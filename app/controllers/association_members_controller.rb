@@ -5,8 +5,6 @@ class AssociationMembersController < ApplicationController
   before_action :set_person
 
 
-  # GET /association_members
-  # GET /association_members.json
   def index
 
     year = params[:year]
@@ -35,25 +33,51 @@ class AssociationMembersController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /association_members/1
-  # GET /association_members/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+       
+    @all_association_members = AssociationMember.all
+
+    @association_members = @all_association_members
+
+    if !year.blank?
+      if year != 'todos'
+        @association_members = @association_members.where("YEAR(last_date) <= ?", year)
+      end
+    else
+      year = Date.today.year
+      @association_members = @association_members.where("YEAR(last_date) <= ?", year)
+    end
+
+    @filter_year = year
+
+    @association_members = @association_members.order(last_date: :desc)
+
+    min_date = @all_association_members.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /association_members/new
+  def show
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
+  end
+
   def new
     @association_member = AssociationMember.new
     render :layout => 'profile'
   end
 
-  # GET /association_members/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /association_members
-  # POST /association_members.json
   def create
     @association_member = AssociationMember.new
     @association_member.association_id = params[:association_id]
@@ -74,8 +98,6 @@ class AssociationMembersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /association_members/1
-  # PATCH/PUT /association_members/1.json
   def update
     respond_to do |format|
 
@@ -104,8 +126,6 @@ class AssociationMembersController < ApplicationController
     end
   end
 
-  # DELETE /association_members/1
-  # DELETE /association_members/1.json
   def destroy
     @association_member.destroy
     respond_to do |format|
@@ -115,24 +135,10 @@ class AssociationMembersController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_association_member
       @association_member = AssociationMember.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def association_member_params
       params.require(:association_member).permit(:activities, :association_id, :start_date, :end_date, :person_id, :status)
     end

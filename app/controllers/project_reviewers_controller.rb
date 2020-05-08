@@ -5,8 +5,6 @@ class ProjectReviewersController < ApplicationController
   before_action :set_person
 
 
-  # GET /project_reviewers
-  # GET /project_reviewers.json
   def index
 
     year = params[:year]
@@ -35,25 +33,51 @@ class ProjectReviewersController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /project_reviewers/1
-  # GET /project_reviewers/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+       
+    @all_project_reviewers = ProjectReviewer.all
+
+    @project_reviewers = @all_project_reviewers
+
+    if !year.blank?
+      if year != 'todos'
+        @project_reviewers = @project_reviewers.where("YEAR(last_date) = ?", year)
+      end
+    else
+      year = Date.today.year
+      @project_reviewers = @project_reviewers.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @project_reviewers = @project_reviewers.order(last_date: :desc)
+
+    min_date = @all_project_reviewers.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /project_reviewers/new
+  def show
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
+  end
+
   def new
     @project_reviewer = ProjectReviewer.new
     render :layout => 'profile'
   end
 
-  # GET /project_reviewers/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /project_reviewers
-  # POST /project_reviewers.json
   def create
     @project_reviewer = ProjectReviewer.new
     @project_reviewer.name = params[:name]
@@ -75,8 +99,6 @@ class ProjectReviewersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /project_reviewers/1
-  # PATCH/PUT /project_reviewers/1.json
   def update
     respond_to do |format|
 
@@ -101,8 +123,6 @@ class ProjectReviewersController < ApplicationController
     end
   end
 
-  # DELETE /project_reviewers/1
-  # DELETE /project_reviewers/1.json
   def destroy
     @project_reviewer.destroy
     respond_to do |format|
@@ -112,24 +132,10 @@ class ProjectReviewersController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_project_reviewer
       @project_reviewer = ProjectReviewer.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def project_reviewer_params
       params.require(:project_reviewer).permit(:name, :announcement, :description, :review_date, :country_id, :person_id, :status)
     end

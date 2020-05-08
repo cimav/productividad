@@ -5,8 +5,6 @@ class InvitedConferencesController < ApplicationController
   before_action :set_person
 
 
-  # GET /invited_conferences
-  # GET /invited_conferences.json
   def index
 
     year = params[:year]
@@ -35,25 +33,51 @@ class InvitedConferencesController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /invited_conferences/1
-  # GET /invited_conferences/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+       
+    @all_invited_conferences = InvitedConference.all
+
+    @invited_conferences = @all_invited_conferences
+
+    if !year.blank?
+      if year != 'todos'
+        @invited_conferences = @invited_conferences.where("YEAR(last_date) = ?", year)
+      end
+    else
+      year = Date.today.year
+      @invited_conferences = @invited_conferences.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @invited_conferences = @invited_conferences.order(last_date: :desc)
+
+    min_date = @all_invited_conferences.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /invited_conferences/new
+  def show
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
+  end
+
   def new
     @invited_conference = InvitedConference.new
     render :layout => 'profile'
   end
 
-  # GET /invited_conferences/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /invited_conferences
-  # POST /invited_conferences.json
   def create
     @invited_conference = InvitedConference.new
     @invited_conference.title      = params[:title]
@@ -72,8 +96,6 @@ class InvitedConferencesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /invited_conferences/1
-  # PATCH/PUT /invited_conferences/1.json
   def update
     respond_to do |format|
 
@@ -97,8 +119,6 @@ class InvitedConferencesController < ApplicationController
     end
   end
 
-  # DELETE /invited_conferences/1
-  # DELETE /invited_conferences/1.json
   def destroy
     @invited_conference.destroy
     respond_to do |format|
@@ -108,24 +128,10 @@ class InvitedConferencesController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_invited_conference
       @invited_conference = InvitedConference.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def invited_conference_params
       params.require(:invited_conference).permit(:title, :conference_date, :conference_id,:person_id, :status)
     end

@@ -1,16 +1,22 @@
+<%
+url_journal_article_reviewers = evaluador_de_articulos_path
+if !@person.blank?
+  url_journal_article_reviewers  = journal_article_reviewers_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Evaluador de Proyectos', journal_article_reviewers_path(@person.shortname) %></li>
+        <li><%= link_to 'Evaluador de Artículos', url_journal_article_reviewers %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @journal_article_reviewer.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_journal_article_reviewer_path(@person.shortname, @journal_article_reviewer), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_journal_article_reviewer_path(current_user.shortname, @journal_article_reviewer), class: 'button is-link' %>
     <% end %>
-    <%= link_to journal_article_reviewers_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_journal_article_reviewers, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

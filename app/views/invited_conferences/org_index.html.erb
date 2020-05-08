@@ -1,0 +1,63 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Conferencias por Invitación', conferencias_por_invitacion_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': conferencias_por_invitacion_path %>
+      </div>
+
+    </div>
+    
+  </div>
+</div>
+
+<% if @invited_conferences.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @invited_conferences.each do |invited_conference| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= published_icon %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to invited_conference.title, ver_conferencia_por_invitacion_path(invited_conference) %></strong>
+          <br>
+          <p class="product-dates">
+            <small>
+              Fecha de presentación: <%= invited_conference.conference_date %>
+            </small>
+          </p>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

@@ -1,16 +1,22 @@
+<%
+url_invited_conferences = conferencias_por_invitacion_path
+if !@person.blank?
+  url_invited_conferences  = invited_conferences_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Conferencias por Invitación', invited_conferences_path(@person.shortname) %></li>
+        <li><%= link_to 'Conferencias por Invitación', url_invited_conferences %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @invited_conference.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_invited_conference_path(@person.shortname, @invited_conference), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_invited_conference_path(current_user.shortname, @invited_conference), class: 'button is-link' %>
     <% end %>
-    <%= link_to invited_conferences_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_invited_conferences, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

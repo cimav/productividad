@@ -4,9 +4,6 @@ class JournalArticleReviewersController < ApplicationController
   before_action :set_journal_article_reviewer, only: [:show, :edit, :update, :destroy]
   before_action :set_person
 
-
-  # GET /journal_article_reviewers
-  # GET /journal_article_reviewers.json
   def index
 
     year = params[:year]
@@ -35,25 +32,51 @@ class JournalArticleReviewersController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /journal_article_reviewers/1
-  # GET /journal_article_reviewers/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+       
+    @all_journal_article_reviewers = JournalArticleReviewer.all
+
+    @journal_article_reviewers = @all_journal_article_reviewers
+
+    if !year.blank?
+      if year != 'todos'
+        @journal_article_reviewers = @journal_article_reviewers.where("YEAR(last_date) = ?", year)
+      end
+    else
+      year = Date.today.year
+      @journal_article_reviewers = @journal_article_reviewers.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @journal_article_reviewers = @journal_article_reviewers.order(last_date: :desc)
+
+    min_date = @all_journal_article_reviewers.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /journal_article_reviewers/new
+  def show
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
+  end
+
   def new
     @journal_article_reviewer = JournalArticleReviewer.new
     render :layout => 'profile'
   end
 
-  # GET /journal_article_reviewers/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /journal_article_reviewers
-  # POST /journal_article_reviewers.json
   def create
     @journal_article_reviewer = JournalArticleReviewer.new
     @journal_article_reviewer.title = params[:title]
@@ -74,8 +97,6 @@ class JournalArticleReviewersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /journal_article_reviewers/1
-  # PATCH/PUT /journal_article_reviewers/1.json
   def update
     respond_to do |format|
 
@@ -100,8 +121,6 @@ class JournalArticleReviewersController < ApplicationController
     end
   end
 
-  # DELETE /journal_article_reviewers/1
-  # DELETE /journal_article_reviewers/1.json
   def destroy
     @journal_article_reviewer.destroy
     respond_to do |format|
@@ -111,24 +130,10 @@ class JournalArticleReviewersController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_journal_article_reviewer
       @journal_article_reviewer = JournalArticleReviewer.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def journal_article_reviewer_params
       params.require(:journal_article_reviewer).permit(:title, :authors, :review_date, :journal_id, :person_id, :status)
     end

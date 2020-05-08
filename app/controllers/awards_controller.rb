@@ -4,9 +4,6 @@ class AwardsController < ApplicationController
   before_action :set_award, only: [:show, :edit, :update, :destroy]
   before_action :set_person
 
-
-  # GET /awards
-  # GET /awards.json
   def index
 
     year = params[:year]
@@ -35,25 +32,51 @@ class AwardsController < ApplicationController
     render :layout => 'profile'
   end
 
-  # GET /awards/1
-  # GET /awards/1.json
-  def show
-    render :layout => 'profile'
+  def org_index
+
+    year = params[:year]
+       
+    @all_awards = Award.all
+
+    @awards = @all_awards
+
+    if !year.blank?
+      if year != 'todos'
+        @awards = @awards.where("YEAR(last_date) = ?", year)
+      end
+    else
+      year = Date.today.year
+      @awards = @awards.where("YEAR(last_date) = ?", year)
+    end
+
+    @filter_year = year
+
+    @awards = @awards.order(last_date: :desc)
+
+    min_date = @all_awards.minimum(:last_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
   end
 
-  # GET /awards/new
+  def show
+    layout = 'org'
+    if !@person.blank?
+      layout = 'profile'
+    end
+    render :layout => layout
+  end
+
   def new
     @award = Award.new
     render :layout => 'profile'
   end
 
-  # GET /awards/1/edit
   def edit
     render :layout => 'profile'
   end
 
-  # POST /awards
-  # POST /awards.json
   def create
     @award = Award.new
     @award.name = params[:name]
@@ -75,8 +98,6 @@ class AwardsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /awards/1
-  # PATCH/PUT /awards/1.json
   def update
     respond_to do |format|
 
@@ -101,8 +122,6 @@ class AwardsController < ApplicationController
     end
   end
 
-  # DELETE /awards/1
-  # DELETE /awards/1.json
   def destroy
     @award.destroy
     respond_to do |format|
@@ -112,24 +131,10 @@ class AwardsController < ApplicationController
   end
 
   private
-    def set_person
-      email = params[:email]
-      if !email.include? '@'
-        email += '@' + main_organization.domain
-      end
-      @person = Person.find_by_email(email)
-
-      if (!@person) 
-        redirect_to profiles_url
-      end
-    end
-
-    # Use callbacks to share common setup or constraints between actions.
     def set_award
       @award = Award.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
     def award_params
       params.require(:award).permit(:name, :granted_by, :grant_date, :award_type, :country_id, :person_id)
     end

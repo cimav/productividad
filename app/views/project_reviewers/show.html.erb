@@ -1,16 +1,22 @@
+<%
+url_project_reviewers = evaluador_de_proyectos_path
+if !@person.blank?
+  url_project_reviewers  = project_reviewers_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Evaluador de Proyectos', project_reviewers_path(@person.shortname) %></li>
+        <li><%= link_to 'Evaluador de Proyectos', url_project_reviewers %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @project_reviewer.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_project_reviewer_path(@person.shortname, @project_reviewer), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_project_reviewer_path(current_user.shortname, @project_reviewer), class: 'button is-link' %>
     <% end %>
-    <%= link_to project_reviewers_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_project_reviewers, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>

@@ -1,0 +1,57 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Actividades Relevantes', actividades_relevantes_path %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': actividades_relevantes_path %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<% if @relevant_activities.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @relevant_activities.each do |relevant_activity| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= custom_icon('warning', 'fa-star', '&nbsp;') %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= link_to relevant_activity.name, ver_actividad_relevante_path(relevant_activity) %></strong><br>
+          <%= "#{relevant_activity.start_date}, #{relevant_activity.location} (#{relevant_activity.country.name})" %>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>

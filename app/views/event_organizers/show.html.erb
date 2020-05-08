@@ -1,16 +1,22 @@
+<%
+url_event_organizers = organizador_de_eventos_path
+if !@person.blank?
+  url_event_organizers  = event_organizers_path(@person.shortname)
+end
+%>
 <div class="level product-actions">
   <div class="level-left">
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
-        <li><%= link_to 'Organizador de Eventos', event_organizers_path(@person.shortname) %></li>
+        <li><%= link_to 'Organizador de Eventos', url_event_organizers %></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
     <% if @event_organizer.can_edit(current_user.id) %>
-      <%= link_to 'Editar', edit_event_organizer_path(@person.shortname, @event_organizer), class: 'button is-link' %>
+      <%= link_to 'Editar', edit_event_organizer_path(current_user.shortname, @event_organizer), class: 'button is-link' %>
     <% end %>
-    <%= link_to event_organizers_path(@person.shortname), class: 'button' do %>
+    <%= link_to url_event_organizers, class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>
