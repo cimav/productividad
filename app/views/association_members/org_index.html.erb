@@ -34,36 +34,37 @@
   </div>
 </div>
 
-<% if @association_members.count == 0 %>
+<% if @associations.count == 0 %>
   <div class="empty-results">No existen</div>
 <% end %>
-<% @association_members.each do |association_member| %>
-<div class="product-item">
-  <article class="media">
-    <div class="media-left">
-      <%= doc_icon %>
-    </div>
-    <div class="media-content">
-      <div class="content">
-        <p>
-          <strong><%= link_to "Miembro de #{association_member.association_network.name}", ver_miembro_asociacion_path(association_member) %></strong><br>
-          <% if association_member.association_network.is_international %>
-              <span class="tag is-light">Internacional</span>
-          <% end %>
-          <%= "#{association_member.association_network.location} (#{association_member.association_network.country.name})" %>
-          <p class="product-dates">
-            <span class="tag <%= association_member.status_class %>"><%= association_member.status_text %></span>
-            <small>
-              Inicio: <%= association_member.start_date %>
-              <% if association_member.status == AssociationMember::INACTIVE %>
-                &bull; Termino: <%= association_member.end_date %>
-              <% end %>
-            </small>
-          </p>
-        </p>
-      </div>
-    </div>
-  </article>
-</div>
+<% @associations.each do |association| %>
+  <% if association.association_members.count > 0 %>
+    <h2><%= association.name %></h2>
+    <p>
+    <% if association.is_international %>
+      <span class="tag is-light">Internacional</span>
+    <% end %>
+    <%= "#{association.location} (#{association.country.name})" %>
+    </p>
+    <table class="table is-fullwidth">
+    <tr><th colspan="2">Miembro</th><th>Fechas</th><th>Estado</th></tr>
+    <% association.association_members.each do |m| %>
+    <tr>
+      <td style="width: 60px;"><img class="is-rounded leader-img" src="<%= m.person.display_url rescue '' %>"></td>
+      <td><%= m.person.full_name %></td>
+      <td>
+        <% if m.status == AssociationMember::INACTIVE %>
+          Del <%= m.start_date %> al <%= m.end_date %>
+        <% else %>
+          <%= m.start_date %>
+        <% end %>
+      </td>
+      <td><span class="tag <%= m.status_class %>"><%= m.status_text %></span></td>
+    </tr>
+    <% end %>
+    </table>
+  <% end %>
 <% end %>
+ 
+
 </div>

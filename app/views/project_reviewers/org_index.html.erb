@@ -41,7 +41,7 @@
 <div class="product-item">
   <article class="media">
     <div class="media-left">
-      <%= doc_icon %>
+      <%= custom_icon('success', 'fa-file') %>
     </div>
     <div class="media-content">
       <div class="content">
@@ -49,6 +49,10 @@
           <strong><%= link_to project_reviewer.name, ver_evaluador_de_proyecto_path(project_reviewer) %></strong><br>
           <%= "#{project_reviewer.review_date}, #{project_reviewer.announcement} (#{project_reviewer.country.name})" %>
         </p>
+        <div class="tags  has-addons">
+            <span class="tag is-medium"><img class="is-rounded leader-img" src="<%= project_reviewer.person.display_url rescue '' %>" title="<%= project_reviewer.person.full_name %>"> </span>
+            <span class="tag is-medium"><%= project_reviewer.person.full_name %></span>
+          </div>
       </div>
     </div>
   </article>

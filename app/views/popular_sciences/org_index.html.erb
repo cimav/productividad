@@ -49,7 +49,12 @@
         <p>
           <strong><%= link_to popular_science.name, ver_difusion_y_divulgacion_path(popular_science) %></strong><br>
           <span class="tag is-light"><%= popular_science.activity_type_text %></span>
-          <%= "#{popular_science.start_date}, #{popular_science.location} (#{popular_science.country.name})" %>
+          <%= "#{popular_science.start_date}, #{popular_science.location} (#{popular_science.country.name})" %><br>
+          <div class="tags  has-addons">
+            <span class="tag is-medium"><img class="is-rounded leader-img" src="<%= popular_science.person.display_url rescue '' %>" title="<%= popular_science.person.full_name %>"> </span>
+            <span class="tag is-medium"><%= popular_science.person.full_name %></span>
+          </div>
+          
         </p>
       </div>
     </div>

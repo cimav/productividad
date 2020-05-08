@@ -49,6 +49,10 @@
           <strong><%= link_to relevant_activity.name, ver_actividad_relevante_path(relevant_activity) %></strong><br>
           <%= "#{relevant_activity.start_date}, #{relevant_activity.location} (#{relevant_activity.country.name})" %>
         </p>
+        <div class="tags  has-addons">
+            <span class="tag is-medium"><img class="is-rounded leader-img" src="<%= relevant_activity.person.display_url rescue '' %>" title="<%= relevant_activity.person.full_name %>"> </span>
+            <span class="tag is-medium"><%= relevant_activity.person.full_name %></span>
+          </div>
       </div>
     </div>
   </article>

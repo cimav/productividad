@@ -54,6 +54,10 @@
               Fecha de presentación: <%= invited_conference.conference_date %>
             </small>
           </p>
+          <div class="tags  has-addons">
+            <span class="tag is-medium"><img class="is-rounded leader-img" src="<%= invited_conference.person.display_url rescue '' %>" title="<%= invited_conference.person.full_name %>"> </span>
+            <span class="tag is-medium"><%= invited_conference.person.full_name %></span>
+          </div>
         </p>
       </div>
     </div>

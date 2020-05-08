@@ -59,7 +59,7 @@
 <div class="product-item">
   <article class="media">
     <div class="media-left">
-      <%= doc_icon %>
+      <%= custom_icon('primary', 'fa-certificate', patent.status_text ) %>
     </div>
     <div class="media-content">
       <div class="content">
@@ -68,7 +68,6 @@
           <br>
           <small><%= patent.authors %></small>
           <p class="product-dates">
-            <span class="tag <%= patent.status_class %>"><%= patent.status_text %></span>
             <small>
               Fecha de registro: <%= patent.register_date %>
             </small>

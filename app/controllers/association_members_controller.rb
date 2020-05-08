@@ -37,24 +37,24 @@ class AssociationMembersController < ApplicationController
 
     year = params[:year]
        
-    @all_association_members = AssociationMember.all
+    @all_associations = Association.joins(:association_members)
 
-    @association_members = @all_association_members
+    @associations = @all_associations
 
     if !year.blank?
       if year != 'todos'
-        @association_members = @association_members.where("YEAR(last_date) <= ?", year)
+        @associations = @associations.where("YEAR(last_date) <= ?", year)
       end
     else
       year = Date.today.year
-      @association_members = @association_members.where("YEAR(last_date) <= ?", year)
+      @associations = @associations.where("YEAR(last_date) <= ?", year)
     end
 
     @filter_year = year
 
-    @association_members = @association_members.order(last_date: :desc)
+    @association = @associations.order(:name, last_date: :desc)
 
-    min_date = @all_association_members.minimum(:last_date)
+    min_date = @all_associations.minimum(:last_date)
     
     @min_year = min_date.year rescue year
 

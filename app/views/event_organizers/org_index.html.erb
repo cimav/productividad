@@ -41,13 +41,17 @@
 <div class="product-item">
   <article class="media">
     <div class="media-left">
-      <%= published_icon %>
+      <%= custom_icon('success', 'fa-user', event_organizer.organizer_type_text ) %>
     </div>
     <div class="media-content">
       <div class="content">
         <p>
           <strong><%= link_to "#{event_organizer.organizer_type_text} en #{event_organizer.conference.name}", ver_organizador_path(event_organizer) %></strong>
         </p>
+        <div class="tags  has-addons">
+            <span class="tag is-medium"><img class="is-rounded leader-img" src="<%= event_organizer.person.display_url rescue '' %>" title="<%= event_organizer.person.full_name %>"> </span>
+            <span class="tag is-medium"><%= event_organizer.person.full_name %></span>
+          </div>
       </div>
     </div>
   </article>

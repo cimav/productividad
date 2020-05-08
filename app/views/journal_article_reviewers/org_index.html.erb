@@ -41,13 +41,17 @@
 <div class="product-item">
   <article class="media">
     <div class="media-left">
-      <%= doc_icon %>
+      <%= custom_icon('success', 'fa-file') %>
     </div>
     <div class="media-content">
       <div class="content">
         <p>
           <strong><%= link_to journal_article_reviewer.title, ver_evaluador_de_articulo_path(journal_article_reviewer) %></strong><br>
           <%= "#{journal_article_reviewer.review_date}, #{journal_article_reviewer.journal.name}" %>
+          <div class="tags  has-addons">
+            <span class="tag is-medium"><img class="is-rounded leader-img" src="<%= journal_article_reviewer.person.display_url rescue '' %>" title="<%= journal_article_reviewer.person.full_name %>"> </span>
+            <span class="tag is-medium"><%= journal_article_reviewer.person.full_name %></span>
+          </div>
         </p>
       </div>
     </div>
