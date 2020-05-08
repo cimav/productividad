@@ -14,9 +14,9 @@
   </div>
 </div>
 
-<h2>Personal</h2>
+<h2>Empleados</h2>
 <div class="department-people-area">
-<% @department.people.each do |p| %>
+<% @department.people.where(status: Person::STATUS_ACTIVE, person_type_id: 1).includes(:person).order(:first_name, :last_name).each do |p| %>
 <a class="dark-link" href="<%= show_profile_path(p.shortname) %>">
   <article class="media department-person">
     <figure class="media-left">
@@ -36,4 +36,33 @@
   </article>
 </a>
 <% end %>
+<div class="is-clearfix"></div>
 </div>
+
+<% catedras = @department.people.where(status: Person::STATUS_ACTIVE, person_type_id: 3).includes(:person).order(:first_name, :last_name) %>
+<% if catedras.count > 0 %>
+<h2>Catedras</h2>
+<div class="department-people-area">
+<% catedras.each do |p| %>
+<a class="dark-link" href="<%= show_profile_path(p.shortname) %>">
+  <article class="media department-person">
+    <figure class="media-left">
+      <p class="image is-64x64">
+        <img class="is-rounded" src="<%= p.display_url %>">
+      </p>
+    </figure>
+    <div class="media-content">
+      <div class="content">
+        <p>
+          <strong><%= p.full_name %></strong><br>
+          <small><%= p.email %></small><br>
+          <%= p.description %>
+        </p>
+      </div>
+    </div>
+  </article>
+</a>
+<% end %>
+<div class="is-clearfix"></div>
+</div>
+<% end %>

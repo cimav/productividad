@@ -16,42 +16,19 @@
 
 
 <div class="columns">
-  <div class="column">
+  <div class="column is-three-fifths">
 	<% if !@person.about.blank? %>
-	  <p><%= @person.about %></p>
+	  <p><%= simple_format(@person.about) %></p>
 	<% end %>
   </div>
-  <div class="column is-one-third">
+  <div class="column">
     <% if !@person.description.blank? %>
-      <%= @person.description %><br/>
+      <strong><%= @person.description %></strong><br/>
     <% end %>
-    
+    Departamento: <a href="<%= ver_departamento_path(@person.department) %>"><%= @person.department.name %></a><br/>
+    Reporta a: <a href="<%= show_profile_path(@person.person.shortname) %>"><%= @person.person.full_name %></a>    
   </div>
 </div>
-
-
-
-<% active_experiences = @person.experiences.where(status: Experience::ACTIVE) %>
-<% if active_experiences.count > 0 %>
-  <div id="experience-list">
-    <h2>Experiencia</h2>
-    <% active_experiences.each do |experience| %>
-      <div class="experience-ui-item media"> 
-        <div class="media-left">
-          <span class="icon is-large has-text-grey-lighter">
-            <i class="fas fa-building fa-3x"></i>
-           </span>
-        </div>
-        <div class="media-content">
-          <strong><%= experience.title %></strong><br>
-          <%= experience.company %><br>
-          <small><%= experience.start_date %> - <%= experience.end_date %> <span class="tag is-light"><%= experience.experience_type.name rescue '-' %></span> </small>
-          <p><%= simple_format(experience.description) %></p>
-        </div>
-      </div>
-    <% end %>
-  </div>
-<% end %>
 
 <% active_educations = @person.educations.where(status: Education::ACTIVE) %>
 <% if active_educations.count > 0 %>
@@ -113,6 +90,31 @@
     </div>
   </div>
 <% end %>
+
+<% active_experiences = @person.experiences.where(status: Experience::ACTIVE) %>
+<% if active_experiences.count > 0 %>
+  <div id="experience-list">
+    <h2>Experiencia</h2>
+    <% active_experiences.each do |experience| %>
+      <div class="experience-ui-item media"> 
+        <div class="media-left">
+          <span class="icon is-large has-text-grey-lighter">
+            <i class="fas fa-building fa-3x"></i>
+           </span>
+        </div>
+        <div class="media-content">
+          <strong><%= experience.title %></strong><br>
+          <%= experience.company %><br>
+          <small><%= experience.start_date %> - <%= experience.end_date %> <span class="tag is-light"><%= experience.experience_type.name rescue '-' %></span> </small>
+          <p><%= simple_format(experience.description) %></p>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+
+
 
 
 

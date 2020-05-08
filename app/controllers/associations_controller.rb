@@ -26,7 +26,7 @@ class AssociationsController < ApplicationController
     @association = Association.new
     @association.name = params[:name]
     @association.country_id   = params[:country_id]
-    @association.validated    = association::NOT_VALIDATED
+    @association.validated    = Association::NOT_VALIDATED
     @association.submitted_by = current_user.id
 
     if @association.save! 

@@ -4,6 +4,9 @@ class Association < ApplicationRecord
   ACTIVE    = 1
   INACTIVE  = 99
 
+  NOT_VALIDATED = 0
+  VALIDATED     = 1
+
   STATUS = {
   	ACTIVE => 'Activa',
   	INACTIVE => 'Inactiva'

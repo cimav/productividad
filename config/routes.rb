@@ -203,8 +203,8 @@ Rails.application.routes.draw do
 
   get '/asociaciones/buscar' => 'associations#search'
   get '/asociaciones/datos/:id' => 'associations#data'
-  get '/asociaciones/nueva' => 'associations#new_conference'
-  post '/asociaciones/agregar-nueva' => 'associations#add_conference'
+  get '/asociaciones/nueva' => 'associations#new_association'
+  post '/asociaciones/agregar-nueva' => 'associations#add_association'
 
 
   scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
@@ -247,6 +247,11 @@ Rails.application.routes.draw do
   get '/libros/muestra/:status/:year' => 'books#org_index'
   get '/libros/muestra/:status' => 'books#org_index'
   get '/libros/:id' => 'books#show', :as => :ver_libro
+
+  get '/trabajos' => 'books#org_index'
+  get '/trabajos/muestra/:status/:year' => 'books#org_index'
+  get '/trabajos/muestra/:status' => 'books#org_index'
+  get '/trabajos/:id' => 'books#show', :as => :ver_trabajo
 
   # -------------------------------------------------
   # Department Routes

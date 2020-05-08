@@ -47,10 +47,8 @@ class PersonTopicsController < ApplicationController
       render :json => json
     else
       flash[:error] = 'No se pudo agregar el área de interes'
-      json = {}
-      json[:flash] = flash
-      json[:errors] = @person_topic.errors
-      render :json => json, :status => :unprocessable_entity
+      render inline: 'ERROR'
+      
     end
   end
 
