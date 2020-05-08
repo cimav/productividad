@@ -75,6 +75,16 @@
               %(<%= project.source %>) 
             <% end %>
           </span>
+          <div class="project-participants-index">
+          <% project.project_participants.where('status = ?', ProjectParticipant::ACTIVE).order('participation DESC').order(:role_type).each do |participant| %>
+              <% if participant.role_type == ProjectParticipant::LEADER %>
+                <% pclass = 'leader-img' %>
+              <% else %>
+                <% pclass = 'participant-img' %>
+              <% end %>
+              <img class="is-rounded <%= pclass %>" src="<%= participant.person.display_url rescue '' %>" title="<%= participant.person.full_name %>">
+          <% end %>
+          </div>
         </p>
       </div>
     </div>
