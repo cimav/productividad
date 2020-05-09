@@ -15,12 +15,24 @@ end
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
           <% if @crud_parent_title %>
-            <li><%= link_to @parent[@crud_parent_title], polymorphic_path(@parent) %></li>
-          <% end %>
+              <li> 
+                <% if @crud_parent_title.kind_of?(Array) %>
+                  <% parent_title = @crud_parent_title.map {|f| f.is_a?(String) ? f : @parent[f] }.join('') %>
+                <% else %>
+                  <% parent_title = @parent[@crud_parent_title] %>
+                <% end %>
+                <%= link_to parent_title, polymorphic_path(@parent) %>
+              </li>
+            <% end %>
           <li><%= link_to @crud_title, url_model %></li>
           <% if @crud_item_title %>
-            <li>
-              <%= link_to @entry[@crud_item_title], url_entry %>
+            <li> 
+              <% if @crud_item_title.kind_of?(Array) %>
+                <% item_title = @crud_item_title.map {|f| f.is_a?(String) ? f : @entry[f] }.join('') %>
+              <% else %>
+                <% item_title = @entry[@crud_item_title] %>
+              <% end %>
+              <%= link_to item_title, url_entry %>
             </li>
           <% end %>
         </ul>

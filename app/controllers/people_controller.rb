@@ -4,7 +4,7 @@ class PeopleController < SimpleCrudController
     @crud_title = 'Personas'
     @crud_layout = 'config'
     @crud_item_image = :display_url
-    @crud_item_title = :first_name
+    @crud_item_title = [:first_name, ' ', :last_name]
     self.add_field :person_type_id, "Tipo", :select, {options: PersonType.order(:name).pluck(:name, :id) }
     self.add_field :first_name, "Nombre", :string
     self.add_field :last_name, "Apellidos", :string
