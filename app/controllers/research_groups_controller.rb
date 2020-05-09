@@ -10,5 +10,7 @@ class ResearchGroupsController < SimpleCrudController
     self.add_filter :select, [:department_id], {options: Department.order(:name).pluck(:name, :id) }
     self.add_filter :search, [:name], {placeholder: "Busqueda…"}
 
+    self.add_child :research_sub_group, "Subgrupos"
+
   end
 end

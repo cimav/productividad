@@ -1,9 +1,24 @@
-<div class="container product-index">
+<%
+if @parent 
+  url_model = polymorphic_path([@parent, @crud_model])
+  url_entry = polymorphic_path([@parent, @entry])
+else 
+  url_model = polymorphic_path(@crud_model)
+  url_entry = polymorphic_path(@entry)
+end 
+%>
+<div class="container product-index <%= @crud_container %>">
   <div class="level product-actions">
     <div class="level-left">
       <nav class="breadcrumb" aria-label="breadcrumbs">
         <ul>
-          <li><%= link_to @crud_title, polymorphic_path(@crud_model) %></li>
+          <% if @crud_parent_title %>
+            <li><%= link_to @parent[@crud_parent_title], polymorphic_path(@parent) %></li>
+          <% end %>
+          <li><%= link_to @crud_title, url_model %></li>
+          <% if @crud_item_title %>
+            <li><%= link_to @entry[@crud_item_title], url_entry %></li>
+          <% end %>
           <li><a>Editar</a></li>
         </ul>
       </nav>
@@ -11,7 +26,7 @@
     <div class="level-right">
       <div class="product-filters">
       </div>
-      <a href="<%= polymorphic_path(@crud_model) %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span></a>
+      <a href="<%= url_model %>" class="button"><span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span></a>
     </div>
   </div>
   <%= render 'simple_crud/form' %>

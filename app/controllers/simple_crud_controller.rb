@@ -1,15 +1,21 @@
 class SimpleCrudController < ApplicationController
-
+  before_action :set_parent 
   before_action :set_entry, only: [:show, :edit, :update, :destroy]
 
   def initialize
   	@crud_title = 'Sin Título'
+    @crud_container = ''
+    @crud_item_title = nil
+    @crud_parent = nil
+    @crud_item_image = nil
   	@crud_model ||= controller_path.classify.constantize
   	@crud_limit = 15
   	@crud_layout = 'application'
   	@crud_fields = []
     @crud_filters = []
+    @crud_children = []
   	self.add_field(:id, "ID", :integer, {hide: true})
+
   end
 
   def add_field (field, text, type, params = {})
@@ -19,10 +25,15 @@ class SimpleCrudController < ApplicationController
   def add_filter(type, fields, params = {})
     @crud_filters << {type: type, fields: fields, params: params}
   end
+
+  def add_child(child, text)
+    @crud_children << {child: child, text: text}
+  end 
   	
   def crud_attrs 
   	c = []
   	@crud_fields.each do |f| 
+      next if f[:type] == :show
   	  c << :"#{f[:field]}"
   	end
   	c 
@@ -99,23 +110,47 @@ class SimpleCrudController < ApplicationController
   end
 
   def create
-  	@entry = @crud_model.new(entry_params)
+    if @parent
+      @entry = @crud_model.new(entry_params)
+      @entry[:"#{@crud_parent}_id"] = @parent.id
+    else  
+  	  @entry = @crud_model.new(entry_params)
+    end 
   	if @entry.save 
-  	  redirect_to @entry
+      if @parent
+  	    redirect_to [@parent, @entry], notice: "Creado"
+      else 
+        redirect_to @entry, notice: "Creado"
+      end
   	end
   end
 
   def update
   	@entry.update(entry_params)
-  	redirect_to @entry
+    if @parent
+  	  redirect_to [@parent, @entry], notice: "Actualizado"
+    else 
+      redirect_to @entry, notice: "Actualizado"
+    end
   end
 
   def destroy
   	@entry.destroy
-  	redirect_to polymorphic_path(@crud_model)
+    if @parent
+      redirect_to polymorphic_path([@parent, @crud_model]), notice: "Borrado"
+    else
+  	  redirect_to polymorphic_path(@crud_model), notice: "Borrado"
+    end
   end
 
   private 
+  def set_parent
+    if @crud_parent
+      parent_model ||= "#{@crud_parent}".classify.constantize 
+      parent_id ||= :"#{@crud_parent}_id"
+      @parent = parent_model.find(params[parent_id])
+    end
+  end
   def set_entry
   	@entry = @crud_model.find(params[:id])
   end

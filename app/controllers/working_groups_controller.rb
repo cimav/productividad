@@ -20,5 +20,8 @@ class WorkingGroupsController < SimpleCrudController
 
     self.add_filter :select, [:organization_id], {options: Organization.order(:name).pluck(:name, :id) }
     self.add_filter :search, [:name], {placeholder: "Busqueda…"}
+
+    self.add_child :working_group_role, "Roles"
+
   end
 end

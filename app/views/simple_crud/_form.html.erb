@@ -1,21 +1,35 @@
-<%= form_with(model: @entry, local: true) do |form| %>
+<%
+if @parent 
+  form_model = [@parent, @entry]
+else 
+  form_model = @entry
+end 
+%>
+<%= form_with(model: form_model, local: true) do |form| %>
   <% @crud_fields.each do |f| %>
     <% next if f[:params][:hide] %>
     <div class="field">
-      <%= form.label f[:field], f[:text], class:'label' %>
-      <div class="control">
-        <% if f[:type] == :string %>
-          <%= form.text_field :"#{f[:field]}", class:'input' %>
-        <% end %>
-        <% if f[:type] == :text %>
-          <%= form.text_area :"#{f[:field]}", class:'textarea' %>
-        <% end %>
-        <% if f[:type] == :select %>
-          <div class="select">
-            <%= form.select :"#{f[:field]}", options_for_select(f[:params][:options], @entry[f[:field]]) %>
-          </div>
-        <% end %>
-      </div>
+      <% if f[:type] == :checkbox %>
+          <table><tr><td><%= form.check_box :"#{f[:field]}" %></td><td><%= form.label f[:field], f[:text], class:'label' %></td></tr></table>
+      <% else %>
+        <%= form.label f[:field], f[:text], class:'label' %>
+        <div class="control">
+          <% if f[:type] == :show %>
+            <%= eval "@entry.#{f[:field]}" %>
+          <% end %>
+          <% if f[:type] == :string %>
+            <%= form.text_field :"#{f[:field]}", class:'input' %>
+          <% end %>
+          <% if f[:type] == :text %>
+            <%= form.text_area :"#{f[:field]}", class:'textarea' %>
+          <% end %>
+          <% if f[:type] == :select %>
+            <div class="select">
+              <%= form.select :"#{f[:field]}", options_for_select(f[:params][:options], @entry[f[:field]]) %>
+            </div>
+          <% end %>
+        </div>
+      <% end %> 
     </div>
   <% end %>
   <div class="actions is-pulled-right">

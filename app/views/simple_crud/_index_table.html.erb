@@ -35,6 +35,9 @@ last_page = @count_all /  @crud_limit + 1
 </div>
 <table class="crud-table table is-fullwidth is-hoverable">
   <tr>
+    <% if @crud_item_image %>
+      <th class="crud-image"></th>
+    <% end %>
   	<% options_hash = {} %>
     <% @crud_fields.each do |f| %>
       <% next if f[:params][:hide] || f[:params][:hide_index] %>
@@ -52,20 +55,37 @@ last_page = @count_all /  @crud_limit + 1
   </tr>  
   <% @entries.each do |entry| %>
     <tr>
+      <% if @crud_item_image %>
+        <td class="crud-image">
+          <figure class="image is-24x24"><img class="is-rounded" src="<%= eval "entry.#{@crud_item_image}" %>"></figure>
+        </td>
+      <% end %>
+      <%
+        if @parent 
+          url_entry = polymorphic_path([@parent, entry])
+          url_edit = edit_polymorphic_path([@parent, entry])
+        else 
+          url_entry = polymorphic_path(entry)
+          url_edit = edit_polymorphic_path(entry)
+        end 
+      %>
       <% @crud_fields.each do |f| %>
         <% next if f[:params][:hide] || f[:params][:hide_index] %>
-        <td class="crud-td" onclick="window.location = '<%= polymorphic_path(entry) %>'">
+        <td class="crud-td" onclick="window.location = '<%= url_entry %>'">
           <% if f[:type] == :select %>
             <%= options_hash[f[:field]][entry[f[:field]]] %>
-            <%=  %>
+          <% elsif f[:type] == :checkbox %>
+            <%= entry[f[:field]] ? 'SI' : 'NO' %>
+          <% elsif f[:type] == :show %>
+            <%= eval "entry.#{f[:field]}" %>
           <% else %>
             <%= entry[f[:field]] %>
           <% end %>
         </td>
       <% end %>
       <td class="crud-actions">
-        <a href="<%= edit_polymorphic_path(entry) %>"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
-        <%= link_to polymorphic_path(entry), data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
+        <a href="<%= url_edit %>"><span class="icon is-small"><i class="fas fa-edit"></i></span></a>
+        <%= link_to url_entry, data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
           <span class="icon is-small"><i class="fas fa-trash" aria-hidden="true"></i></span>
         <% end %>
       </td>

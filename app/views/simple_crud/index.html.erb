@@ -1,14 +1,26 @@
 <% if params[:search] == 'true' %>
   <%= render 'simple_crud/index_table' %>
 <% else %>
-  <input type="hidden" id="crud-index-url" value="<%= polymorphic_path(@crud_model) %>">
+  <%
+  if @parent 
+    url_index = polymorphic_path([@parent, @crud_model])
+    url_new = new_polymorphic_path([@parent, @crud_model.new])
+  else 
+    url_index = polymorphic_path(@crud_model) 
+    url_new = new_polymorphic_path(@crud_model.new)
+  end 
+  %>
+  <input type="hidden" id="crud-index-url" value="<%= url_index %>">
   <input type="hidden" id="crud-index-page" value="<%= @page %>">
-  <div class="container product-index crud-index">
+  <div class="container product-index crud-index <%= @crud_container %>">
     <div class="level product-actions">
       <div class="level-left">
         <nav class="breadcrumb" aria-label="breadcrumbs">
           <ul>
-            <li><%= link_to @crud_title, polymorphic_path(@crud_model) %></li>
+            <% if @crud_parent_title %>
+              <li><%= link_to @parent[@crud_parent_title], polymorphic_path(@parent) %></li>
+            <% end %>
+            <li><%= link_to @crud_title, url_index %></li>
           </ul>
         </nav>
       </div>
@@ -32,7 +44,7 @@
 
           <%  end %>
         </div>
-        <a href="<%= new_polymorphic_path(@crud_model.new) %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span></a>
+        <a href="<%=  url_new %>" class="button is-success"><span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span></a>
       </div>
     </div>
 
@@ -41,6 +53,7 @@
     </div>
   </div>
 <% end %>
+</div>
 
 
 

@@ -8,8 +8,9 @@ Rails.application.routes.draw do
       resources :people, :path => 'personas'
       resources :person_types, :path => 'tipos-de-personas'
       resources :departments, :path => 'departamentos'
-      resources :research_groups, :path => 'grupos-de-investigacion'
-      resources :research_sub_groups, :path => 'subgrupos-de-investigacion'
+      resources :research_groups, :path => 'grupos-de-investigacion' do
+        resources :research_sub_groups, :path => 'subgrupos'
+      end
       resources :organizations, :path => 'organizaciones'
       resources :cities, :path => 'ciudades'
       resources :countries, :path => 'paises'
@@ -17,11 +18,9 @@ Rails.application.routes.draw do
       resources :working_groups, :path => 'grupos-de-trabajo' do
         resources :working_group_members, :path => 'participantes'
         get 'participantes/muestra/:year' => 'working_group_members#index'
+        resources :working_group_roles, :path => 'roles'
       end
-      resources :working_group_roles, :path => 'roles-de-grupos-de-trabajo'
-      
     end
-
   end 
 
   # -------------------------------------------------
