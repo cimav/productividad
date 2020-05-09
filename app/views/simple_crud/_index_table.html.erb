@@ -48,8 +48,17 @@ last_page = @count_all /  @crud_limit + 1
             options_hash[f[:field]][o[1]] = o[0]
           end
         end
+
+        sorted = ''
+        if params[:order] == f[:field].to_s
+          if params[:sorted] =='ASC'
+            sorted = '▼ '
+          else
+            sorted = '▲ '
+          end
+        end
       %>
-      <th><%= f[:text] %></th>
+      <th class="crud-th" id="crud-th-<%= f[:field] %>" data-label="<%= f[:text] %>" data-field="<%= f[:field] %>"><%= sorted %><%= f[:text] %></th>
     <% end %>
     <th class="crud-actions"></th>
   </tr>  

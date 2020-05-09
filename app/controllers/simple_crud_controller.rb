@@ -80,6 +80,10 @@ class SimpleCrudController < ApplicationController
           @entries = @entries.where(where_text, value: value)
         end
 
+        if params[:order] != ''
+          @entries = @entries.order("#{params[:order]} #{params[:sorted]}")
+        end
+
       end 
       @count_all = @entries.count(:all)
       @entries = @entries.limit(@crud_limit).offset( (@page - 1) * @crud_limit )
