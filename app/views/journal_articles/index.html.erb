@@ -48,11 +48,14 @@
     <% end %>
   </div>
 </div>
-
 <% if @journal_articles.count == 0 %>
   <div class="empty-results">No existen</div>
 <% end %>
+<div class="columns">
+<div class="column is-two-thirds">
+<% art_ids = [] %>
 <% @journal_articles.each do |journal_article| %>
+<% art_ids << journal_article.id %>
 <div class="product-item">
   <article class="media">
     <div class="media-left">
@@ -93,4 +96,42 @@
   </article>
 </div>
 <% end %>
+</div>
+<div class="column is-one-third journal-articles-extra">
+  <%
+
+  cites = ProductCite.where(attachable_type: 'JournalArticle', attachable_id: @all_journal_articles)
+  coauthors = ProductParticipant.where(attachable_type: 'JournalArticle', attachable_id: art_ids).group(:person_id)
+  if  @filter_year != 'todos'
+    cites = cites.where("YEAR(published_date) = ?", @filter_year)
+  end
+  cites = cites.group('YEAR(published_date)').count
+  %>
+
+  <% if cites.count > 0 %>
+    <h2>Citas</h2>
+    <% if @filter_year == 'todos' %>
+      <%= bar_chart cites %>
+    <% else %>
+      <div class="product-cites-count"><%= cites[@filter_year.to_i] %></div>
+      <div class="product-cites-year"><%= @filter_year %></div>
+    <% end %>
+  <% end %>
+  <h2>Coautores</h2>
+  <table>
+  <% coauthors.each do |co| %>
+  
+    <% if co.person %>
+      <tr><td><figure class="image is-32x32"><img class="is-rounded" src="<%= co.person.display_url rescue '' %>"></figure></td>
+      <td><span><%= link_to co.person.full_name, journal_articles_path(co.person.shortname)  %></span><small><%= co.person.department.name %></small></td></tr>
+    <% else %>
+      <tr><td><figure class="image is-32x32"><%= image_tag "unknown.svg", class: 'is-rounded' %></figure></td>
+      <td><span><%= co.author_is %></span></td></tr>
+    <% end %>          
+  <% end %>
+  </table>
+</div>
+
+
+
 </div>

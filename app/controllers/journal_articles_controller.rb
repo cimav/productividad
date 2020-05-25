@@ -28,10 +28,10 @@ class JournalArticlesController < ApplicationController
 
 
     if params[:status] == 'todos'
-      if !year.blank?
+      if !year.blank? && year != 'todos'
         @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
       end
-    elsif !status.blank? && !year.blank?
+    elsif !status.blank? && !year.blank? && year != 'todos'
       @journal_articles = @journal_articles.where("journal_articles.status = ? AND YEAR(last_date) = ?", status, year)
     elsif !status.blank?
       @journal_articles = @journal_articles.where("journal_articles.status = ?", status)
@@ -43,19 +43,14 @@ class JournalArticlesController < ApplicationController
     @filter_year = year
 
     @journal_articles = @journal_articles.order(last_date: :desc)
-
-    min_date = @all_journal_articles.minimum(:last_date)
-    
     @min_year = min_date.year rescue year
-
     render :layout => 'profile'
   end
 
   def org_index
-
     year = params[:year]
- 
     @filter_status = params[:status] 
+
     case @filter_status
       when "enviados"
         status = JournalArticle::SENT
@@ -68,18 +63,15 @@ class JournalArticlesController < ApplicationController
       else
         @filter_status = 'todos'
     end
-       
-    #@all_journal_articles = JournalArticle.left_outer_joins(:product_participants).where("(product_participants.person_id=? AND product_participants.status=?) OR (journal_articles.person_id = ?)", @person.id, ProductParticipant::ACTIVE, @person.id).group('journal_articles.id') 
+      
     @all_journal_articles = JournalArticle.all
-
     @journal_articles = @all_journal_articles
 
-
     if params[:status] == 'todos'
-      if !year.blank?
+      if !year.blank? && year != 'todos'
         @journal_articles = @journal_articles.where("YEAR(last_date) = ?", year)
       end
-    elsif !status.blank? && !year.blank?
+    elsif !status.blank? && !year.blank? && year != 'todos'
       @journal_articles = @journal_articles.where("journal_articles.status = ? AND YEAR(last_date) = ?", status, year)
     elsif !status.blank?
       @journal_articles = @journal_articles.where("journal_articles.status = ?", status)
@@ -89,11 +81,8 @@ class JournalArticlesController < ApplicationController
     end
 
     @filter_year = year
-
     @journal_articles = @journal_articles.order(last_date: :desc)
-
     min_date = @all_journal_articles.minimum(:last_date)
-    
     @min_year = min_date.year rescue year
 
     render :layout => 'org'

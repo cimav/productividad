@@ -21,7 +21,12 @@
   <article class="media department-person">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img class="is-rounded" src="<%= p.display_url %>">
+        <% if p.id == @department.person_id %>
+          <% pclass = 'leader-img' %>
+        <% else %>
+          <% pclass = 'participant-img' %>
+        <% end %>
+        <img class="is-rounded <%= pclass %>" src="<%= p.display_url %>">
       </p>
     </figure>
     <div class="media-content">

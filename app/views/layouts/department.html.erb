@@ -23,7 +23,7 @@
       <div class="column is-one-fifth profile-sidebar">
         <div class="profile-header">
           <figure class="image is-48x48 profile-img"><%= image_tag "org_logo.png" %></figure>
-          <a href="/" class="department-sidebar-title"><%= @department.name %></a>
+          <a href="<%= ver_departamento_path(@department) %>" class="department-sidebar-title"><%= @department.name %></a>
           <div class="is-clearfix"></div>
         </div>
         <%= render 'department_menu', department: @department %>
