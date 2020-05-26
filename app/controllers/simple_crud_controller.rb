@@ -40,8 +40,12 @@ class SimpleCrudController < ApplicationController
   end
 
   def index
-    @entries = @crud_model.select(crud_attrs).all
-    
+    if @parent
+      @entries = eval("@parent.#{@crud_model.to_s.pluralize.underscore}.select(crud_attrs).all")
+    else  
+      @entries = @crud_model.select(crud_attrs).all
+    end
+
     if !params[:page].blank?
       @page = params[:page].to_i
     else 
