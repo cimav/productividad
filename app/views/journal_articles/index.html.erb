@@ -120,10 +120,10 @@
   <h2>Coautores</h2>
   <table>
   <% coauthors.each do |co| %>
-  
+    <% next if co.person_id == @person.id %>
     <% if co.person %>
       <tr><td><figure class="image is-32x32"><img class="is-rounded" src="<%= co.person.display_url rescue '' %>"></figure></td>
-      <td><span><%= link_to co.person.full_name, journal_articles_path(co.person.shortname)  %></span><small><%= co.person.department.name %></small></td></tr>
+      <td><span><%= link_to co.person.full_name, journal_articles_path(co.person.shortname)  %></span><small><%= co.person.department.name rescue '--' %></small></td></tr>
     <% else %>
       <tr><td><figure class="image is-32x32"><%= image_tag "unknown.svg", class: 'is-rounded' %></figure></td>
       <td><span><%= co.author_is %></span></td></tr>
