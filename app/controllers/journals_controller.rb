@@ -5,14 +5,18 @@ class JournalsController < SimpleCrudController
     @crud_container = 'crud-container'
     @crud_item_title = :name 
     self.add_field :name, "Nombre", :string
-    self.add_field :website, "Sitio Web", :string
+    self.add_field :website, "Sitio Web", :string, { hide_index: true }
     self.add_field :country_id, "País", :select, { options: Country.order(:name).pluck(:name, :id)}
     self.add_field :issn, "ISSN", :string
     self.add_field :e_issn, "E-ISSN", :string
+    self.add_field :publisher, "Editor", :string
+    self.add_field :publisher_address, "Dirección", :text, { hide_index: true }
     self.add_field :impact_factor_with_year, "Factor de Impacto", :show
     self.add_field :is_refereed, "Arbitrada", :checkbox
     self.add_field :is_international, "Internacional", :checkbox
     self.add_field :is_indexed, "Indizada", :checkbox
+    self.add_field :is_open_access, "Indizada", :checkbox
+    
 
     validated_options = []
     validated_options << ["Validada", Journal::VALIDATED]
@@ -22,6 +26,8 @@ class JournalsController < SimpleCrudController
     self.add_filter :search, [:name], {placeholder: "Busqueda…"}
 
     self.add_child :journal_impact_factor, "Factores de Impacto"
+    self.add_child :journal_journal_categories, "Categorías"
+
   end
 
   def search 

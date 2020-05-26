@@ -1,6 +1,7 @@
 class Journal < ApplicationRecord
   belongs_to :country
   has_many   :journal_impact_factors
+  has_many   :journal_journal_categories
   has_many   :journal_indices, :dependent => :delete_all
 
 

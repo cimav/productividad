@@ -1,0 +1,2 @@
+class JournalCategory < ApplicationRecord
+end

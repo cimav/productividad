@@ -10,7 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_08_200555) do
+ActiveRecord::Schema.define(version: 2020_05_26_210707) do
+
+  create_table "00_integra_revistas", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "integra_nombre"
+    t.string "regular_nombre"
+  end
+
+  create_table "00_jcr_2019", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "ranking"
+    t.text "journal"
+    t.text "vacio"
+    t.text "cites"
+    t.text "impact_factor"
+    t.text "eigen_factor"
+  end
+
+  create_table "00_numbers", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "n"
+  end
+
+  create_table "00_open_journals", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "name"
+    t.text "url"
+    t.text "alternative_name"
+    t.text "issn"
+    t.text "eissn"
+    t.text "publisher"
+    t.text "country"
+    t.text "keywords"
+    t.text "language"
+    t.text "subject"
+  end
+
+  create_table "00_wos_categories", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "cat", size: :long
+  end
+
+  create_table "00_wos_journals", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.text "title"
+    t.text "issn"
+    t.text "eissn"
+    t.text "publisher"
+    t.text "address"
+    t.text "lang"
+    t.text "categories"
+  end
 
   create_table "acknowledgments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "attachable_id"
@@ -64,6 +109,18 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "changed_values"
     t.integer "person_id"
+  end
+
+  create_table "announcements", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "person_id"
+    t.string "name"
+    t.date "end_date"
+    t.string "ammount"
+    t.string "url"
+    t.integer "status"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_announcements_on_person_id"
   end
 
   create_table "association_members", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -200,6 +257,9 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "english_name"
+    t.string "code3"
+    t.string "phone_code"
   end
 
   create_table "degrees", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -347,7 +407,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.date "accepted_date"
     t.date "published_date"
     t.bigint "journal_id", null: false
-    t.string "authors"
+    t.text "authors"
     t.string "volume"
     t.string "issue"
     t.string "pages"
@@ -359,8 +419,15 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.datetime "updated_at", precision: 6, null: false
     t.date "last_date"
     t.date "rejected_date"
+    t.text "notes"
     t.index ["journal_id"], name: "index_journal_articles_on_journal_id"
     t.index ["person_id"], name: "index_journal_articles_on_person_id"
+  end
+
+  create_table "journal_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "journal_impact_factors", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -369,6 +436,7 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.string "impact_factor"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "eigen_factor"
     t.index ["journal_id"], name: "index_journal_impact_factors_on_journal_id"
   end
 
@@ -379,6 +447,15 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["indexer_id"], name: "index_journal_indices_on_indexer_id"
     t.index ["journal_id"], name: "index_journal_indices_on_journal_id"
+  end
+
+  create_table "journal_journal_categories", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "journal_id"
+    t.bigint "journal_category_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["journal_category_id"], name: "index_journal_journal_categories_on_journal_category_id"
+    t.index ["journal_id"], name: "index_journal_journal_categories_on_journal_id"
   end
 
   create_table "journals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -394,6 +471,11 @@ ActiveRecord::Schema.define(version: 2020_05_08_200555) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "submitted_by"
     t.integer "validated"
+    t.text "publisher"
+    t.text "publisher_address"
+    t.text "language"
+    t.text "wos_categories"
+    t.boolean "is_open_access"
     t.index ["country_id"], name: "index_journals_on_country_id"
   end
 

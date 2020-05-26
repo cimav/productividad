@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   scope 'configuracion' do
     scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
       resources :indexers, :path => 'indices'
+      resources :journal_categories, :path => 'categorias-de-revistas'
       resources :people, :path => 'personas'
       resources :person_types, :path => 'tipos-de-personas'
       resources :departments, :path => 'departamentos'
@@ -212,6 +213,7 @@ Rails.application.routes.draw do
     resources :journals, :path => 'revistas' do
       scope(:path_names => { :new => "nuevo", :edit => "editar" }) do
         resources :journal_impact_factors, :path => 'factor-de-impacto'
+        resources :journal_journal_categories, :path => 'categorias'
       end
     end
      
