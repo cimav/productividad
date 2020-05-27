@@ -14,6 +14,10 @@
   </div>
 </div>
 
+<div class="columns">
+<div class="column">
+
+
 <h2>Empleados</h2>
 <div class="department-people-area">
 <% @department.people.where(status: Person::STATUS_ACTIVE, person_type_id: 1).includes(:person).order(:first_name, :last_name).each do |p| %>
@@ -71,3 +75,30 @@
 <div class="is-clearfix"></div>
 </div>
 <% end %>
+
+</div>
+<div class="column is-one-quarter">
+  <% root = false %>
+  <% parents = [] %>
+  <% parent =  @department.department_id %>
+  <% p = @department %>
+  <% while parent != p.id %> 
+    <% p = p.department %>
+    <% parents.prepend(p) %>
+    <% parent =  p.department_id %>
+  <% end %>
+  <% parents.each do |p| %>
+    <a href="<%= ver_departamento_path(p) %>" class="button is-small is-rounded is-fullwidth"><%= p.name %></a>
+    <div class="has-text-centered"><span class="icon"><i class="fas fa-arrow-down"></i></span></div>
+  <% end %>
+  <a href="<%= ver_departamento_path(@department) %>" class="button is-small is-rounded is-success is-fullwidth"><%= @department.name %></a>
+  <% children = Department.where(department_id: @department.id).order(:name) %>
+  <% if children.count > 0 %>
+    <div class="has-text-centered"><span class="icon"><i class="fas fa-angle-double-down"></i></span></div>
+    <% children.each do |d| %>
+      <% next if d.id == @department.id %>
+      <a href="<%= ver_departamento_path(d) %>" class="button is-small is-rounded is-fullwidth"><%= d.name %></a>
+      <div style="padding: 0.5em;"></div>
+    <% end %>
+  <% end %>
+</div>
