@@ -1,0 +1,5 @@
+<%
+color = "#{prospect.status_class.to_s}"
+color.sub! 'is-', ''
+%>
+<%= custom_icon(color, prospect.status_icon, prospect.status_text) %>

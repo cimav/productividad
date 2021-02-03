@@ -1,0 +1,38 @@
+<table class="table prospect-department-table is-fullwidth is-striped is-bordered">
+  <tr>
+  	<th class="department-cell">Jefe de Departamento</th>
+  	<th>¿Quién?</th>
+  	<th>Cualidad</th>
+  </tr>
+  <% Department.where(is_scientific: true).order(:name).each do |department| %>
+    <tr class="department-row">
+    	<% suggested = prospect.prospect_participants.where(suggested_by: department.person_id) 
+    	   if suggested.count > 1 
+    	   	  rowspan = suggested.count 
+    	   else 
+              rowspan = 1
+           end
+           is_first = true
+        %>
+    	<td rowspan="<%= rowspan %>" class="department-cell">
+            <figure class="image is-32x32"><img class="is-rounded" src="<%= department.person.display_url rescue '' %>" title="<%= department.person.full_name %>"></figure>
+    		<strong><%= department.person.full_name %></strong><br>
+    		<small><%= department.name %></small>
+    	</td>
+        <% if suggested.count > 0 %>
+          <% suggested.each do |sug| %>
+            <% if !is_first %>
+              <tr>
+            <% else 
+               is_first = false
+             end %>
+             <td><figure class="image is-32x32"><img class="is-rounded" src="<%= sug.person.display_url rescue '' %>" title="<%= sug.person.full_name %>"></figure><%= sug.person.full_name %><br><small><%= sug.person.department.name %></small></td>
+             <td><%= sug.suggester_comments %></td>
+             </tr>
+    	  <% end %>
+    	
+    	<% else %>
+    		  <td colspan="2" class="no-suggestions">Ninguna sugerencia</td></tr>
+    	<% end %>
+  <% end %>
+</table>

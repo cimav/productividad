@@ -110,6 +110,10 @@ Rails.application.routes.draw do
         resources :popular_sciences, :path => 'difusion-y-divulgacion'
         resources :relevant_activities, :path => 'actividades-relevantes'
 
+        resources :prospects, :path => 'prospectos' do 
+          resources :prospect_participants, :path => 'participantes'
+        end
+
         get 'editar' => 'profiles#edit', as: 'profile_edit'
         patch 'guardar' => 'profiles#edit_save', as: 'profile_edit_save'
 

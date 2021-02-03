@@ -1,0 +1,117 @@
+<%
+url_prospects = prospects_path
+url_prospect =  prospect_path(@prospect)
+if !@department.blank?
+  url_prospects = ver_departamento_prospectos_path(@department)
+  url_prospect = ver_departamento_prospecto_path(@department, @prospect)
+elsif !@person.blank?
+  url_prospects = prospects_path(@person.shortname)
+  url_prospect = prospect_path(@person.shortname, @prospect)
+end
+%>
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Prospectos', url_prospects %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <% if is_prospect_admin? %>
+      <%= link_to 'Editar', edit_prospect_path(current_user.shortname, @prospect), class: 'button' %>
+    <% end %>
+    <%= link_to url_prospects, class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+  <h1 class="prospect-title"><%= link_to @prospect.subject, url_prospect %></h1>
+  <div class="columns is-mobile is-centered">
+    <div class="column is-narrow">
+      <span class="status-tag">
+        <span class="tags has-addons">
+          <span class="tag icon <%= @prospect.status_text_class %>"><i class="fas <%= @prospect.status_icon %>" aria-hidden="true"></i></span>
+          <span class="tag <%= @prospect.status_class %>"><%= @prospect.status_text %></span>
+        </span>
+      </span>
+    </div>
+  </div>
+  
+
+  <div class="columns">
+  <div class="column">
+
+  	<div class="info-section">
+  	  <div class="info-title">Información General</div>
+  	  <div class="info-content">
+  	  	<strong>Organización/Empresa:</strong> <%= @prospect.organization %><br>
+  	  	<strong>Origen del contacto:</strong> <%= @prospect.source %><br>
+  	  	<strong>Fecha de contacto:</strong> <%= I18n.l(@prospect.contact_date, format: :long).to_s.capitalize rescue '--' %><br>
+  	  	<strong>Contacto:</strong> <%= @prospect.contact %><span class="tag"><%= @prospect.decision_type_text %></span><br>
+  	  	<strong>Teléfono:</strong> <%= @prospect.phone rescue '--' %> &bull; <strong>Correo Electrónico:</strong> <%= @prospect.email rescue '--' %><br>
+  	  	<strong>Dirección:</strong> <%= @prospect.address %>. <% @prospect.country.name.upcase rescue '--' %><br>
+      </div>
+    </div>
+
+  	<div class="info-section">
+  	  <div class="info-title">Necesidad a resolver:</div>
+  	  <div class="info-content">
+        <%= @prospect.needs %>
+      </div>
+    </div>
+
+    <div class="info-section">
+  	  <div class="info-title">Propuesta de participantes:</div>
+  	  <div class="info-content">
+
+
+        <% if is_scientific_department_admin? %>
+          <% @prospect_participant = @prospect.prospect_participants.new %>
+          <%= form_for @prospect_participant, :url => prospect_prospect_participants_path(current_user.shortname, @prospect), remote: true do |form| %>
+          <div class="prospect-proposal">
+          <table class="table is-fullwidth">
+            <tr>
+              <th style="width: 9.5em;">Propongo como</th>
+              <td style="width: 8em;">
+                <% options = ProspectParticipant::PARTICIPANT_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
+                <span class="control"><span class="select"><%= form.select :participant_type, options, {} %></span></span>
+              </td>
+              <th style="width: 1em;">a</th>
+              <td style="width: 8em;">
+              <% 
+                employee_type = 1
+                people = Person.where(person_type_id: employee_type, status: Person::STATUS_ACTIVE).order(:first_name, :last_name).pluck(:id, :first_name, :last_name)
+                person_type = PersonType.find(employee_type)
+                person_options = {}
+                people.each do |p|
+                  person_options["#{p[1]} #{p[2]}"] = p[0]
+                end
+              %>
+              <span class="control"><span class="select"><%= form.select :person_id, options_for_select(person_options),prompt: "-- Seleccionar #{person_type.name} --", class: 'participant-person-select', id: "person_id_new"%></span></span>
+              </td>
+              <th style="width: 2em;">por</th>
+              <td><%= form.text_field :suggester_comments, class:'input', required: true, placeholder: '¿Por qué sugieres que participe?' %></td>
+              <th style="width: 3em" class="button-add-cell">
+              	<button type="submit" class="button is-success">
+              	  <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
+              	</button>
+              </th>
+            </tr>
+          </table></div>
+          <% end %>
+        <% end %>
+
+
+        <div id="prospect-participants-ui">
+          <%= render 'prospect_participants/participant_list', prospect: @prospect, person: @person  %>
+        </div>
+        
+      </div>
+    </div>
+
+  </div>
+  </div>
+</div>

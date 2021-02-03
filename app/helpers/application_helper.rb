@@ -35,23 +35,35 @@ module ApplicationHelper
   end
 
   def is_agreement_admin?
-  	current_user_roles.include?('AGREEMENT')
+  	is_admin? || current_user_roles.include?('AGREEMENT')
   end
 
   def is_service_admin?
-  	current_user_roles.include?('SERVICE')
+  	is_admin? || current_user_roles.include?('SERVICE')
   end
 
   def is_journal_admin?
-    current_user_roles.include?('JOURNALS')
+    is_admin? || current_user_roles.include?('JOURNALS')
   end
 
   def is_conference_admin?
-    current_user_roles.include?('CONFERENCES')
+    is_admin? || current_user_roles.include?('CONFERENCES')
   end
 
   def is_association_admin?
-    current_user_roles.include?('ASSOCIATIONS')
+    is_admin? || current_user_roles.include?('ASSOCIATIONS')
+  end
+
+  def is_project_admin?
+    is_admin? || current_user_roles.include?('PROJECTS')
+  end
+
+  def is_prospect_admin?
+    is_admin? || current_user_roles.include?('PROSPECTS')
+  end
+
+  def is_scientific_department_admin?
+    (current_user.id = current_user.department.person_id) && (current_user.department.is_scientific == true)
   end
 
   def custom_icon(color, icon, text = '&nbsp;')

@@ -1,0 +1,76 @@
+<div class="container product-index">
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Prospectos', prospects_path(@person.shortname) %></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <div class="product-filters">
+      <div class="select">
+        <% 
+        options = {}
+
+        options["Todos"]       = "todos"
+        options["Inicial"]     = "inicial"
+        options["Asignados"]   = "asignados"
+        options["Aceptados"]   = "aceptados"
+        options["Suspendidos"] = "suspendidos"
+        options["Cancelados"]  = "cancelados"
+        options["Rechazados"]  = "rechazados"
+        %>
+        <%= select_tag 'filter_status', options_for_select(options, @filter_status), class: 'filter-select', id: "filter-status", 'data-url': prospects_path(@person.shortname) %>
+      </div>
+      <div class="select">
+        <% 
+        options = {}
+        options["Todos los años"] = "todos"
+        
+        this_year = Date.today.year
+
+        if @min_year.is_a? Integer
+          min_year = @min_year
+        else
+          min_year = this_year
+        end
+
+        
+        (min_year..this_year).each do |y|
+          options["Año #{y}"] = y
+        end
+        %>
+        <%= select_tag 'filter_year', options_for_select(options, @filter_year), class: 'filter-select', id: "filter-year", 'data-url': prospects_path(@person.shortname) %>
+      </div>
+
+    </div>
+    <% if is_prospect_admin? %>
+      <%= link_to new_prospect_path, class:'button is-link' do %>
+        <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span><span>Crear prospecto</span>
+      <%  end %>
+    <% end %>
+  </div>
+</div>
+
+<% if @prospects.count == 0 %>
+  <div class="empty-results">No existen</div>
+<% end %>
+<% @prospects.each do |prospect| %>
+<div class="product-item">
+  <article class="media">
+    <div class="media-left">
+      <%= render 'status_icon', prospect: prospect, person: @person  %>
+    </div>
+    <div class="media-content">
+      <div class="content">
+          <strong><%= link_to prospect.subject, prospect_path(@person.shortname, prospect) %></strong><br>
+          <span><%= prospect.organization %> – <%= prospect.contact %></span><br>
+          <small>Fecha de contacto <%= I18n.l(prospect.contact_date, format: :long) rescue '--' %></small>
+        </p>
+      </div>
+    </div>
+  </article>
+</div>
+<% end %>
+</div>
