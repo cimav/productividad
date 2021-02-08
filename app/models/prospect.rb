@@ -8,6 +8,8 @@ class Prospect < ApplicationRecord
 
   has_rich_text :needs
 
+  after_create :add_code
+
   INITIAL     = 1
   ASSIGNED    = 2
   ACCEPTED    = 3
@@ -66,6 +68,20 @@ class Prospect < ApplicationRecord
   def product_name 
     "Prospecto"
   end 
+
+  def add_code
+    con = Prospect.where("YEAR(created_at) = :year", {:year => Date.today.year}).maximum('consecutive')
+    if con.nil?
+      con = 1
+    else
+      con += 1
+    end
+    consecutive = "%04d" % con
+    self.consecutive = con
+    year = Date.today.year.to_s.last(2)
+    self.code = "#{year}/#{consecutive}"
+    self.save(:validate => false)
+  end
 
   def decision_type_text
     DECISION_TYPES[decision_type.to_i]
