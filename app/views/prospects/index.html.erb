@@ -64,7 +64,7 @@
     </div>
     <div class="media-content">
       <div class="content">
-          <strong><%= link_to prospect.subject, prospect_path(@person.shortname, prospect) %></strong><br>
+          <strong><%= link_to "#{prospect.code}: #{prospect.subject}", prospect_path(@person.shortname, prospect) %></strong><br>
           <span><%= prospect.organization %> – <%= prospect.contact %></span><br>
           <small>Fecha de contacto <%= I18n.l(prospect.contact_date, format: :long) rescue '--' %></small>
         </p>

@@ -3,12 +3,13 @@
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
         <li><%= link_to 'Prospectos', prospects_path(@person.shortname) %></li>
+        <li><%= link_to @prospect.code, prospect_path(current_user.shortname, @prospect) %></li>
         <li><a>Editar</a></li>
       </ul>
     </nav>
   </div>
   <div class="level-right">
-    <%= link_to prospects_path(@person.shortname), class: 'button' do %>
+    <%= link_to prospect_path(current_user.shortname, @prospect), class: 'button' do %>
       <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
     <% end %>
   </div>
