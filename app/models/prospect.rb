@@ -83,6 +83,10 @@ class Prospect < ApplicationRecord
     self.save(:validate => false)
   end
 
+  def show_url
+    "https://sip.cimav.edu.mx/prospectos/#{self.code}"
+  end
+
   def decision_type_text
     DECISION_TYPES[decision_type.to_i]
   end

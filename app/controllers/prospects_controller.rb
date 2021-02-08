@@ -122,6 +122,8 @@ class ProspectsController < ApplicationController
       status_initial.status = ProspectStatusChange::ACTIVE
       status_initial.save
 
+      ProspectsMailer.new_prospect(@prospect).deliver_now
+
 
       log = @prospect.activity_logs.new 
       log.message = "Prospecto de proyecto agregado: #{@prospect.subject}"

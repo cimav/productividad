@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_065513) do
+ActiveRecord::Schema.define(version: 2021_02_08_070939) do
 
   create_table "00_aux_art_part", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "correo", collation: "latin1_swedish_ci"
@@ -800,6 +800,8 @@ ActiveRecord::Schema.define(version: 2021_02_08_065513) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.date "contact_date"
+    t.integer "consecutive"
+    t.string "code"
     t.index ["country_id"], name: "index_prospects_on_country_id"
     t.index ["person_id"], name: "index_prospects_on_person_id"
   end
