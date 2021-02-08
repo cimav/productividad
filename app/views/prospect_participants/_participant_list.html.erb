@@ -26,7 +26,7 @@
             <% else 
                is_first = false
              end %>
-             <td><figure class="image is-32x32"><img class="is-rounded" src="<%= sug.person.display_url rescue '' %>" title="<%= sug.person.full_name %>"></figure><%= sug.person.full_name %><br><small><%= sug.person.department.name %></small></td>
+             <td><figure class="image is-32x32"><img class="is-rounded" src="<%= sug.person.display_url rescue '' %>" title="<%= sug.person.full_name %>"></figure><%= sug.person.full_name %><br><small><%= sug.person.department.name %><br><em>Sugerido el <%= I18n.l(sug.created_at, format: :long).to_s.capitalize rescue '--' %></em></small></td>
              <td><%= sug.suggester_comments %></td>
              </tr>
     	  <% end %>
