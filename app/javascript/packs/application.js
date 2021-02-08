@@ -6,6 +6,8 @@
 require("@rails/ujs").start()
 require("turbolinks").start()
 require("@rails/activestorage").start()
+require("trix")
+require("@rails/actiontext")
 require("channels")
 require("jquery")
 require("jquery-ui")
@@ -92,13 +94,3 @@ window.showNotice = function(msg) {
         parent: document.getElementById('notification-area'),
        }).show();
 }
-
-
-
-
-
-
-
-
-require("trix")
-require("@rails/actiontext")

@@ -169,7 +169,7 @@ class ProspectsController < ApplicationController
     end
 
     def prospect_params
-      params.require(:prospect).permit(:subject, :organization, :contact_date, :contact, :decision_type, :phone, :email, :address, :country_id, :source, :status)
+      params.require(:prospect).permit(:subject, :organization, :contact_date, :contact, :decision_type, :phone, :email, :address, :country_id, :source, :needs, :status)
     end
 
     def prospect_status_change_params
