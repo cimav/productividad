@@ -27,6 +27,9 @@
           </span>
         </p>
       </div> -->
+      <% if Rails.env.development? %>
+      <div class="tag is-warning">VERSION DESARROLLO</div>
+      <% end %>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
             <img src="https://cimav.edu.mx/foto/ion/128" class="navbar-user-img" alt="<%= current_user.full_name %>">
