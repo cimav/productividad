@@ -201,6 +201,11 @@ class ProspectsController < ApplicationController
 
   end
 
+  def go_to
+    @prospect = Prospect.find_by_code(params[:code])
+    redirect_to prospect_path(current_user.shortname, @prospect.id)
+  end
+
 
   private
 

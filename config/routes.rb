@@ -329,6 +329,12 @@ Rails.application.routes.draw do
   get '/mi-perfil' => 'profiles#my_profile', as:'my_profile'
   get '/perfiles/:email' => 'profiles#show', :constraints => { :email => /(?!.*\/).*/ }, :as => "show_profile"
 
+
+  # -------------------------------------------------
+  # Redirect Routes
+  # -------------------------------------------------
+  get '/ir-a/prospecto/*code' => 'prospects#go_to'
+
   # -------------------------------------------------
   # Auth Rules
   # -------------------------------------------------

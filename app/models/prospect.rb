@@ -103,7 +103,13 @@ class Prospect < ApplicationRecord
   end
 
   def show_url
-    "https://sip.cimav.edu.mx/prospectos/#{self.code}"
+    if Rails.env.development? 
+      server = "http://localhost:3000"
+    else
+      server = "https://sip.cimav.edu.mx"
+    end
+
+    "#{server}/ir-a/prospecto/#{self.code}"
   end
 
   def decision_type_text
