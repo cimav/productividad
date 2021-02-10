@@ -1,0 +1,104 @@
+<%
+new_status = params[:s].to_i
+
+options = [
+    Prospect::INITIAL,
+    Prospect::ASSIGNED,
+    Prospect::ACCEPTED,
+    Prospect::SUSPENDED,
+    Prospect::CANCELED,
+    Prospect::REJECTED 
+  ]
+
+show_options = {}
+show_options[Prospect::INITIAL]  = [Prospect::ASSIGNED] 
+show_options[Prospect::ASSIGNED]  = [Prospect::INITIAL] 
+show_options[Prospect::ACCEPTED]  = [Prospect::ASSIGNED] 
+show_options[Prospect::SUSPENDED] = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
+show_options[Prospect::CANCELED]  = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
+show_options[Prospect::REJECTED]  = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
+
+date_title = {}
+date_title[Prospect::INITIAL]  = "Fecha de reinicio de proceso:"
+date_title[Prospect::ASSIGNED]  = "Fecha de definición del equipo:"
+date_title[Prospect::ACCEPTED]  = "Fecha de aceptación:"
+date_title[Prospect::SUSPENDED] = "Fecha de suspensión:"
+date_title[Prospect::CANCELED]  = "Fecha de cancelación:"
+date_title[Prospect::REJECTED]  = "Fecha de rechazo:"
+
+content_title = {}
+content_title[Prospect::INITIAL]  = "Motivo del reinicio:"
+content_title[Prospect::ASSIGNED]  = "Notas:"
+content_title[Prospect::ACCEPTED]  = "Notas:"
+content_title[Prospect::SUSPENDED] = "Motivo de la suspensión:"
+content_title[Prospect::CANCELED]  = "Motivo de la cancelación:"
+content_title[Prospect::REJECTED]  = "Motivo del rechazo:"
+%>
+
+
+<%
+url_prospects = prospects_path
+url_prospect =  prospect_path(@prospect)
+if !@department.blank?
+  url_prospects = ver_departamento_prospectos_path(@department)
+  url_prospect = ver_departamento_prospecto_path(@department, @prospect)
+elsif !@person.blank?
+  url_prospects = prospects_path(@person.shortname)
+  url_prospect = prospect_path(@person.shortname, @prospect)
+end
+%>
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Prospectos', url_prospects %></li>
+        <li><a><%= @prospect.code %></a></li>
+        <li><a>Cambiar Estado</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to url_prospects, class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+
+
+<% if show_options[new_status] && (show_options[new_status].include? @prospect.status) %>
+  <%= form_for @prospect_status_change, :url => cambiar_estado_guardar_prospect_path(@person.shortname, @prospect), local: true do |form| %>
+  <%= form.hidden_field :to, value: new_status %>
+  <div class="columns">
+    <div class="columm is-narrow">
+      <div class="change-status-title">
+        <div class="tags has-addons">
+          <span class="tag icon is-large <%= Prospect::STATUS_TEXT_CLASS[new_status] %>"><i class="fas <%= Prospect::STATUS_ICON[new_status] %>" aria-hidden="true"></i></span>
+          <span class="tag <%= Prospect::STATUS_CLASS[new_status] %>"><%= Prospect::STATUS[new_status] %></span>
+        </div>
+      </div>
+    </div>
+    <div class="column">
+        <div class="field">
+          <%= form.label :change_date, date_title[new_status], class:'label' %>
+          <p class="control"><%= form.text_field :change_date, type:'date', class:'input', value: Date.today.strftime("%F") %></p>
+        </div>
+
+        <div class="field">
+      	  <%= form.label :content, content_title[new_status], class:'label' %>
+          <p class="control single-rich"><%= form.rich_text_area :content %></p>
+        </div> 
+    </div>
+  </div>
+  <div class="actions is-pulled-right">
+    <a href="<%= prospect_path(@person.shortname, @prospect) %>" class="button">Cancelar</a>
+    <%= form.submit 'Actualizar estado', class:"button is-link" %>
+  </div>
+  
+  <% end %>
+<% else %>
+  <div class="notification is-danger">
+    Acción no permitida
+  </div>
+<% end %>

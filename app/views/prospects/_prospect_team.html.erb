@@ -1,0 +1,17 @@
+<table class="table prospect-department-table is-fullwidth is-striped">
+  <tr>
+  	<th colspan="2">Nombre</th>
+  	<th>Departamento</th>
+  	<th>Participación</th>
+  </tr>
+  <% prospect.prospect_teams.order(:participant_type).each do |team| %>
+    <tr>
+      <td class="figure-cell">
+        <figure class="image is-32x32"><img class="is-rounded" src="<%= team.person.display_url rescue '' %>" title="<%= team.person.full_name %>"></figure>
+      </td>
+      <td><strong><%= team.person.full_name %></strong></td>
+      <td><%= team.person.department.name %></td>
+      <td><%= team.participant_type_text %></td>
+    </tr>
+  <% end %>
+</table>

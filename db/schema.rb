@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_08_070939) do
+ActiveRecord::Schema.define(version: 2021_02_08_174644) do
 
   create_table "00_aux_art_part", id: false, charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "correo", collation: "latin1_swedish_ci"
@@ -783,6 +783,18 @@ ActiveRecord::Schema.define(version: 2021_02_08_070939) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["person_id"], name: "index_prospect_status_changes_on_person_id"
     t.index ["prospect_id"], name: "index_prospect_status_changes_on_prospect_id"
+  end
+
+  create_table "prospect_teams", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "prospect_id"
+    t.bigint "person_id"
+    t.text "comments"
+    t.integer "participant_type"
+    t.integer "status", default: 1, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["person_id"], name: "index_prospect_teams_on_person_id"
+    t.index ["prospect_id"], name: "index_prospect_teams_on_prospect_id"
   end
 
   create_table "prospects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

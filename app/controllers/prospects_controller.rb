@@ -1,7 +1,7 @@
 class ProspectsController < ApplicationController
   before_action :auth_required
 
-  before_action :set_prospect, only: [:org_show, :information, :change_status, :change_status_save, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
+  before_action :set_prospect, only: [:org_show, :information, :change_status, :change_status_save, :assign, :create_team, :admin, :show, :edit, :update, :destroy, :budget, :messages, :tasks, :calendar, :services, :participants, :documents]
   before_action :set_person
   before_action :set_department
 
@@ -50,7 +50,7 @@ class ProspectsController < ApplicationController
 
     @filter_year = year
 
-    @prospects = @prospects.order(contact_date: :desc)
+    @prospects = @prospects.order(code: :desc)
 
     min_date = @all_prospects.minimum(:contact_date)
     
@@ -156,11 +156,49 @@ class ProspectsController < ApplicationController
   end
 
   def destroy
-    @prospect.destroy
+    @prospect.status = Prospect::DELETED
     respond_to do |format|
       format.html { redirect_to prospects_url, notice: 'El prospecto de proyecto ha sido eliminado.' }
       format.json { head :no_content }
     end
+  end
+
+  def assign
+    render :layout => 'profile'
+  end
+
+  def create_team 
+    respond_to do |format|
+      params.each do |k,v|
+        if k.start_with?('team_')
+          team = @prospect.prospect_teams.new
+          team.person_id = "#{k}".sub! 'team_', ''
+          team.participant_type = v
+          team.save
+        end 
+      end
+      status_assigned = @prospect.prospect_status_changes.new
+      status_assigned.from = @prospect.status
+      status_assigned.to = Prospect::ASSIGNED
+      status_assigned.change_date = DateTime.now
+      status_assigned.person_id = current_user.id
+      status_assigned.status = ProspectStatusChange::ACTIVE
+      status_assigned.save
+
+      @prospect.status = Prospect::ASSIGNED
+      @prospect.save
+
+      #ProspectsMailer.team_created(@prospect).deliver_now
+
+
+      log = @prospect.activity_logs.new 
+      log.message = "Se asignó el equipo al prospecto"
+      log.person_id = current_user.id
+      log.save
+      format.html { redirect_to prospect_path(@person.shortname, @prospect.id), notice: 'El equipo ha sido designado' }
+      format.json { render :show, status: :ok, location: @prospect }
+    end
+
   end
 
 

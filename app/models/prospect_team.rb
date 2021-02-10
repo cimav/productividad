@@ -1,7 +1,5 @@
-class ProspectParticipant < ApplicationRecord
+class ProspectTeam < ApplicationRecord
   belongs_to :person, optional: true
-  belongs_to :suggested_by_person, foreign_key: 'suggested_by', class_name: 'Person', optional: true
-
   belongs_to :prospect 
 
   ACTIVE = 1
@@ -9,10 +7,12 @@ class ProspectParticipant < ApplicationRecord
 
   LEADER = 1
   PARTICIPANT = 2 
+  NOT_PARTICIPANT = 3
 
   PARTICIPANT_TYPES = {
     LEADER => 'Líder',
-    PARTICIPANT => 'Participante'
+    PARTICIPANT => 'Participante',
+    NOT_PARTICIPANT => 'No Participa'
   }
 
   def participant_type_text 

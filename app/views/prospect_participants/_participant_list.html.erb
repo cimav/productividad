@@ -1,12 +1,13 @@
-<table class="table prospect-department-table is-fullwidth is-striped is-bordered">
+<table class="table prospect-department-table is-fullwidth">
   <tr>
-  	<th class="department-cell">Jefe de Departamento</th>
-  	<th>¿Quién?</th>
+  	<th colspan="2" lass="department-cell">Jefe de Departamento</th>
+  	<th colspan="2">¿Quién?</th>
   	<th>Cualidad</th>
+    <th></th>
   </tr>
   <% Department.where(is_scientific: true).order(:name).each do |department| %>
     <tr class="department-row">
-    	<% suggested = prospect.prospect_participants.where(suggested_by: department.person_id) 
+    	<% suggested = prospect.prospect_participants.where(suggested_by: department.person_id).where.not(status: ProspectParticipant::DELETED) 
     	   if suggested.count > 1 
     	   	  rowspan = suggested.count 
     	   else 
@@ -14,8 +15,10 @@
            end
            is_first = true
         %>
-    	<td rowspan="<%= rowspan %>" class="department-cell">
-            <figure class="image is-32x32"><img class="is-rounded" src="<%= department.person.display_url rescue '' %>" title="<%= department.person.full_name %>"></figure>
+    	<td rowspan="<%= rowspan %>" class="figure-cell">
+        <figure class="image is-32x32"><img class="is-rounded" src="<%= department.person.display_url rescue '' %>" title="<%= department.person.full_name %>"></figure>
+      </td>
+      <td rowspan="<%= rowspan %>" class="department-cell">
     		<strong><%= department.person.full_name %></strong><br>
     		<small><%= department.name %></small>
     	</td>
@@ -26,13 +29,34 @@
             <% else 
                is_first = false
              end %>
-             <td><figure class="image is-32x32"><img class="is-rounded" src="<%= sug.person.display_url rescue '' %>" title="<%= sug.person.full_name %>"></figure><%= sug.person.full_name %><br><small><%= sug.person.department.name %><br><em>Sugerido el <%= I18n.l(sug.created_at, format: :long).to_s.capitalize rescue '--' %></em></small></td>
+             <td style="width: 32px; text-align: center;" class="figure-cell"><figure class="image is-32x32"><img class="is-rounded" src="<%= sug.person.display_url rescue '' %>" title="<%= sug.person.full_name %>"></figure></td>
+             <td>
+               <strong><%= sug.person.full_name %></strong><br>
+               <small><%= sug.person.department.name %><br>
+               <%
+                 sug.participant_type == ProspectParticipant::LEADER ? tag_class = "is-warning" : tag_class = "is-primary"
+
+               %>
+               <span class="tag <%= tag_class %>"><%= sug.participant_type_text %></span> Sugerido el <%= I18n.l(sug.created_at, format: :short).to_s.capitalize rescue '--' %></small>
+             </td>
              <td><%= sug.suggester_comments %></td>
+             <td>
+             <% if current_user.id == department.person_id && prospect.status == Prospect::INITIAL %>
+               
+               <%= link_to edit_prospect_prospect_participant_path(@person.shortname, @prospect, sug) do %>
+                 <span class="icon is-small"><i class="fas fa-edit"></i></span>
+               <% end %>
+               
+               <%= link_to prospect_prospect_participant_path(@person.shortname, @prospect, sug), data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
+                 <span class="icon is-small"><i class="fas fa-trash"></i></span>
+               <% end %>
+             <% end %>
+             </td>
              </tr>
     	  <% end %>
     	
     	<% else %>
-    		  <td colspan="2" class="no-suggestions">Ninguna sugerencia</td></tr>
+    		  <td colspan="4" class="no-suggestions">Ninguna sugerencia</td></tr>
     	<% end %>
   <% end %>
 </table>

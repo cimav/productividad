@@ -3,6 +3,7 @@ class Prospect < ApplicationRecord
   belongs_to :country
   has_many :activity_logs, :as => :item
   has_many :prospect_participants
+  has_many :prospect_teams
   has_many :prospect_status_changes
 
 
@@ -16,6 +17,7 @@ class Prospect < ApplicationRecord
   SUSPENDED   = 4
   CANCELED    = 5
   REJECTED    = 6
+  DELETED     = 99
 
   STATUS = {
   	INITIAL  => 'Inicial',
@@ -24,6 +26,15 @@ class Prospect < ApplicationRecord
     SUSPENDED   => 'Suspendido',
     CANCELED    => 'Cancelado',
     REJECTED    => 'Rechazado'
+  }
+
+  STATUS_MENU = {
+    INITIAL  => 'Regresar a inicial',
+    ASSIGNED  => 'Definir equipo de trabajo',
+    ACCEPTED => 'Se acepta la propuesta',
+    SUSPENDED   => 'Suspender',
+    CANCELED    => 'Cancelar',
+    REJECTED    => 'Rechazar'
   }
 
   DECISION_NONE = 1
@@ -64,6 +75,14 @@ class Prospect < ApplicationRecord
     REJECTED    => 'has-text-danger'
   }
   
+  STATUS_TIMELINE = {
+    INITIAL  => 'Inicio del contacto',
+    ASSIGNED  => 'Se definió el equipo',
+    ACCEPTED => 'El prospecto acepto propuesta',
+    SUSPENDED   => 'Negociación suspendida',
+    CANCELED    => 'El prospecto canceló',
+    REJECTED    => 'Propuesta rechazada'
+  }
 
   def product_name 
     "Prospecto"

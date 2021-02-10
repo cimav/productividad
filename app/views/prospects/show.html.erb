@@ -20,6 +20,7 @@ end
   </div>
   <div class="level-right">
     <% if is_prospect_admin? %>
+      <%= render 'change_status_dropdown', prospect: @prospect, person: @person  %>
       <%= link_to 'Editar', edit_prospect_path(current_user.shortname, @prospect), class: 'button' %>
     <% end %>
     <%= link_to url_prospects, class: 'button' do %>
@@ -69,19 +70,19 @@ end
   	  <div class="info-content">
 
 
-        <% if is_scientific_department_admin? %>
+        <% if @prospect.status == Prospect::INITIAL && is_scientific_department_admin? %>
           <% @prospect_participant = @prospect.prospect_participants.new %>
           <%= form_for @prospect_participant, :url => prospect_prospect_participants_path(current_user.shortname, @prospect), remote: true do |form| %>
           <div class="prospect-proposal">
           <table class="table is-fullwidth">
             <tr>
-              <th style="width: 9.5em;">Propongo como</th>
+              <th style="text-align: right; width: 9.5em;">Propongo como</th>
               <td style="width: 8em;">
                 <% options = ProspectParticipant::PARTICIPANT_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} %>
                 <span class="control"><span class="select"><%= form.select :participant_type, options, {} %></span></span>
               </td>
-              <th style="width: 1em;">a</th>
-              <td style="width: 8em;">
+              <th style="width: 2em;">a</th>
+              <td style="width: 10em; text-align: right;">
               <% 
                 employee_type = 1
                 people = Person.where(person_type_id: employee_type, status: Person::STATUS_ACTIVE).order(:first_name, :last_name).pluck(:id, :first_name, :last_name)
@@ -91,14 +92,18 @@ end
                   person_options["#{p[1]} #{p[2]}"] = p[0]
                 end
               %>
-              <span class="control"><span class="select"><%= form.select :person_id, options_for_select(person_options),prompt: "-- Seleccionar #{person_type.name} --", class: 'participant-person-select', id: "person_id_new"%></span></span>
+              <div class="control"><div class="select"><%= form.select :person_id, options_for_select(person_options),prompt: "-- Seleccionar #{person_type.name} --", class: 'participant-person-select', id: "person_id_new"%></div></div>
               </td>
-              <th style="width: 2em;">por</th>
-              <td><%= form.text_field :suggester_comments, class:'input', required: true, placeholder: '¿Por qué sugieres que participe?' %></td>
-              <th style="width: 3em" class="button-add-cell">
+              <th rowspan="2" style="width: 3em" class="button-add-cell">
               	<button type="submit" class="button is-success">
               	  <span class="icon is-small"><i class="fas fa-plus" aria-hidden="true"></i></span>
               	</button>
+              </th>
+            </tr>
+            <tr>
+              <th style="text-align: right;">por</th>
+              <td colspan="3">
+                <%= form.text_field :suggester_comments, class:'input', required: true, placeholder: '¿Por qué sugieres que participe?' %></
               </th>
             </tr>
           </table></div>
@@ -113,6 +118,23 @@ end
       </div>
     </div>
 
+    <% if @prospect.status >= Prospect::ASSIGNED %>
+    <div class="info-section">
+      <div class="info-title">Equipo definido por Vinculación:</div>
+      <div class="info-content">
+        
+          <%= render 'prospect_team', prospect: @prospect  %>
+      </div>
+    </div>
+    <% end %>
+  </div>
+  <div class="column is-one-quarter">
+    <div class="info-section">
+      <div class="info-title">Linea de tiempo</div>
+      <div class="info-content">
+        <%= render 'timeline', prospect: @prospect  %>
+      </div>
+    </div>
   </div>
   </div>
 </div>

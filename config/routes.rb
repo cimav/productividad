@@ -112,6 +112,12 @@ Rails.application.routes.draw do
 
         resources :prospects, :path => 'prospectos' do 
           resources :prospect_participants, :path => 'participantes'
+          member do
+            get 'definir-equipo' => 'prospects#assign'
+            post 'definir-equipo' => 'prospects#create_team'
+            get 'cambiar-estado' => 'prospects#change_status'
+            post 'cambiar-estado-guardar' => 'prospects#change_status_save'
+          end
         end
 
         get 'editar' => 'profiles#edit', as: 'profile_edit'

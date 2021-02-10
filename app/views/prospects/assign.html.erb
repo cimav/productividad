@@ -1,0 +1,90 @@
+<div class="level product-actions">
+  <div class="level-left">
+    <nav class="breadcrumb" aria-label="breadcrumbs">
+      <ul>
+        <li><%= link_to 'Prospectos', prospects_path(@person.shortname) %></li>
+        <li><%= link_to @prospect.code, prospect_path(current_user.shortname, @prospect) %></li>
+        <li><a>Definir equipo</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="level-right">
+    <%= link_to prospect_path(current_user.shortname, @prospect), class: 'button' do %>
+      <span class="icon is-small"><i class="fas fa-angle-left" aria-hidden="true"></i></span>
+    <% end %>
+  </div>
+</div>
+
+<div class="product">
+<% 
+sugs = @prospect.prospect_participants.where.not(status: ProspectParticipant::DELETED) 
+
+distinct_sugs = {}
+sugs.each do |sug|
+  if !distinct_sugs[sug.person_id]
+  	distinct_sugs[sug.person_id] = {}
+    distinct_sugs[sug.person_id]['display_url'] = sug.person.display_url
+    distinct_sugs[sug.person_id]['name'] = sug.person.full_name
+    distinct_sugs[sug.person_id]['department'] = sug.person.department.name
+    distinct_sugs[sug.person_id]['participant_type'] = sug.participant_type
+    distinct_sugs[sug.person_id]['suggested_by'] = [] 
+  end
+  # Elegir siempre el de mayor jerarquia
+  if distinct_sugs[sug.person_id]['participant_type'] >= sug.participant_type
+    distinct_sugs[sug.person_id]['participant_type'] = sug.participant_type
+  end
+  distinct_sugs[sug.person_id]['suggested_by'] << sug.suggested_by_person.full_name
+end
+
+%>
+<% if distinct_sugs.count <= 0 %>
+  <div class="empty-results">No existen sugerencias</div>
+<% else %>
+<%= form_with url: definir_equipo_prospect_path(current_user.shortname, @prospect), method: :post, local: true do |form| %>
+<table class="table prospect-department-table is-fullwidth is-striped">
+  <tr>
+  	<th colspan="2">Nombre</th>
+  	<th>Departamento</th>
+  	<th>Sugerido por</th>
+  	<th>Participación</th>
+  </tr>
+  <% distinct_sugs.each do |k,sug| %>
+    <tr>
+      <td class="figure-cell">
+        <figure class="image is-32x32"><img class="is-rounded" src="<%= sug['display_url'] rescue '' %>" title="<%= sug['name'] %>"></figure>
+      </td>
+      <td>
+        <strong><%= sug['name'] %></strong>
+      </td>
+      <td>
+        <%= sug['department'] %>
+      </td>
+      <td>
+      	<%= sug['suggested_by'].join(', ') %>
+      </td>
+      <td>
+      	<% options = ProspectTeam::PARTICIPANT_TYPES.invert.sort {|a,b| (a[1] <=> b[1]) if a[1] > 0} 
+      	   options_html = ""
+           
+          options.each do |k,v|
+          	 if sug['participant_type'].to_i == v 
+          	   options_html += "<option selected='selected' value='#{v}'>#{k}</option>"
+          	 else
+               options_html += "<option value='#{v}'>#{k}</option>"
+             end
+           end 
+        %>
+        <span class="control"><span class="select"><%= select_tag "team_#{k}", options_html.html_safe %></span></span>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+<div class="actions is-pulled-right">
+	<button type="submit" class="button is-link">Definir equipo de trabajo</button>
+</div>
+<% end %>
+<% end %>
+
+</div>

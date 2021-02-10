@@ -74,7 +74,7 @@ class ProspectParticipantsController < ApplicationController
     @prospect_participant.status = ProspectParticipant::DELETED
     @prospect_participant.save
     respond_to do |format|
-      format.html { redirect_to prospect_prospect_participants_path(@person.shortname, @prospect), notice: 'El participante ha sido eliminado.' }
+      format.html { redirect_to prospect_path(@person.shortname, @prospect), notice: 'El participante ha sido eliminado.' }
       format.json { head :no_content }
     end
   end
