@@ -304,6 +304,11 @@ Rails.application.routes.draw do
   get '/actividades-relevantes/muestra/:status' => 'relevant_activities#org_index'
   get '/actividades-relevantes/:id' => 'relevant_activities#show', :as => :ver_actividad_relevante
 
+  get '/prospectos' => 'prospects#org_index'
+  get '/prospectos/muestra/:status/:year' => 'prospects#org_index'
+  get '/prospectos/muestra/:status' => 'prospects#org_index'
+  get '/prospectos/:id' => 'prospects#show', :as => :ver_prospecto
+
   # -------------------------------------------------
   # Department Routes
   # -------------------------------------------------
@@ -311,6 +316,11 @@ Rails.application.routes.draw do
   get '/departamentos/:department_id/muestra/:status/:year' => 'projects#department_index'
   get '/departamentos/:department_id/muestra/:status' => 'projects#department_index'
   get '/departamentos/:department_id/proyectos/:id' => 'projects#show', :as => :ver_departamento_proyecto
+
+  get '/departamentos/:department_id/prospectos/' => 'prospect#department_index', :as => :ver_departamento_prospectos
+  get '/departamentos/:department_id/muestra/:status/:year' => 'prospect#department_index'
+  get '/departamentos/:department_id/muestra/:status' => 'prospect#department_index'
+  get '/departamentos/:department_id/prospectos/:id' => 'prospect#show', :as => :ver_departamento_prospecto
 
 
   # -------------------------------------------------

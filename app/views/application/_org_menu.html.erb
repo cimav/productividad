@@ -8,6 +8,7 @@
   <p class="menu-label">Investigacion</p>
   <ul class="menu-list">
     <li class="li-proyectos"><%= link_to "Proyectos", proyectos_path %></li>
+    <% if Rails.env.development? %>
 	  <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", articulos_en_revistas_path %></li>
 	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", articulos_en_conferencias_path %></li>
 	  <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", difusion_y_divulgacion_path %></li>
@@ -21,8 +22,10 @@
 	  <li class="li-evaluador-de-proyectos"><%= link_to "Evaluador de Proyectos", evaluador_de_proyectos_path %></li>
     <li class="li-evaluador-de-articulos"><%= link_to "Evaluador de Artículos", evaluador_de_articulos_path %></li>
 	  <li class="li-actividades-relevantes"><%= link_to "Actividades Relevantes", actividades_relevantes_path %></li>
+    <% end %>
   </ul>
   </div>
+  <% if Rails.env.development? %>
   <div class="menu-section">
   <p class="menu-label">Posgrado</p>
   <ul class="menu-list">
@@ -30,12 +33,17 @@
     <li class="li-posgrado-graduados"><a>Graduados ⌛</a></li>
   </ul>
   </div>
+  <% end %>
   <div class="menu-section">
   <p class="menu-label">Vinculación</p>
   <ul class="menu-list">
+    <li class="li-prospectos"><%= link_to "Prospectos", prospectos_path %></li>
+    <% if Rails.env.development? %>
     <li class="li-vinculacion"><a>Ingresos ⌛</a></li>
+    <% end %>
   </ul>
   </div>
+  <% if Rails.env.development? %>
   <div class="menu-section">
   <p class="menu-label">Trabajo Interno</p>
   <ul class="menu-list">
@@ -43,5 +51,6 @@
     <li class="li-grupos"><%= link_to "Grupos de Trabajo", grupos_de_trabajo_path(main_organization.shortname) %></li>
   </ul>
   </div>
+  <% end %>
   <div class="is-clearfix"></div>
 </aside>

@@ -5,21 +5,24 @@
   </p>
   <ul class="menu-list">
     <li class="li-proyectos"><%= link_to "Proyectos", projects_path(person.shortname) %></li>
-	  <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", journal_articles_path(person.shortname) %></li>
-	  <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", conference_papers_path(person.shortname) %></li>
-	  <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", popular_sciences_path(person.shortname) %></li>
-	  <li class="li-libros"><%= link_to "Libros y Capítulos", books_path(person.shortname) %></li>
-	  <li class="li-trabajos"><%= link_to "Trabajos", conference_works_path(person.shortname) %></li>
-	  <li class="li-patentes"><%= link_to "Patentes", patents_path(person.shortname) %></li>
-	  <li class="li-conferencias-por-invitacion"><%= link_to "Conferencias por Invitación", invited_conferences_path(person.shortname) %></li>
-	  <li class="li-asociaciones-y-redes"><%= link_to "Asociaciones y Redes", association_members_path(person.shortname) %></li>
-	  <li class="li-reconocimientos"><%= link_to "Reconocimientos", awards_path(person.shortname) %></li>
-	  <li class="li-organizador-de-eventos"><%= link_to "Organizador de Eventos", event_organizers_path(person.shortname) %></li>
-	  <li class="li-evaluador-de-proyectos"><%= link_to "Evaluador de Proyectos", project_reviewers_path(person.shortname) %></li>
-    <li class="li-evaluador-de-articulos"><%= link_to "Evaluador de Artículos", journal_article_reviewers_path(person.shortname) %></li>
-	  <li class="li-actividades-relevantes"><%= link_to "Actividades Relevantes", relevant_activities_path(person.shortname) %></li>
+    <% if Rails.env.development? %>
+	    <li class="li-articulos-en-revistas"><%= link_to "Artículos en Revistas", journal_articles_path(person.shortname) %></li>
+	    <li class="li-articulos-en-conferencias"><%= link_to "Artículos en Conferencias", conference_papers_path(person.shortname) %></li>
+	    <li class="li-difusion-y-divulgacion"><%= link_to "Difusión y Divulgación", popular_sciences_path(person.shortname) %></li>
+	    <li class="li-libros"><%= link_to "Libros y Capítulos", books_path(person.shortname) %></li>
+	    <li class="li-trabajos"><%= link_to "Trabajos", conference_works_path(person.shortname) %></li>
+	    <li class="li-patentes"><%= link_to "Patentes", patents_path(person.shortname) %></li>
+	    <li class="li-conferencias-por-invitacion"><%= link_to "Conferencias por Invitación", invited_conferences_path(person.shortname) %></li>
+	    <li class="li-asociaciones-y-redes"><%= link_to "Asociaciones y Redes", association_members_path(person.shortname) %></li>
+	    <li class="li-reconocimientos"><%= link_to "Reconocimientos", awards_path(person.shortname) %></li>
+	    <li class="li-organizador-de-eventos"><%= link_to "Organizador de Eventos", event_organizers_path(person.shortname) %></li>
+	    <li class="li-evaluador-de-proyectos"><%= link_to "Evaluador de Proyectos", project_reviewers_path(person.shortname) %></li>
+      <li class="li-evaluador-de-articulos"><%= link_to "Evaluador de Artículos", journal_article_reviewers_path(person.shortname) %></li>
+	    <li class="li-actividades-relevantes"><%= link_to "Actividades Relevantes", relevant_activities_path(person.shortname) %></li>
+    <% end %>
   </ul>
   </div>
+  <% if Rails.env.development? %>
   <div class="menu-section">
   <p class="menu-label">
     Posgrado
@@ -29,23 +32,29 @@
     <li class="li-posgrado-graduados"><a>Graduados ⌛</a></li>
   </ul>
   </div>
+  <% end %>
   <div class="menu-section">
   <p class="menu-label">
     Vinculación
   </p>
   <ul class="menu-list">
     <li class="li-prospectos"><%= link_to "Prospectos", prospects_path(person.shortname) %></li>
-    <li class="li-vinculacion"><a>Ingresos ⌛</a></li>
+    <% if Rails.env.development? %>
+      <li class="li-vinculacion"><a>Ingresos ⌛</a></li>
+    <% end %>
   </ul>
   </div>
+  <% if Rails.env.development? %>
   <div class="menu-section">
   <p class="menu-label">
     Trabajo Interno
   </p>
+  
   <ul class="menu-list">
     <li class="li-servicios-de-laboratorio"><%= link_to "Servicios de Laboratorio", servicios_de_laboratorio_path(person.shortname) %></li>
     <li class="li-grupos"><%= link_to "Grupos de Trabajo", grupos_de_trabajo_path(person.shortname) %></li>
   </ul>
   </div>
+  <% end %>
   <div class="is-clearfix"></div>
 </aside>
