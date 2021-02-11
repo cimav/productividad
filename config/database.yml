@@ -17,7 +17,7 @@ default: &default
   password:
   socket: /tmp/mysql.sock
   variables:
-   sql_mode: 'traditional'
+    sql_mode: 'traditional'
 
 development:
   <<: *default
@@ -52,7 +52,7 @@ test:
 production:
   <<: *default
   database: productividad_production
-  username: productividad
+  host: <%= ENV['PRODUCTIVIDAD_DATABASE_HOST'] %>
+  username: <%= ENV['PRODUCTIVIDAD_DATABASE_USER'] %>
   password: <%= ENV['PRODUCTIVIDAD_DATABASE_PASSWORD'] %>
-
 

@@ -6,7 +6,7 @@ def get_childs(parent_id)
   return "" if @items[parent_id].blank? 
   ul = "<ul>"
   @items[parent_id].each do |child|
-    ul += "<li><a href='#{ver_departamento_path(child)}'><div class='org-item'><strong>#{child.name}</strong><br><figure class='image is-24x24'><img class='is-rounded' src='#{child.person.display_url}'></figure> #{child.person.full_name}</div></a>"
+    ul += "<li><a href='#{ver_departamento_path(child)}'><div class='org-item'><strong>#{child.name}</strong><br><figure class='image is-24x24'><img class='is-rounded' src='#{child.person.display_url rescue '--'}'></figure> #{child.person.full_name rescue '--'}</div></a>"
     ul += get_childs(child.id)
     ul += "</li>"
   end
@@ -49,7 +49,7 @@ end
       <a href="<%= ver_departamento_path(root) %>">
       <div class="org-item org-root-item">
         <strong><%= root.name %></strong><br>
-        <figure class="image is-24x24"><img class="is-rounded" src="<%= root.person.display_url rescue '' %>"></figure> <%= root.person.full_name %>
+        <figure class="image is-24x24"><img class="is-rounded" src="<%= root.person.display_url rescue '' %>"></figure> <%= root.person.full_name rescue '--' %>
       </div>
       </a>
       <%= get_childs(root.id) %>

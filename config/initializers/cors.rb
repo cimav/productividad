@@ -1,1 +1,1 @@
-Rails.application.config.allowed_cors_origins 
+#Rails.application.config.allowed_cors_origins 
