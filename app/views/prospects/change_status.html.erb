@@ -15,7 +15,7 @@ show_options[Prospect::INITIAL]  = [Prospect::ASSIGNED]
 show_options[Prospect::ASSIGNED]  = [Prospect::INITIAL] 
 show_options[Prospect::ACCEPTED]  = [Prospect::ASSIGNED] 
 show_options[Prospect::SUSPENDED] = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
-show_options[Prospect::CANCELED]  = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
+show_options[Prospect::CANCELED]  = [Prospect::ASSIGNED, Prospect::ACCEPTED, Prospect::INITIAL] 
 show_options[Prospect::REJECTED]  = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
 
 date_title = {}
@@ -52,7 +52,7 @@ end
     <nav class="breadcrumb" aria-label="breadcrumbs">
       <ul>
         <li><%= link_to 'Prospectos', url_prospects %></li>
-        <li><a><%= @prospect.code %></a></li>
+        <li><%= link_to @prospect.code, prospect_path(current_user.shortname, @prospect) %></li>
         <li><a>Cambiar Estado</a></li>
       </ul>
     </nav>
@@ -65,7 +65,6 @@ end
 </div>
 
 <div class="product">
-
 
 <% if show_options[new_status] && (show_options[new_status].include? @prospect.status) %>
   <%= form_for @prospect_status_change, :url => cambiar_estado_guardar_prospect_path(@person.shortname, @prospect), local: true do |form| %>

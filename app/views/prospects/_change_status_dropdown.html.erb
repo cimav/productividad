@@ -21,9 +21,9 @@
   #show_options[Prospect::INITIAL]  = [Prospect::ASSIGNED] 
   show_options[Prospect::ASSIGNED]  = [Prospect::INITIAL] 
   show_options[Prospect::ACCEPTED]  = [Prospect::ASSIGNED] 
-  show_options[Prospect::SUSPENDED] = [Prospect::ASSIGNED, Prospect::INITIAL] 
-  show_options[Prospect::CANCELED]  = [Prospect::ASSIGNED, Prospect::INITIAL] 
-  show_options[Prospect::REJECTED]  = [Prospect::ASSIGNED, Prospect::INITIAL] 
+  show_options[Prospect::SUSPENDED] = [Prospect::ASSIGNED, Prospect::ACCEPTED] 
+  show_options[Prospect::CANCELED]  = [Prospect::ASSIGNED, Prospect::INITIAL, Prospect::ACCEPTED] 
+  show_options[Prospect::REJECTED]  = [Prospect::ASSIGNED] 
 
   status_icon = {}
   status_icon[Prospect::INITIAL]    = "fa-circle"
