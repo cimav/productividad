@@ -34,12 +34,12 @@
   status_icon[Prospect::REJECTED]   = "fa-times"
 
   status_url = {}
-  status_url[Prospect::INITIAL]    = cambiar_estado_prospect_path(person.shortname, prospect)
+  status_url[Prospect::INITIAL]    = cambiar_estado_prospect_path(current_user.shortname, prospect)
   status_url[Prospect::ASSIGNED]   = definir_equipo_prospect_path(current_user.shortname, @prospect)
-  status_url[Prospect::ACCEPTED]   = cambiar_estado_prospect_path(person.shortname, prospect)
-  status_url[Prospect::SUSPENDED]  = cambiar_estado_prospect_path(person.shortname, prospect)
-  status_url[Prospect::CANCELED]   = cambiar_estado_prospect_path(person.shortname, prospect)
-  status_url[Prospect::REJECTED]   = cambiar_estado_prospect_path(person.shortname, prospect)
+  status_url[Prospect::ACCEPTED]   = cambiar_estado_prospect_path(current_user.shortname, prospect)
+  status_url[Prospect::SUSPENDED]  = cambiar_estado_prospect_path(current_user.shortname, prospect)
+  status_url[Prospect::CANCELED]   = cambiar_estado_prospect_path(current_user.shortname, prospect)
+  status_url[Prospect::REJECTED]   = cambiar_estado_prospect_path(current_user.shortname, prospect)
   %>
   <% options.each do |option| %>
     <% if show_options[option].include? prospect.status %>

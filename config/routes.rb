@@ -143,6 +143,8 @@ Rails.application.routes.draw do
         get 'evaluador-de-articulos/muestra/:year' => 'journal_article_reviewers#index'
         get 'difusion-y-divulgacion/muestra/:year' => 'popular_sciences#index'
         get 'actividades-relevantes/muestra/:year' => 'relevant_activities#index'
+        get 'prospectos/muestra/:status/:year' => 'prospects#index'
+        get 'prospectos/muestra/:status' => 'prospects#index'
 
         get 'grupos-de-trabajo/' => 'person_working_groups#index'
         get 'grupos-de-trabajo/muestra/:year' => 'person_working_groups#index'
@@ -317,10 +319,10 @@ Rails.application.routes.draw do
   get '/departamentos/:department_id/muestra/:status' => 'projects#department_index'
   get '/departamentos/:department_id/proyectos/:id' => 'projects#show', :as => :ver_departamento_proyecto
 
-  get '/departamentos/:department_id/prospectos/' => 'prospect#department_index', :as => :ver_departamento_prospectos
-  get '/departamentos/:department_id/muestra/:status/:year' => 'prospect#department_index'
-  get '/departamentos/:department_id/muestra/:status' => 'prospect#department_index'
-  get '/departamentos/:department_id/prospectos/:id' => 'prospect#show', :as => :ver_departamento_prospecto
+  get '/departamentos/:department_id/prospectos/' => 'prospects#department_index', :as => :ver_departamento_prospectos
+  get '/departamentos/:department_id/muestra/:status/:year' => 'prospects#department_index'
+  get '/departamentos/:department_id/muestra/:status' => 'prospects#department_index'
+  get '/departamentos/:department_id/prospectos/:id' => 'prospects#show', :as => :ver_departamento_prospecto
 
 
   # -------------------------------------------------

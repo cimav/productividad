@@ -23,7 +23,7 @@ module ApplicationHelper
   end
 
   def current_user_roles
-    @current_user_roles ||= @current_user.roles.pluck(:identificator)
+    @current_user_roles ||= current_user.roles.pluck(:identificator)
   end
 
   def main_organization

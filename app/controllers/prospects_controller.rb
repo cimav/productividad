@@ -59,6 +59,64 @@ class ProspectsController < ApplicationController
     render :layout => 'profile'
   end
 
+  def org_index
+
+    year = params[:year]
+ 
+    @filter_status = params[:status] 
+
+    case @filter_status
+      when "en-definicion"
+        status = prospect::DEFINITION
+      when "en-negociacion"
+        status = prospect::NEGOTIATION
+      when "en-proceso"
+        status = prospect::IN_PROCESS
+      when "concluidos"
+        status = prospect::CONCLUDED
+      when "suspendidos"
+        status = prospect::SUSPENDED
+      when "cancelados"
+        status = prospect::CANCELED
+      when "rechazados"
+        status = prospect::REJECTED
+      else
+        @filter_status = 'todos'
+    end
+      
+    @all_prospects = Prospect.all
+
+    @prospects = @all_prospects
+
+
+    if params[:status] == 'todos'
+      if !year.blank?
+        @prospects = @prospects.where("YEAR(contact_date) <= ?", year)
+      end
+    elsif !status.blank? && !year.blank?
+      @prospects = @prospects.where("prospects.status = ? AND YEAR(contact_date) <= ?", status, year)
+    elsif !status.blank?
+      @prospects = @prospects.where("prospects.status = ?", status)
+    else
+      year = Date.today.year
+      @prospects = @prospects.where("YEAR(contact_date) <= ?", year)
+    end
+
+    @filter_year = year
+
+    @prospects = @prospects.order(code: :desc)
+
+    min_date = @all_prospects.minimum(:contact_date)
+    
+    @min_year = min_date.year rescue year
+
+    render :layout => 'org'
+  end
+
+  def department_index
+    render :inline => 'EN DESARROLLO'
+  end
+
   def change_status
     @prospect_status_change = @prospect.prospect_status_changes.new
     render :layout => 'profile'
