@@ -130,6 +130,30 @@ end
   </div>
   <div class="column is-one-quarter">
     <div class="info-section">
+      <div class="info-title">Agente de Vinculación</div>
+      <div class="info-content">
+
+        <article class="media">
+        <figure class="media-left">
+          <p class="image is-48x48">
+            <img class="is-rounded" src="<%= @prospect.person.display_url rescue '' %>" title="<%= @prospect.person.full_name %>">
+          </p>
+        </figure>
+        <div class="media-content">
+          <div class="content">
+            <p>
+              <strong><%= @prospect.person.full_name %></strong>
+              <br>
+              
+            </p>
+          </div>
+        </div>
+        </article>
+
+
+      </div>
+    </div>
+    <div class="info-section">
       <div class="info-title">Linea de tiempo</div>
       <div class="info-content">
         <%= render 'timeline', prospect: @prospect  %>
