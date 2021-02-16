@@ -12,4 +12,21 @@ class ProspectsMailer < ApplicationMailer
 
     mail(to: to_people, subject: "[SIP] Nuevo prospecto #{prospect.code}.")
   end
+
+  def team_created(prospect)
+    @prospect = prospect
+    to_people = []
+    if Rails.env.production? 
+      Department.where(is_scientific: true).order(:name).each do |department|
+        to_people << department.person.email
+      end
+      @prospect.prospect_teams.order(:participant_type).each do |team| 
+        to_people << team.person.email
+      end
+    else 
+      to_people << ENV['EMAIL_DEVELOPER']
+    end
+
+    mail(to: to_people, subject: "[SIP] Equipo asignado al prospecto #{prospect.code}.")
+  end
 end

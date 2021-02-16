@@ -42,11 +42,6 @@
              <td><%= sug.suggester_comments %></td>
              <td>
              <% if current_user.id == department.person_id && prospect.status == Prospect::INITIAL %>
-               
-               <%= link_to edit_prospect_prospect_participant_path(@person.shortname, @prospect, sug) do %>
-                 <span class="icon is-small"><i class="fas fa-edit"></i></span>
-               <% end %>
-               
                <%= link_to prospect_prospect_participant_path(@person.shortname, @prospect, sug), data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
                  <span class="icon is-small"><i class="fas fa-trash"></i></span>
                <% end %>

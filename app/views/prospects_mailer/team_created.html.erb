@@ -1,0 +1,55 @@
+<div style="padding: 2em;">
+  <div style="padding: 0.5em 0; border-bottom: 1px solid #ddd; font-size: 1.5em;">
+    <strong>Prospecto <%= @prospect.code %> </strong>
+  </div>
+  <p>Hacemos de su conocimiento que ha sido asignado el equipo para atender el prospecto  <%= @prospect.code %>.</p>
+
+  <p>
+    <strong>Asunto</strong>: <%= @prospect.subject %><br>
+    <strong>Organización/Empresa:</strong> <%= @prospect.organization %><br>
+  </p>
+  <p>
+  	<table style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;">
+      <tr>
+  	    <th style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;" colspan="2">Nombre</th>
+  	    <th style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;">Departamento</th>
+  	    <th style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;">Participación</th>
+      </tr>
+      <% @prospect.prospect_teams.order(:participant_type).each do |team| %>
+        <tr>
+          <% if team.participant_type == ProspectTeam::NOT_PARTICIPANT %>
+
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;">
+              <img style="width: 48px; height: 48px; -webkit-filter: grayscale(100%); filter: grayscale(100%);" src="<%= "#{team.person.display_url}" rescue '' %>" title="<%= team.person.full_name %>">
+            </td>
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd; color: #999;"><strong><%= team.person.full_name %></strong></td>
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd; color: #999;"><%= team.person.department.name %></td>
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd; color: #999;"><%= team.participant_type_text %></td>
+
+          <% else %>
+
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;">
+              <img style="width: 48px; height: 48px;" src="<%= "#{team.person.display_url}" rescue '' %>" title="<%= team.person.full_name %>">
+            </td>
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;"><strong><%= team.person.full_name %></strong></td>
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;"><%= team.person.department.name %></td>
+            <td style="border-spacing: 0; border-collapse: collapse; border: 1px solid #ddd;"><%= team.participant_type_text %></td>
+            
+          <% end %>
+        </tr>
+      <% end %>
+    </table>
+  </p>
+  
+  <p>
+    Consulta más información en el siguiente enlace: <A href="<%= @prospect.show_url %>"><%= @prospect.show_url %></a>
+  </p>  
+
+
+  <div style="padding: 0.5em 0; margin-top: 2em; border-top: 1px solid #ddd;">
+  Sistema Integral de Productividad<br>
+  CIMAV
+  </div>
+</div>
+
+

@@ -246,7 +246,7 @@ class ProspectsController < ApplicationController
       @prospect.status = Prospect::ASSIGNED
       @prospect.save
 
-      #ProspectsMailer.team_created(@prospect).deliver_now
+      ProspectsMailer.team_created(@prospect).deliver_now
 
 
       log = @prospect.activity_logs.new 

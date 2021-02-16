@@ -64,6 +64,8 @@ $(document).on('ajax:success', '#new_prospect_participant', function(data){
     parent: document.getElementById('notification-area'),
    }).show();
 
+  $('#prospect_participant_person_id').val('');
+  $('#prospect_participant_suggester_comments').val('');
 });
 
 
