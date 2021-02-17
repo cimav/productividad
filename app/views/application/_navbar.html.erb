@@ -31,7 +31,7 @@
       <% end %>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
-            <img src="https://cimav.edu.mx/foto/ion/128" class="navbar-user-img" alt="<%= current_user.full_name %>">
+            <img src="<%= "#{current_user.display_url}" rescue '' %>" class="navbar-user-img" alt="<%= current_user.full_name %>">
         </a>
         <div class="navbar-dropdown is-right">
           <%= link_to 'Ver mi perfil', my_profile_path, class: 'navbar-item' %>
