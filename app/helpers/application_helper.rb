@@ -62,6 +62,10 @@ module ApplicationHelper
     is_admin? || current_user_roles.include?('PROSPECTS')
   end
 
+  def is_prospect_evaluator?
+    is_admin? || current_user_roles.include?('PROSPECT_EVALUATOR')
+  end
+
   def is_scientific_department_admin?
     (current_user.id = current_user.department.person_id) && (current_user.department.is_scientific == true)
   end

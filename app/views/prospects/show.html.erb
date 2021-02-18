@@ -70,7 +70,7 @@ end
   	  <div class="info-content">
 
 
-        <% if @prospect.status == Prospect::INITIAL && is_scientific_department_admin? %>
+        <% if @prospect.status == Prospect::INITIAL && is_prospect_evaluator? %>
           <% @prospect_participant = @prospect.prospect_participants.new %>
           <%= form_for @prospect_participant, :url => prospect_prospect_participants_path(current_user.shortname, @prospect), remote: true do |form| %>
           <div class="prospect-proposal">

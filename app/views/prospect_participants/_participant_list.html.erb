@@ -1,13 +1,14 @@
 <table class="table prospect-department-table is-fullwidth">
   <tr>
-  	<th colspan="2" lass="department-cell">Jefe de Departamento</th>
+  	<th colspan="2" lass="department-cell">Sugerencias de</th>
   	<th colspan="2">¿Quién?</th>
   	<th>Cualidad</th>
     <th></th>
   </tr>
-  <% Department.where(is_scientific: true).order(:name).each do |department| %>
+  <% evals = Person.left_outer_joins(:person_roles).left_outer_joins(:roles).where('roles.IDENTIFICATOR': 'PROSPECT_EVALUATOR') %>
+  <% evals.each do |p| %>
     <tr class="department-row">
-    	<% suggested = prospect.prospect_participants.where(suggested_by: department.person_id).where.not(status: ProspectParticipant::DELETED) 
+    	<% suggested = prospect.prospect_participants.where(suggested_by: p.id).where.not(status: ProspectParticipant::DELETED) 
     	   if suggested.count > 1 
     	   	  rowspan = suggested.count 
     	   else 
@@ -16,11 +17,11 @@
            is_first = true
         %>
     	<td rowspan="<%= rowspan %>" class="figure-cell">
-        <figure class="image is-32x32"><img class="is-rounded" src="<%= department.person.display_url rescue '' %>" title="<%= department.person.full_name %>"></figure>
+        <figure class="image is-32x32"><img class="is-rounded" src="<%= p.display_url rescue '' %>" title="<%= p.full_name %>"></figure>
       </td>
       <td rowspan="<%= rowspan %>" class="department-cell">
-    		<strong><%= department.person.full_name %></strong><br>
-    		<small><%= department.name %></small>
+    		<strong><%= p.full_name %></strong><br>
+    		<small><%= p.department.name %></small>
     	</td>
         <% if suggested.count > 0 %>
           <% suggested.each do |sug| %>
@@ -35,13 +36,12 @@
                <small><%= sug.person.department.name %><br>
                <%
                  sug.participant_type == ProspectParticipant::LEADER ? tag_class = "is-warning" : tag_class = "is-primary"
-
                %>
                <span class="tag <%= tag_class %>"><%= sug.participant_type_text %></span> Sugerido el <%= I18n.l(sug.created_at, format: :short).to_s.capitalize rescue '--' %></small>
              </td>
              <td><%= sug.suggester_comments %></td>
              <td>
-             <% if current_user.id == department.person_id && prospect.status == Prospect::INITIAL %>
+             <% if current_user.id == p.id && prospect.status == Prospect::INITIAL %>
                <%= link_to prospect_prospect_participant_path(@person.shortname, @prospect, sug), data: {:confirm => '¿Confirmar?'}, :method => :delete do %>
                  <span class="icon is-small"><i class="fas fa-trash"></i></span>
                <% end %>

@@ -3,8 +3,9 @@ class ProspectsMailer < ApplicationMailer
     @prospect = prospect
     to_people = []
     if Rails.env.production? 
-      Department.where(is_scientific: true).order(:name).each do |department|
-        to_people << department.person.email
+      evals = Person.left_outer_joins(:person_roles).left_outer_joins(:roles).where('roles.IDENTIFICATOR': 'PROSPECT_EVALUATOR') 
+      evals.each do |p|
+        to_people << p.email
       end
     else 
       to_people << ENV['EMAIL_DEVELOPER']
@@ -17,8 +18,9 @@ class ProspectsMailer < ApplicationMailer
     @prospect = prospect
     to_people = []
     if Rails.env.production? 
-      Department.where(is_scientific: true).order(:name).each do |department|
-        to_people << department.person.email
+      evals = Person.left_outer_joins(:person_roles).left_outer_joins(:roles).where('roles.IDENTIFICATOR': 'PROSPECT_EVALUATOR') 
+      evals.each do |p|
+        to_people << p.email
       end
       @prospect.prospect_teams.order(:participant_type).each do |team| 
         to_people << team.person.email
