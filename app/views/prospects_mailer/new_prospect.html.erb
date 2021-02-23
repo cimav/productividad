@@ -2,16 +2,14 @@
   <div style="padding: 0.5em 0; border-bottom: 1px solid #ddd; font-size: 1.5em;">
     <strong>Prospecto <%= @prospect.code %> </strong>
   </div>
-  <p>Hacemos de su conocimiento que tenemos un nuevo prospecto, es necesario que en las próximas 8 horas hábiles realice sus sugerencias de participantes en el Sistema Integral de Productividad.</p>
+  <p>Hacemos de su conocimiento que tenemos un nuevo prospecto, es necesario que en las próximas <strong>8 horas hábiles</strong> realice sus sugerencias de participantes en el Sistema Integral de Productividad.</p>
 
   <p>
     <strong>Asunto</strong>: <%= @prospect.subject %><br>
-    <strong>Organización/Empresa:</strong> <%= @prospect.organization %><br>
   </p>
   <p>
     Realiza tus sugerencias en el siguiente enlace: <A href="<%= @prospect.show_url %>"><%= @prospect.show_url %></a>
   </p>  
-
 
 
   <div style="padding: 0.5em 0; margin-top: 2em; border-top: 1px solid #ddd;">

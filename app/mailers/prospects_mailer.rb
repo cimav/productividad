@@ -11,7 +11,7 @@ class ProspectsMailer < ApplicationMailer
       to_people << ENV['EMAIL_DEVELOPER']
     end
 
-    mail(to: to_people, subject: "[SIP] Nuevo prospecto #{prospect.code}.")
+    mail(to: to_people, subject: "[VINCULACIÓN] 📢 Nuevo Prospecto de Proyecto #{prospect.code}.")
   end
 
   def team_created(prospect)
@@ -23,12 +23,14 @@ class ProspectsMailer < ApplicationMailer
         to_people << p.email
       end
       @prospect.prospect_teams.order(:participant_type).each do |team| 
-        to_people << team.person.email
+        if team.participant_type.to_i != ProspectTeam::NOT_PARTICIPANT
+          to_people << team.person.email
+        end
       end
     else 
       to_people << ENV['EMAIL_DEVELOPER']
     end
 
-    mail(to: to_people, subject: "[SIP] Equipo asignado al prospecto #{prospect.code}.")
+    mail(to: to_people, subject: "[VINCULACIÓN] Equipo asignado al Prospecto de Proyecto #{prospect.code}.")
   end
 end

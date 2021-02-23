@@ -253,7 +253,7 @@ class ProspectsController < ApplicationController
       log.message = "Se asignó el equipo al prospecto"
       log.person_id = current_user.id
       log.save
-      format.html { redirect_to prospect_path(@person.shortname, @prospect.id), notice: 'El equipo ha sido designado' }
+      format.html { redirect_to prospect_path(@person.shortname, @prospect.id), notice: 'El equipo ha sido designado por la Dirección de Vinculación' }
       format.json { render :show, status: :ok, location: @prospect }
     end
 
