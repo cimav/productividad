@@ -163,7 +163,7 @@ class ProspectsController < ApplicationController
     @prospect.decision_type   = params[:decision_type]
     @prospect.contact         = params[:contact]
     @prospect.phone           = params[:phone]
-    @prospect.email           = params[:email]
+    @prospect.email           = params[:prospect_email]
     @prospect.address         = params[:address]
     @prospect.country_id      = params[:country_id]
     @prospect.source          = params[:source]

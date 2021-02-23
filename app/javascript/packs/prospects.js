@@ -33,7 +33,7 @@ $(document).on('click', '#add-prospect', function() {
                    contact: contact,
                    decision_type: decision_type,
                    phone: phone,
-                   email: email,
+                   prospect_email: email,
                    address: address,
                    country_id: country_id,
                    source: source,

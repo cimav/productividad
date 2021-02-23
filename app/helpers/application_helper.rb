@@ -30,6 +30,10 @@ module ApplicationHelper
     @main_organization ||= Organization.find_by_domain(current_user.email.split("@").last)
   end
 
+  def mexico_id
+    Country.find_by_name('México').id.to_i
+  end
+
   def is_admin?
   	current_user_roles.include?('ADMIN')
   end

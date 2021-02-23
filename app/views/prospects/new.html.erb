@@ -141,7 +141,7 @@
     <div class="field-body">
       <div class="field">
         <div class="select">
-          <%= form.collection_select :country_id, Country.order(:name),:id,:name %>
+          <%= form.collection_select :country_id, Country.order(:name),:id,:name, {selected: mexico_id } %>
         </div>
       </div>
     </div>
